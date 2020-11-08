@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+
+    <!-- For fast scroller -->
+    <style name="FastScrollerTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/fastscroller_background</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

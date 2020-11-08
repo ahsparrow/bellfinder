@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App bar -->
+    <color name="colorPrimary">#96B4FF</color>
+
+    <!-- Tower list items -->
+    <color name="recycler_item_bg">#B8EAFA</color>
+    <color name="visited_item_bg">#B9F6CA</color>
+
+    <color name="ic_launcher_background">#8C9EFF</color>
+
+    <!-- For fast scroller -->
+    <color name="fastscroller_background">#ffffff</color>
+</resources>

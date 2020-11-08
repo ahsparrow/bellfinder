@@ -1,0 +1,35 @@
+<resources>
+    <string name="add_visit_menuitem">Add visit</string>
+    <string name="app_name">Bell Finder</string>
+    <string name="bells_label">Bells:</string>
+    <string name="cancel">Cancel</string>
+    <string name="county_label">County:</string>
+    <string name="date_format_iso">%1$tY-%1$tm-%1$te</string>
+    <string name="date_format_long">%1$ta, %1$te %1$tb %1$tY</string>
+    <string name="date_format_short">%1$te %1$tb %1$ty</string>
+    <string name="delete">Delete</string>
+    <string name="delete_visit">Delete this visit?</string>
+    <string name="distance_formatter">"%.1f mi"</string>
+    <string name="dove_link"><u>Open Dove\'s guide</u></string>
+    <string name="export_menuitem">Export visits</string>
+    <string name="import_menuitem">Import visits</string>
+    <string name="info">Info</string>
+    <string name="initialised_version_code">INITIALISED_VERSION_CODE</string>
+    <string name="no">No</string>
+    <string name="notes">Notes</string>
+    <string name="novisits_info">Create a new visit by selecting a tower and pressing the add visit button</string>
+    <string name="peal">Peal</string>
+    <string name="place_label">Place:</string>
+    <string name="practice_label">Practice:</string>
+    <string name="quarter">Quarter</string>"
+    <string name="save">Save</string>
+    <string name="search_hint">Search Place</string>
+    <string name="search_title">Search</string>
+    <string name="show_map_item">Show on map</string>
+    <string name="tenor_label">Tenor:</string>
+    <string name="unused">Unused</string>
+    <string name="yes">Yes</string>
+
+    <!-- For fast scroller -->
+    <string name="handleimage">handleImage</string>
+</resources>

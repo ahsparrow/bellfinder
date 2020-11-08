@@ -1,0 +1,2 @@
+include ':bellfinder'
+rootProject.name = "Bell Finder"
