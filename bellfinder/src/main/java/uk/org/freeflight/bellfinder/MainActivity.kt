@@ -300,7 +300,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun importHandler(uri: Uri) {
+    private fun importHandler(uri: Uri?) {
+        // Uri is null if import request is aborted by user
+        if (uri == null)
+            return
+
         contentResolver.openInputStream(uri)?.let<InputStream, Unit> { input ->
             try {
                 val viewModel: ViewModel by viewModels()
