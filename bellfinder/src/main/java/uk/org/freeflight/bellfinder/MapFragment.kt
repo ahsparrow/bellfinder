@@ -31,6 +31,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenResumed
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -113,68 +114,70 @@ class MapFragment : SearchableFragment() {
         mapView.addMapListener(DelayedMapListener(object : MapListener {
             override fun onScroll(p: ScrollEvent): Boolean {
                 lifecycleScope.launch {
-                    // Get surrounding towers
-                    val nearbyTowers = withContext(Dispatchers.IO) {
-                        val centre = GeoPoint(mapView.mapCenter)
-                        val location = Location("").apply {
-                            latitude = centre.latitude
-                            longitude = centre.longitude
+                    whenResumed {
+                        // Get surrounding towers
+                        val nearbyTowers = withContext(Dispatchers.IO) {
+                            val centre = GeoPoint(mapView.mapCenter)
+                            val location = Location("").apply {
+                                latitude = centre.latitude
+                                longitude = centre.longitude
+                            }
+
+                            viewModel.getTowersByLocation(location)
                         }
 
-                        viewModel.getTowersByLocation(location)
-                    }
+                        // Limit number of towers to be displayed
+                        val towers = nearbyTowers.slice(0 until NUM_MARKERS)
+                        val ids = towers.map { it.towerId }
 
-                    // Limit number of towers to be displayed
-                    val towers = nearbyTowers.slice(0 until NUM_MARKERS)
-                    val ids = towers.map { it.towerId }
+                        // Old markers to remove
+                        val oldMarkers = markers.filter { it.towerId !in ids }
 
-                    // Old markers to remove
-                    val oldMarkers = markers.filter { it.towerId !in ids }
+                        // Existing markers to keep
+                        val existingMarkers = markers.filter { it.towerId in ids }
+                        val existingIds = existingMarkers.map { it.towerId }
 
-                    // Existing markers to keep
-                    val existingMarkers = markers.filter { it.towerId in ids }
-                    val existingIds = existingMarkers.map { it.towerId }
+                        // New markers to add
+                        val newTowers = towers.filter { it.towerId !in existingIds }
+                        val newMarkers = newTowers.map { tower ->
+                            val marker = CustomMarker(tower.towerId, infoWindow, mapView).apply {
+                                position = GeoPoint(tower.latitude, tower.longitude)
+                                title = if (tower.place2 != "") {
+                                    tower.place + ", " + tower.place2
+                                } else {
+                                    tower.place
+                                }
+                                snippet = tower.dedication
 
-                    // New markers to add
-                    val newTowers = towers.filter { it.towerId !in existingIds }
-                    val newMarkers = newTowers.map { tower ->
-                        val marker = CustomMarker(tower.towerId, infoWindow, mapView).apply {
-                            position = GeoPoint(tower.latitude, tower.longitude)
-                            title = if (tower.place2 != "") {
-                                tower.place + ", " + tower.place2
-                            } else {
-                                tower.place
+                                val resid = when (tower.bells) {
+                                    1, 2, 3 -> R.drawable.tower3
+                                    4 -> R.drawable.tower4
+                                    5 -> R.drawable.tower5
+                                    6, 7 -> R.drawable.tower6
+                                    8, 9 -> R.drawable.tower8
+                                    10, 11 -> R.drawable.tower10
+                                    else -> R.drawable.tower12
+                                }
+                                icon = ResourcesCompat.getDrawable(view.resources, resid, null)
                             }
-                            snippet = tower.dedication
-
-                            val resid = when (tower.bells) {
-                                1, 2, 3 -> R.drawable.tower3
-                                4 -> R.drawable.tower4
-                                5 -> R.drawable.tower5
-                                6, 7 -> R.drawable.tower6
-                                8, 9 -> R.drawable.tower8
-                                10, 11 -> R.drawable.tower10
-                                else -> R.drawable.tower12
-                            }
-                            icon = ResourcesCompat.getDrawable(view.resources, resid, null)
+                            marker
                         }
-                        marker
+                        
+                        // Update marker overlays and list of markers
+                        mapView.overlays.removeAll(oldMarkers)
+                        mapView.overlays.addAll(newMarkers)
+                        markers = existingMarkers + newMarkers
+
+                        // Close the info window if open on an old marker
+                        if (infoWindow.isOpen) {
+                            val marker = infoWindow.markerReference as CustomMarker
+                            if (marker.towerId !in existingIds)
+                                marker.closeInfoWindow()
+                        }
+
+                        // Redraw
+                        mapView.invalidate()
                     }
-
-                    // Update marker overlays and list of markers
-                    mapView.overlays.removeAll(oldMarkers)
-                    mapView.overlays.addAll(newMarkers)
-                    markers = existingMarkers + newMarkers
-
-                    // Close the info window if open on an old marker
-                    if (infoWindow.isOpen) {
-                        val marker = infoWindow.markerReference as CustomMarker
-                        if (marker.towerId !in existingIds)
-                            marker.closeInfoWindow()
-                    }
-
-                    // Redraw
-                    mapView.invalidate()
                 }
 
                 return false
