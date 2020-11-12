@@ -22,7 +22,6 @@ package uk.org.freeflight.bellfinder
 import android.Manifest
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -38,7 +37,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
@@ -49,8 +47,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uk.org.freeflight.bellfinder.db.Visit
-import java.io.File
 import java.io.InputStream
+import java.io.OutputStream
 import java.util.*
 
 const val TAG = "BellFinder"
@@ -61,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private var optionMenu: Menu? = null
 
     private lateinit var getImport: ActivityResultLauncher<String>
+    private lateinit var getExport: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,11 +131,16 @@ class MainActivity : AppCompatActivity() {
         // Toolbar
         setSupportActionBar(findViewById(R.id.toolbar_main))
 
-        // Set visit import handler
+        // Visit import/export handlers
         getImport = registerForActivityResult(ActivityResultContracts.GetContent()) {
             importHandler(it)
         }
 
+        getExport = registerForActivityResult(ActivityResultContracts.CreateDocument()) {
+            exportHandler(it)
+        }
+
+        // Ask for location permissions
         requestLocationPermissions()
     }
 
@@ -168,7 +172,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.export_menuitem -> {
-                exportVisits()
+                getExport.launch("visits.csv")
                 true
             }
 
@@ -241,65 +245,45 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Email the visits database
-    private fun exportVisits() {
-        lifecycleScope.launch {
-            val csvFile = withContext(Dispatchers.IO) {
-                val viewModel: ViewModel by viewModels()
-                val visits = viewModel.getVisitViews()
+    // Export the visits database
+    private fun exportHandler(uri: Uri?) {
+        // Uri is null if request is aborted by user
+        if (uri == null)
+            return
 
-                // Create file in export directory
-                val exportDir = File(filesDir, "export")
-                if (!exportDir.exists()) {
-                    exportDir.mkdir()
+        contentResolver.openOutputStream(uri)?.let<OutputStream, Unit> { output ->
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val viewModel: ViewModel by viewModels()
+                    val visits = viewModel.getVisitViews()
+
+                    // CSV header (place and doveId are info only, not for backup)
+                    val header = listOf(listOf(
+                        "VisitId", "TowerId", "Date", "Notes", "Peal", "Quarter", "Place", "DoveId"))
+
+                    val rows = visits.map { visit ->
+                        val date = getString(R.string.date_format_iso).format(visit.date)
+                        val place =
+                            visit.place + ", " + if (visit.place2 != "") visit.place2 else visit.dedication
+
+                        listOf(
+                            visit.visitId.toString(),
+                            visit.towerId.toString(),
+                            date,
+                            visit.notes,
+                            if (visit.peal) "Y" else "",
+                            if (visit.quarter) "Y" else "",
+                            place,
+                            visit.doveId
+                        )
+                    }
+                    csvWriter().writeAll(header + rows, output)
                 }
-                val csvFile = File(exportDir, "visits.csv")
-
-                // Write CSV header (place and doveId are info only, not for backup)
-                val header = listOf(listOf(
-                    "VisitId", "TowerId", "Date", "Notes", "Peal", "Quarter", "Place", "DoveId"))
-                csvWriter().writeAll(header, csvFile)
-
-                val rows = visits.map { visit ->
-                    val date = getString(R.string.date_format_iso).format(visit.date)
-                    val place =
-                        visit.place + ", " + if (visit.place2 != "") visit.place2 else visit.dedication
-
-                    listOf(
-                        visit.visitId.toString(),
-                        visit.towerId.toString(),
-                        date,
-                        visit.notes,
-                        if (visit.peal) "Y" else "",
-                        if (visit.quarter) "Y" else "",
-                        place,
-                        visit.doveId
-                    )
-                }
-                csvWriter().writeAll(rows, csvFile, append = true)
-                csvFile
-            }
-
-            // Intent to email export as attachment
-            val attachment = FileProvider.getUriForFile(
-                applicationContext,
-                "uk.org.freeflight.bellfinder.fileprovider",
-                csvFile
-            )
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                data = Uri.parse("mailto:")
-                type = "text/csv"
-                putExtra(Intent.EXTRA_SUBJECT, "Bell Finder export")
-                putExtra(Intent.EXTRA_TEXT, "CSV export data attached")
-                putExtra(Intent.EXTRA_STREAM, attachment)
-            }
-
-            if (intent.resolveActivity(packageManager) != null) {
-                startActivity(intent)
             }
         }
     }
 
+    // Import to the visits database
     private fun importHandler(uri: Uri?) {
         // Uri is null if import request is aborted by user
         if (uri == null)
