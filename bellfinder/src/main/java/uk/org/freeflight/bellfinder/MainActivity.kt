@@ -177,8 +177,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.import_menuitem -> {
-                // text/csv would be better, but it doesn't work
-                getImport.launch("text/*")
+                // text/csv would be better, but it doesn't seem to work
+                getImport.launch("*/*")
                 true
             }
 
