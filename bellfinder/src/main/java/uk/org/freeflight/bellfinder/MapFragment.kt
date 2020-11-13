@@ -149,7 +149,9 @@ class MapFragment : SearchableFragment() {
                                 }
                                 snippet = tower.dedication
 
-                                val resid = when (tower.bells) {
+                                val resid = if (tower.unringable) {
+                                    R.drawable.tower_unringable
+                                } else when (tower.bells) {
                                     1, 2, 3 -> R.drawable.tower3
                                     4 -> R.drawable.tower4
                                     5 -> R.drawable.tower5
