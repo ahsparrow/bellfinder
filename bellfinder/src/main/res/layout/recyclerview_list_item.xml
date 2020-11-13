@@ -10,26 +10,33 @@
         android:layout_marginBottom="8dp"
         android:background="@color/recycler_item_bg">
 
+    <TextView
+        android:id="@+id/textview_recyclerview_bells"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minEms="2"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textview_recyclerview_place"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toStartOf="@id/textview_recyclerview_extra"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textview_recyclerview_bells"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textview_recyclerview_place2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textview_recyclerview_bells"
             app:layout_constraintTop_toBottomOf="@+id/textview_recyclerview_place" />
 
         <TextView

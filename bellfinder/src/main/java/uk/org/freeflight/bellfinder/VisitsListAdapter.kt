@@ -40,11 +40,11 @@ class VisitsListAdapter : ListAdapter("Visits") {
             holder.place.text = current.place
             holder.place2.text = if (current.place2 != "") current.place2 else current.dedication
 
+            holder.bells.text = current.bells.toString()
+
             holder.extra.text = holder.itemView.context
                 .getString(R.string.date_format_short).format(current.date)
-
-            val pq = if (current.peal) "P" else if (current.quarter) "Q" else ""
-            holder.extra2.text = if (pq == "") current.bells.toString() else "$pq ${current.bells}"
+            holder.extra2.text = if (current.peal) "P" else if (current.quarter) "Q" else ""
         }
     }
 

@@ -50,7 +50,7 @@ class TowerListAdapter : ListAdapter("Towers") {
             holder.place2.text = if (current.place2 != "") current.place2 else current.dedication
 
             // Number of bells
-            holder.extra2.text = current.bells.toString()
+            holder.bells.text = current.bells.toString()
 
             // Set background colour
             if (visitedTowers.contains(id)) {

@@ -41,6 +41,7 @@ abstract class ListAdapter(val name: String) : RecyclerView.Adapter<ListAdapter.
         val place2: TextView = itemView.findViewById(R.id.textview_recyclerview_place2)
         val extra: TextView = itemView.findViewById(R.id.textview_recyclerview_extra)
         val extra2: TextView = itemView.findViewById(R.id.textview_recyclerview_extra2)
+        val bells: TextView = itemView.findViewById(R.id.textview_recyclerview_bells)
 
         // Item details for selection tracker
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long>? =
