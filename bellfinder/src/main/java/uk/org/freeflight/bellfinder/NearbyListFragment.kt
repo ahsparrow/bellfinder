@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package uk.org.freeflight.bellfinder
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -28,6 +27,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -103,7 +103,6 @@ class NearbyListFragment : ListFragment(), LocationListener {
         return view
     }
 
-    @SuppressLint("MissingPermission")
     override fun onResume() {
         super.onResume()
 
@@ -111,26 +110,44 @@ class NearbyListFragment : ListFragment(), LocationListener {
 
         // First try for fine location
         if (startLocation(LocationManager.GPS_PROVIDER)) {
-            val lastLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            if (lastLocation != null) {
-                if (locationAge(lastLocation) < MAX_INITIAL_AGE) {
-                    sort(lastLocation)
-                    goodLocation = true
+            try {
+                val lastLocation =
+                    locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                if (lastLocation != null) {
+                    if (locationAge(lastLocation) < MAX_INITIAL_AGE) {
+                        sort(lastLocation)
+                        goodLocation = true
+                    }
                 }
+            }
+            catch (e: SecurityException) {
+                Log.w(TAG, "Unexpected security exception getting find locoation")
+            }
+            catch (e: IllegalArgumentException) {
+                Log.w(TAG, "Unknown fine location provider")
             }
         }
 
         // We didn't get a fine location so give coarse location a go
         if (!goodLocation) {
             if (startLocation(LocationManager.NETWORK_PROVIDER)) {
-                val lastLocation = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                if (lastLocation != null) {
-                    if (locationAge(lastLocation) < MAX_INITIAL_AGE) {
-                        goodLocation = true
-                    }
+                try {
+                    val lastLocation =
+                        locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    if (lastLocation != null) {
+                        if (locationAge(lastLocation) < MAX_INITIAL_AGE) {
+                            goodLocation = true
+                        }
 
-                    // Initialise the list with location irrespective of age
-                    sort(lastLocation)
+                        // Initialise the list with location irrespective of age
+                        sort(lastLocation)
+                    }
+                }
+                catch (e: SecurityException) {
+                    Log.w(TAG, "Unexpected security exception getting coarse location")
+                }
+                catch (e: IllegalArgumentException) {
+                    Log.w(TAG, "Unknown coarse location provider")
                 }
             }
         }
