@@ -21,11 +21,13 @@ package uk.org.freeflight.bellfinder.db
 
 import android.content.Context
 import androidx.room.*
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Tower::class, Visit::class],
     views = [VisitView::class],
-    version = 1,
+    version = 2,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class BellFinderDatabase : RoomDatabase() {
@@ -46,11 +48,18 @@ abstract class BellFinderDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     BellFinderDatabase::class.java,
-                    "tower_database"
-                ).build()
+                    "tower_database")
+                    .addMigrations(MIGRATION1TO2())
+                    .build()
                 INSTANCE = instance
                 return instance
             }
+        }
+    }
+
+    class MIGRATION1TO2 : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE Towers ADD COLUMN UR INTEGER DEFAULT 0 NOT NULL")
         }
     }
 }

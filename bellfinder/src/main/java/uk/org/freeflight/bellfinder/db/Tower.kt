@@ -34,6 +34,7 @@ data class Tower(
     @ColumnInfo(name = "Dedicn") val dedication: String,
     @ColumnInfo(name = "Bells") val bells: Int,
     @ColumnInfo(name = "Wt") val weight: Int,
+    @ColumnInfo(name = "UR") val unringable: Boolean,
     @ColumnInfo(name = "PracN") val practiceNight: String,
     @ColumnInfo(name = "PrXF") val practiceExtra: String,
     @ColumnInfo(name = "Lat") val latitude: Double,
@@ -48,6 +49,7 @@ data class Tower(
         data.getValue("Dedicn"),
         data.getValue("Bells").toInt(),
         data.getValue("Wt").toInt(),
+        data.getValue("UR") != "",
         data.getValue("PracN"),
         data.getValue("PrXF"),
         data.getValue("Lat").toDouble(),
@@ -55,6 +57,6 @@ data class Tower(
     )
 
     companion object {
-        val DB_COLS = listOf("TowerID", "DoveID", "Place", "Place2", "County", "Dedicn", "Bells", "Wt", "PracN", "PrXF", "Lat", "Long")
+        val DB_COLS = listOf("TowerID", "DoveID", "Place", "Place2", "County", "Dedicn", "Bells", "Wt", "UR", "PracN", "PrXF", "Lat", "Long")
     }
 }
