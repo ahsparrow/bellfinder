@@ -17,8 +17,8 @@ import uk.org.freeflight.bellfinder.db.*
 import java.io.IOException
 import java.util.*
 
-val TOWER1 = Tower(1, "LOCKERLEY", "Lockerley", "", "Hants", "S John", 6, 1000, "Thu", "", 51.0, -1.0)
-val TOWER2 = Tower(2, "ETYTHERLEY", "East Tytherley", "", "Hants", "S Peter", 8, 1200, "Thu", "", 51.1, -1.0)
+val TOWER1 = Tower(1, "LOCKERLEY", "Lockerley", "", "Hants", "S John", 6, 1000, false, "Thu", "", 51.0, -1.0)
+val TOWER2 = Tower(2, "ETYTHERLEY", "East Tytherley", "", "Hants", "S Peter", 8, 1200, false, "Thu", "", 51.1, -1.0)
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseTest {
