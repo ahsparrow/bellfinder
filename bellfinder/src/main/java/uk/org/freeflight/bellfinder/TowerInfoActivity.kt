@@ -55,7 +55,12 @@ class TowerInfoActivity : AppCompatActivity() {
                 }
 
                 // Tower place
-                findViewById<TextView>(R.id.textview_towerinfo_place).text = tower.place
+                val place = if (tower.unringable) {
+                    tower.place + " (Unringable)"
+                } else {
+                    tower.place
+                }
+                findViewById<TextView>(R.id.textview_towerinfo_place).text = place
 
                 // Tower place details
                 val place2 = if (tower.place2 != "") {

@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder
 
+import android.graphics.Paint
 import android.location.Location
 import androidx.core.content.ContextCompat.getColor
 import uk.org.freeflight.bellfinder.db.Tower
@@ -46,6 +47,11 @@ class NearbyListAdapter : ListAdapter("Nearby") {
 
             // Set place information in text views
             holder.place.text = current.place
+            holder.place.paintFlags = if (current.unringable) {
+                holder.place.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                holder.place.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
             holder.place2.text = if (current.place2 != "") current.place2 else current.dedication
 
             // Number of bells
