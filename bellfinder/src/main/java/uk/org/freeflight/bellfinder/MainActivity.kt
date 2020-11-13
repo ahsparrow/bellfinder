@@ -82,24 +82,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.parseDove(assets.open("dove.txt"))
         }
 
-        // Put this after getting preferences to avoid warning
-        if (BuildConfig.DEBUG) {
-            /*
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
-            )
-            */
-            StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
-            )
-        }
-
         // Set up view pager for towers/nearby/visits
         viewPager = findViewById(R.id.pager)
         val viewPagerAdapter = ViewPagerAdapter(this)
