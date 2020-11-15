@@ -24,17 +24,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class ListAdapter(val name: String) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+abstract class ListAdapter(val name: String,
+                           private val onClick: (id: Long) -> Unit
+) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
     // List of items in list
     protected var itemIds = emptyList<Long>()
 
     // View holder for text items
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ItemViewHolder(itemView: View,
+                         val onClick: (id: Long) -> Unit
+    ) : RecyclerView.ViewHolder(itemView) {
         var id: Long? = null
-        var pos: Int = RecyclerView.NO_POSITION
 
         val layout: ConstraintLayout = itemView.findViewById(R.id.recycler_item_layout)
         val place: TextView = itemView.findViewById(R.id.textview_recyclerview_place)
@@ -43,31 +45,22 @@ abstract class ListAdapter(val name: String) : RecyclerView.Adapter<ListAdapter.
         val extra2: TextView = itemView.findViewById(R.id.textview_recyclerview_extra2)
         val bells: TextView = itemView.findViewById(R.id.textview_recyclerview_bells)
 
-        // Item details for selection tracker
-        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long>? =
-            object : ItemDetailsLookup.ItemDetails<Long>() {
-                override fun getPosition() = pos
-                override fun getSelectionKey() = id
+        init {
+            itemView.setOnClickListener {
+                id?.let {
+                    onClick(it)
+                }
             }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_list_item, parent, false)
-        return ItemViewHolder(itemView)
+        return ItemViewHolder(itemView, onClick)
     }
 
     override fun getItemCount() = itemIds.size
-
-    // Get key of item at given position
-    fun getItemKey(position: Int): Long {
-        return itemIds[position]
-    }
-
-    // Get position of item with given key
-    fun findPositionFromKey(key: Long): Int {
-        return itemIds.indexOf(key)
-    }
 
     abstract fun search(pattern: String)
 }

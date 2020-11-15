@@ -23,7 +23,7 @@ import android.graphics.Paint
 import androidx.core.content.ContextCompat.getColor
 import uk.org.freeflight.bellfinder.db.Tower
 
-class TowerListAdapter : ListAdapter("Towers") {
+class TowerListAdapter(onClick: (id: Long) -> Unit): ListAdapter("Towers", onClick) {
 
     // Tower data cached from database
     private var towerMap = mapOf<Long, Tower>()
@@ -36,9 +36,8 @@ class TowerListAdapter : ListAdapter("Towers") {
         val id = itemIds[position]
         val current = towerMap[id]
         if (current != null) {
-            // Information to be used by the selection tracker
+            // Information to be used by onClick
             holder.id = id
-            holder.pos = position
 
             // Set place information in text views
             holder.place.text = current.place

@@ -22,7 +22,7 @@ package uk.org.freeflight.bellfinder
 import android.annotation.SuppressLint
 import uk.org.freeflight.bellfinder.db.VisitView
 
-class VisitsListAdapter : ListAdapter("Visits") {
+class VisitsListAdapter(onClick: (id: Long) -> Unit): ListAdapter("Visits", onClick) {
     // Visit data from cached from database
     private var visitMap = mapOf<Long, VisitView>()
 
@@ -34,7 +34,6 @@ class VisitsListAdapter : ListAdapter("Visits") {
         if (current != null) {
             // Information to be used by the selection tracker
             holder.id = id
-            holder.pos = position
 
             // Set place information in text views
             holder.place.text = current.place

@@ -21,15 +21,12 @@ package uk.org.freeflight.bellfinder
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class ListFragment: SearchableFragment() {
-    protected lateinit var selectionBuilder: SelectionTracker.Builder<Long>
     lateinit var adapter: ListAdapter
 
     override fun onCreateView(
@@ -45,41 +42,6 @@ abstract class ListFragment: SearchableFragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.contentDescription = adapter.name
 
-        // Selection tracker
-        selectionBuilder = SelectionTracker.Builder(
-            "selection",
-            recyclerView,
-            ItemIdKeyProvider(adapter),
-            ItemLookup(recyclerView),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
-
         return view
-    }
-
-    // Selection tracker - get item key/position
-    class ItemIdKeyProvider(private val adapter: ListAdapter) :
-        ItemKeyProvider<Long>(SCOPE_CACHED) {
-
-        override fun getKey(position: Int): Long? {
-            return adapter.getItemKey(position)
-        }
-
-        override fun getPosition(key: Long): Int {
-            return adapter.findPositionFromKey(key)
-        }
-    }
-
-    // Selection tracker - get item details from motion position
-    class ItemLookup(private val rv: RecyclerView) : ItemDetailsLookup<Long>() {
-        override fun getItemDetails(event: MotionEvent) : ItemDetails<Long>? {
-
-            val view = rv.findChildViewUnder(event.x, event.y)
-            if (view != null) {
-                return (rv.getChildViewHolder(view) as ListAdapter.ItemViewHolder)
-                    .getItemDetails()
-            }
-            return null
-        }
     }
 }

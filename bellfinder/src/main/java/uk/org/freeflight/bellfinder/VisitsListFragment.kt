@@ -21,15 +21,10 @@ package uk.org.freeflight.bellfinder
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.OnItemActivatedListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,7 +35,7 @@ class VisitsListFragment : ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val visitsAdapter = VisitsListAdapter()
+        val visitsAdapter = VisitsListAdapter {id -> onClick(id)}
         adapter = visitsAdapter
 
         viewModel.liveVisitViews.observe(this, { visits ->
@@ -53,36 +48,6 @@ class VisitsListFragment : ListFragment() {
         })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
-        // Selection tracker
-        selectionBuilder.withOnItemActivatedListener(ItemListener()).build()
-
-        return view
-    }
-
-    // Selected item listener
-    inner class ItemListener: OnItemActivatedListener<Long> {
-        override fun onItemActivated(item: ItemDetailsLookup.ItemDetails<Long>, e: MotionEvent) :
-                Boolean {
-
-            val selectionKey = item.selectionKey
-            return if (selectionKey != null) {
-                // Start new activity to display selected tower
-                val intent = Intent(activity, VisitEditActivity::class.java)
-                intent.putExtra("VISIT_ID", selectionKey)
-                startActivity(intent)
-                true
-            }  else {
-                false
-            }
-        }
-    }
-
     override fun search(pattern: String) {
         lifecycleScope.launch {
             withContext(Dispatchers.Default) {
@@ -90,5 +55,11 @@ class VisitsListFragment : ListFragment() {
             }
             adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun onClick(id: Long) {
+        val intent = Intent(activity, VisitEditActivity::class.java)
+        intent.putExtra("VISIT_ID", id)
+        startActivity(intent)
     }
 }

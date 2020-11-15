@@ -28,15 +28,10 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.OnItemActivatedListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,28 +48,10 @@ class NearbyListFragment : ListFragment(), LocationListener {
 
     private var snackbar: Snackbar? = null
 
-    // Selected item listener
-    inner class ItemListener: OnItemActivatedListener<Long> {
-        override fun onItemActivated(item: ItemDetailsLookup.ItemDetails<Long>, e: MotionEvent) :
-                Boolean {
-
-            val selectionKey = item.selectionKey
-            return if (selectionKey != null) {
-                // Start new activity to display selected tower
-                val intent = Intent(activity, TowerInfoActivity::class.java)
-                intent.putExtra("TOWER_ID", selectionKey)
-                startActivity(intent)
-                true
-            }  else {
-                false
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val nearbyAdapter = NearbyListAdapter()
+        val nearbyAdapter = NearbyListAdapter {id -> onClick(id)}
         adapter = nearbyAdapter
 
         // Set tower information in list adapter
@@ -89,18 +66,6 @@ class NearbyListFragment : ListFragment(), LocationListener {
         })
 
         locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
-        // Selection tracker
-        selectionBuilder.withOnItemActivatedListener(ItemListener()).build()
-
-        return view
     }
 
     override fun onResume() {
@@ -233,4 +198,10 @@ class NearbyListFragment : ListFragment(), LocationListener {
     }
 
     override fun search(pattern: String) {}
+
+    private fun onClick(id: Long) {
+        val intent = Intent(activity, TowerInfoActivity::class.java)
+        intent.putExtra("TOWER_ID", id)
+        startActivity(intent)
+    }
 }

@@ -24,8 +24,7 @@ import android.location.Location
 import androidx.core.content.ContextCompat.getColor
 import uk.org.freeflight.bellfinder.db.Tower
 
-class NearbyListAdapter : ListAdapter("Nearby") {
-
+class NearbyListAdapter(onClick: (id: Long) -> Unit): ListAdapter("Nearby", onClick) {
     // Tower data from cached from database
     private var towerMap = mapOf<Long, Tower>()
     private var towerDistances = mapOf<Long, Double>()
@@ -43,7 +42,6 @@ class NearbyListAdapter : ListAdapter("Nearby") {
         if (current != null) {
             // Information to be used by the selection tracker
             holder.id = id
-            holder.pos = position
 
             // Set place information in text views
             holder.place.text = current.place
