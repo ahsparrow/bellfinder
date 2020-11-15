@@ -26,7 +26,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.StrictMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
