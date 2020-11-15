@@ -167,6 +167,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Select a view page
+    fun setViewPage(name: String, smoothScroll: Boolean) {
+        val idx = ViewPagerAdapter.tabNames.indexOf(name)
+        viewPager.setCurrentItem(idx, smoothScroll)
+    }
+
     // Set filter in fragment list adapter
     private fun setFilter(pattern: String?) {
         val frag: SearchableFragment? = getPagerFragment(viewPager.currentItem)
