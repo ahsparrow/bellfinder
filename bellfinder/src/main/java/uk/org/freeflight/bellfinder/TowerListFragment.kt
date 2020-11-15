@@ -28,23 +28,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TowerListFragment: ListFragment() {
+    private val adapter = TowerListAdapter {id -> onClick(id)}
     private val viewModel: ViewModel by activityViewModels()
+
+    override fun getAdapter() = adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val towerAdapter = TowerListAdapter {id -> onClick(id)}
-        adapter = towerAdapter
-
         // Set tower information in list adapter
         viewModel.liveTowers.observe(this, { towers ->
-            towers?.let { towerAdapter.setTowers(towers) }
+            towers?.let { adapter.setTowers(towers) }
         })
 
         // Set visited towers in list adapter
         viewModel.liveVisitedTowerIds.observe(this, { towerIds ->
-            towerIds?.let { towerAdapter.setVisitedTowers(towerIds)}
-
+            towerIds?.let { adapter.setVisitedTowers(towerIds)}
         })
     }
 

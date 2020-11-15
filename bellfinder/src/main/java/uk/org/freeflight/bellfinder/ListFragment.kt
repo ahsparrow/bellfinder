@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class ListFragment: SearchableFragment() {
-    lateinit var adapter: ListAdapter
+    abstract fun getAdapter(): ListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,10 +37,10 @@ abstract class ListFragment: SearchableFragment() {
 
         //  Setup RecyclerView
         val recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
-        recyclerView.adapter = adapter
+        recyclerView.adapter = getAdapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-        recyclerView.contentDescription = adapter.name
+        recyclerView.contentDescription = getAdapter().name
 
         return view
     }

@@ -43,26 +43,26 @@ class NearbyListFragment : ListFragment(), LocationListener {
         const val MAX_GPS_AGE = 30000L
     }
 
+    private val adapter = NearbyListAdapter {id -> onClick(id)}
     private var locationManager: LocationManager? = null
     private var lastGpsLocation: Location? = null
 
     private var snackbar: Snackbar? = null
 
+    override fun getAdapter() = adapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val nearbyAdapter = NearbyListAdapter {id -> onClick(id)}
-        adapter = nearbyAdapter
 
         // Set tower information in list adapter
         val viewModel: ViewModel by activityViewModels()
         viewModel.liveTowers.observe(this, { towers ->
-            towers?.let { nearbyAdapter.setTowers(it) }
+            towers?.let { adapter.setTowers(it) }
         })
 
         // Set visited towers in list adapter
         viewModel.liveVisitedTowerIds.observe(this, { towerIds ->
-            towerIds?.let { nearbyAdapter.setVisitedTowers(towerIds)}
+            towerIds?.let { adapter.setVisitedTowers(towerIds)}
         })
 
         locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -190,8 +190,7 @@ class NearbyListFragment : ListFragment(), LocationListener {
     private fun sort(location: Location) {
         lifecycleScope.launch {
             withContext(Dispatchers.Default) {
-                val nearbyAdapter = adapter as NearbyListAdapter
-                nearbyAdapter.sort(location)
+                adapter.sort(location)
             }
             adapter.notifyDataSetChanged()
         }

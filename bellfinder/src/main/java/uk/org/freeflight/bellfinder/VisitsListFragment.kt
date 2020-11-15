@@ -30,17 +30,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class VisitsListFragment : ListFragment() {
+    private val adapter = VisitsListAdapter {id -> onClick(id)}
     private val viewModel: ViewModel by activityViewModels()
+
+    override fun getAdapter() = adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val visitsAdapter = VisitsListAdapter {id -> onClick(id)}
-        adapter = visitsAdapter
-
         viewModel.liveVisitViews.observe(this, { visits ->
             visits?.let {
-                visitsAdapter.setVisits(visits)
+                adapter.setVisits(visits)
 
                 val tv: TextView? = view?.findViewById(R.id.textview_visits_info)
                 tv?.visibility =  if (visits.isEmpty()) View.VISIBLE else View.GONE
