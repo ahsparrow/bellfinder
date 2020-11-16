@@ -94,9 +94,6 @@ class MapFragment : SearchableFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set centre and zoom
-        restorePreferences()
-
         // Configure zoom, set max. level to reduce load on tile server
         mapView.isTilesScaledToDpi = true
         mapView.setMultiTouchControls(true)
@@ -117,10 +114,9 @@ class MapFragment : SearchableFragment() {
                     whenResumed {
                         // Get surrounding towers
                         val nearbyTowers = withContext(Dispatchers.IO) {
-                            val centre = GeoPoint(mapView.mapCenter)
                             val location = Location("").apply {
-                                latitude = centre.latitude
-                                longitude = centre.longitude
+                                latitude = mapView.mapCenter.latitude
+                                longitude = mapView.mapCenter.longitude
                             }
 
                             viewModel.getTowersByLocation(location)
@@ -160,11 +156,11 @@ class MapFragment : SearchableFragment() {
                                     10, 11 -> R.drawable.tower10
                                     else -> R.drawable.tower12
                                 }
-                                icon = ResourcesCompat.getDrawable(view.resources, resid, null)
+                                icon = ResourcesCompat.getDrawable(mapView.resources, resid, null)
                             }
                             marker
                         }
-                        
+
                         // Update marker overlays and list of markers
                         mapView.overlays.removeAll(oldMarkers)
                         mapView.overlays.addAll(newMarkers)
@@ -181,7 +177,6 @@ class MapFragment : SearchableFragment() {
                         mapView.invalidate()
                     }
                 }
-
                 return false
             }
 
@@ -220,11 +215,35 @@ class MapFragment : SearchableFragment() {
     }
 
     private fun restorePreferences() {
-        val lat = sharedPrefs.getFloat("map_center_latitude", DEFAULT_LAT).toDouble()
-        val lon = sharedPrefs.getFloat("map_center_longitude", DEFAULT_LON).toDouble()
-        val zoom = sharedPrefs.getFloat("map_zoom_level", DEFAULT_ZOOM).toDouble()
-        mapView.controller.setCenter(GeoPoint(lat, lon))
+        var lat: Double
+        var lon: Double
+        var zoom: Double
+        var animate: Boolean
+
+        // Get center/zoom from view model (if set) otherwise shared preferences
+        viewModel.towerPosition.let { pos ->
+            if (pos == null) {
+                lat = sharedPrefs.getFloat("map_center_latitude", DEFAULT_LAT).toDouble()
+                lon = sharedPrefs.getFloat("map_center_longitude", DEFAULT_LON).toDouble()
+                zoom = sharedPrefs.getFloat("map_zoom_level", DEFAULT_ZOOM).toDouble()
+                animate = false
+            } else {
+                lat = pos.latitude
+                lon = pos.longitude
+                zoom = 12.0
+                animate = true
+            }
+        }
+        viewModel.towerPosition = null
+        val center = GeoPoint(lat, lon)
+
+        // Must be zoom first, then center
         mapView.controller.setZoom(zoom)
+        if (animate) {
+            mapView.controller.animateTo(center)
+        } else {
+            mapView.controller.setCenter(center)
+        }
     }
 
     override fun search(pattern: String) {}

@@ -28,7 +28,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
 ): ListAdapter("Towers", onClick, onLongClick) {
 
     // Tower data cached from database
-    private var towerMap = mapOf<Long, Tower>()
+    var towerMap = mapOf<Long, Tower>()
 
     // List of visited towers to highlight
     private var visitedTowers = listOf<Long>()

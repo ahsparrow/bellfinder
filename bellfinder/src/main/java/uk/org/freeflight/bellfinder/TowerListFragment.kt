@@ -63,8 +63,10 @@ class TowerListFragment: ListFragment() {
     }
 
     private fun onLongClick(id: Long): Boolean {
-        val act = activity as MainActivity
-        act.setViewPage("Map", true)
+        val tower = adapter.towerMap[id]
+        viewModel.towerPosition = tower?.let {ViewModel.Position(tower.latitude, tower.longitude)}
+
+        (activity as MainActivity).setViewPage("Map", true)
         return true
     }
 }

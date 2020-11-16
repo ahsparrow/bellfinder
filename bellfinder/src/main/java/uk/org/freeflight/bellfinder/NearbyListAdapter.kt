@@ -28,7 +28,7 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
                         onLongClick: (id: Long) -> Boolean
 ): ListAdapter("Nearby", onClick, onLongClick) {
     // Tower data from cached from database
-    private var towerMap = mapOf<Long, Tower>()
+    var towerMap = mapOf<Long, Tower>()
     private var towerDistances = mapOf<Long, Double>()
 
     // List of visited towers to highlight

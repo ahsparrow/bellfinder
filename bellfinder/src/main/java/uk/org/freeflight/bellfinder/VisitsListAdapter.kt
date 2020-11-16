@@ -26,7 +26,7 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
                         onLongClick: (id: Long) -> Boolean
 ): ListAdapter("Visits", onClick, onLongClick) {
     // Visit data from cached from database
-    private var visitMap = mapOf<Long, VisitView>()
+    var visitMap = mapOf<Long, VisitView>()
 
     // Populate list view holder with tower details
     @SuppressLint("SetTextI18n")

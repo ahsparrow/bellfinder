@@ -102,4 +102,9 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
         val data = stream.bufferedReader().use { it.readLines() }
         dao.insertTowers(parseDove(data))
     }
+
+    // Tower position to pass to map
+    var towerPosition: Position? = null
+
+    class Position(val latitude: Double, val longitude: Double)
 }

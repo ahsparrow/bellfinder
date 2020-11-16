@@ -64,8 +64,16 @@ class VisitsListFragment : ListFragment() {
     }
 
     private fun onLongClick(id: Long): Boolean {
-        val act = activity as MainActivity
-        act.setViewPage("Map", true)
+        val visit = adapter.visitMap[id] ?: return true
+
+        lifecycleScope.launch {
+            val tower = withContext(Dispatchers.IO) {
+                viewModel.getTower(visit.towerId)
+            }
+            viewModel.towerPosition = ViewModel.Position(tower.latitude, tower.longitude)
+
+            (activity as MainActivity).setViewPage("Map", true)
+        }
         return true
     }
 }

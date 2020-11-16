@@ -47,6 +47,8 @@ class NearbyListFragment : ListFragment(), LocationListener {
     private var locationManager: LocationManager? = null
     private var lastGpsLocation: Location? = null
 
+    private val viewModel: ViewModel by activityViewModels()
+
     private var snackbar: Snackbar? = null
 
     override fun getAdapter() = adapter
@@ -55,7 +57,6 @@ class NearbyListFragment : ListFragment(), LocationListener {
         super.onCreate(savedInstanceState)
 
         // Set tower information in list adapter
-        val viewModel: ViewModel by activityViewModels()
         viewModel.liveTowers.observe(this, { towers ->
             towers?.let { adapter.setTowers(it) }
         })
@@ -205,8 +206,10 @@ class NearbyListFragment : ListFragment(), LocationListener {
     }
 
     private fun onLongClick(id: Long): Boolean {
-        val act = activity as MainActivity
-        act.setViewPage("Map", true)
+        val tower = adapter.towerMap[id]
+        viewModel.towerPosition = tower?.let {ViewModel.Position(tower.latitude, tower.longitude)}
+
+        (activity as MainActivity).setViewPage("Map", true)
         return true
     }
 }
