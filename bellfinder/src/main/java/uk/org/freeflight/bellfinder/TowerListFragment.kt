@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TowerListFragment: ListFragment() {
-    private val adapter = TowerListAdapter {id -> onClick(id)}
+    private val adapter = TowerListAdapter(::onClick, ::onLongClick)
     private val viewModel: ViewModel by activityViewModels()
 
     override fun getAdapter() = adapter
@@ -60,5 +60,11 @@ class TowerListFragment: ListFragment() {
         val intent = Intent(activity, TowerInfoActivity::class.java)
         intent.putExtra("TOWER_ID", id)
         startActivity(intent)
+    }
+
+    private fun onLongClick(id: Long): Boolean {
+        val act = activity as MainActivity
+        act.setViewPage("Map", true)
+        return true
     }
 }

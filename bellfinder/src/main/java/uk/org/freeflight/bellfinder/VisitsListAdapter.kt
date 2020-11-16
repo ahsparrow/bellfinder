@@ -22,7 +22,9 @@ package uk.org.freeflight.bellfinder
 import android.annotation.SuppressLint
 import uk.org.freeflight.bellfinder.db.VisitView
 
-class VisitsListAdapter(onClick: (id: Long) -> Unit): ListAdapter("Visits", onClick) {
+class VisitsListAdapter(onClick: (id: Long) -> Unit,
+                        onLongClick: (id: Long) -> Boolean
+): ListAdapter("Visits", onClick, onLongClick) {
     // Visit data from cached from database
     private var visitMap = mapOf<Long, VisitView>()
 

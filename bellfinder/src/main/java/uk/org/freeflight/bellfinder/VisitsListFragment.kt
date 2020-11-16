@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class VisitsListFragment : ListFragment() {
-    private val adapter = VisitsListAdapter {id -> onClick(id)}
+    private val adapter = VisitsListAdapter(::onClick, ::onLongClick)
     private val viewModel: ViewModel by activityViewModels()
 
     override fun getAdapter() = adapter
@@ -61,5 +61,11 @@ class VisitsListFragment : ListFragment() {
         val intent = Intent(activity, VisitEditActivity::class.java)
         intent.putExtra("VISIT_ID", id)
         startActivity(intent)
+    }
+
+    private fun onLongClick(id: Long): Boolean {
+        val act = activity as MainActivity
+        act.setViewPage("Map", true)
+        return true
     }
 }

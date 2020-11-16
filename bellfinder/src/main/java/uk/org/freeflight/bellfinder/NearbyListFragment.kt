@@ -43,7 +43,7 @@ class NearbyListFragment : ListFragment(), LocationListener {
         const val MAX_GPS_AGE = 30000L
     }
 
-    private val adapter = NearbyListAdapter {id -> onClick(id)}
+    private val adapter = NearbyListAdapter(::onClick, ::onLongClick)
     private var locationManager: LocationManager? = null
     private var lastGpsLocation: Location? = null
 
@@ -202,5 +202,11 @@ class NearbyListFragment : ListFragment(), LocationListener {
         val intent = Intent(activity, TowerInfoActivity::class.java)
         intent.putExtra("TOWER_ID", id)
         startActivity(intent)
+    }
+
+    private fun onLongClick(id: Long): Boolean {
+        val act = activity as MainActivity
+        act.setViewPage("Map", true)
+        return true
     }
 }

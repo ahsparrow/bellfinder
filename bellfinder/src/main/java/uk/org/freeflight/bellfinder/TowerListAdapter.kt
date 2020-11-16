@@ -23,7 +23,9 @@ import android.graphics.Paint
 import androidx.core.content.ContextCompat.getColor
 import uk.org.freeflight.bellfinder.db.Tower
 
-class TowerListAdapter(onClick: (id: Long) -> Unit): ListAdapter("Towers", onClick) {
+class TowerListAdapter(onClick: (id: Long) -> Unit,
+                       onLongClick: (id: Long) -> Boolean
+): ListAdapter("Towers", onClick, onLongClick) {
 
     // Tower data cached from database
     private var towerMap = mapOf<Long, Tower>()

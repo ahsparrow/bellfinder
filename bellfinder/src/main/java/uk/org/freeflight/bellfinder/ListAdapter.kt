@@ -27,14 +27,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class ListAdapter(val name: String,
-                           private val onClick: (id: Long) -> Unit
+                           private val onClick: (id: Long) -> Unit,
+                           private val onLongClick: (id: Long) -> Boolean
 ) : RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
     // List of items in list
     protected var itemIds = emptyList<Long>()
 
     // View holder for text items
     class ItemViewHolder(itemView: View,
-                         val onClick: (id: Long) -> Unit
+                         val onClick: (id: Long) -> Unit,
+                         val onLongClick: (id: Long) -> Boolean
     ) : RecyclerView.ViewHolder(itemView) {
         var id: Long? = null
 
@@ -47,9 +49,11 @@ abstract class ListAdapter(val name: String,
 
         init {
             itemView.setOnClickListener {
-                id?.let {
-                    onClick(it)
-                }
+                id?.let {onClick(it)}
+            }
+
+            itemView.setOnLongClickListener {
+                id?.let {onLongClick(it)} ?: false
             }
         }
     }
@@ -57,7 +61,7 @@ abstract class ListAdapter(val name: String,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_list_item, parent, false)
-        return ItemViewHolder(itemView, onClick)
+        return ItemViewHolder(itemView, onClick, onLongClick)
     }
 
     override fun getItemCount() = itemIds.size
