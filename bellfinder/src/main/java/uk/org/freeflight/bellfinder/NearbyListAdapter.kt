@@ -21,7 +21,7 @@ package uk.org.freeflight.bellfinder
 
 import android.graphics.Paint
 import android.location.Location
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getDrawable
 import uk.org.freeflight.bellfinder.db.Tower
 
 class NearbyListAdapter(onClick: (id: Long) -> Unit,
@@ -64,21 +64,11 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
                 holder.extra.text = holder.itemView.context.getString(R.string.distance_formatter).format(miles)
             }
 
-            // Set background colour
-            if (visitedTowers.contains(id)) {
-                holder.layout.setBackgroundColor(
-                    getColor(
-                        holder.itemView.context,
-                        R.color.visited_item_bg
-                    )
-                )
+            // Set background drawable
+            holder.layout.background = if (visitedTowers.contains(id)) {
+                getDrawable(holder.layout.context, R.drawable.recycler_item_selector_visited)
             } else {
-                holder.layout.setBackgroundColor(
-                    getColor(
-                        holder.itemView.context,
-                        R.color.recycler_item_bg
-                    )
-                )
+                getDrawable(holder.layout.context, R.drawable.recycler_item_selector)
             }
         }
     }

@@ -6,6 +6,7 @@
     <!-- Tower list items -->
     <color name="recycler_item_bg">#B8EAFA</color>
     <color name="visited_item_bg">#B9F6CA</color>
+    <color name="recycler_item_pressed">#C0C0C0</color>
 
     <color name="ic_launcher_background">#8C9EFF</color>
 

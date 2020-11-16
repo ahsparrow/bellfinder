@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package uk.org.freeflight.bellfinder
 
 import android.graphics.Paint
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getDrawable
 import uk.org.freeflight.bellfinder.db.Tower
 
 class TowerListAdapter(onClick: (id: Long) -> Unit,
@@ -53,21 +53,11 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
             // Number of bells
             holder.bells.text = current.bells.toString()
 
-            // Set background colour
-            if (visitedTowers.contains(id)) {
-                holder.layout.setBackgroundColor(
-                    getColor(
-                        holder.itemView.context,
-                        R.color.visited_item_bg
-                    )
-                )
+            // Set background drawable
+            holder.layout.background = if (visitedTowers.contains(id)) {
+                getDrawable(holder.layout.context, R.drawable.recycler_item_selector_visited)
             } else {
-                holder.layout.setBackgroundColor(
-                    getColor(
-                        holder.itemView.context,
-                        R.color.recycler_item_bg
-                    )
-                )
+                getDrawable(holder.layout.context, R.drawable.recycler_item_selector)
             }
         }
     }
