@@ -4,7 +4,7 @@
     <color name="colorPrimary">#96B4FF</color>
 
     <!-- Tower list items -->
-    <color name="recycler_item_bg">#B8EAFA</color>
+    <color name="standard_item_bg">#B8EAFA</color>
     <color name="visited_item_bg">#B9F6CA</color>
     <color name="recycler_item_pressed">#C0C0C0</color>
 
