@@ -7,7 +7,7 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/recycler_item_selector">
+    android:background="@drawable/item_selector">
 
     <TextView
         android:id="@+id/textview_recyclerview_bells"

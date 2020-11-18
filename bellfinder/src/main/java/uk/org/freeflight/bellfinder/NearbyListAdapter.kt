@@ -66,9 +66,9 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
 
             // Set background drawable
             holder.layout.background = if (visitedTowers.contains(id)) {
-                getDrawable(holder.layout.context, R.drawable.recycler_item_selector_visited)
+                getDrawable(holder.layout.context, R.drawable.visited_item_selector)
             } else {
-                getDrawable(holder.layout.context, R.drawable.recycler_item_selector)
+                getDrawable(holder.layout.context, R.drawable.item_selector)
             }
         }
     }
