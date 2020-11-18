@@ -4,6 +4,6 @@
     <color name="colorPrimary">#4B5A80</color>
 
     <!-- Tower list items -->
-    <color name="standard_item_bg">#2F454C</color>
+    <color name="standard_item_bg">#3C4968</color>
     <color name="visited_item_bg">#2A5336</color>
 </resources>
