@@ -6,5 +6,4 @@
     <!-- Tower list items -->
     <color name="standard_item_bg">#2F454C</color>
     <color name="visited_item_bg">#2A5336</color>
-    <color name="recycler_item_pressed">#808080</color>
 </resources>
