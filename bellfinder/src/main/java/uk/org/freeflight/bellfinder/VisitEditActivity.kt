@@ -23,6 +23,8 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -206,6 +208,11 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
 
     // Format and display date
     protected fun setVisitDate() {
-        findViewById<TextView>(R.id.textview_visit_date).text = getString(R.string.date_format_long).format(visitDate)
+        val txt = getString(R.string.date_format_long).format(visitDate)
+        val span = SpannableString(txt).apply {
+            setSpan(UnderlineSpan(), 0, txt.length, 0)
+        }
+
+        findViewById<TextView>(R.id.textview_visit_date).text = span
     }
 }

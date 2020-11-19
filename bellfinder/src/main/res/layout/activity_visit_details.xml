@@ -60,12 +60,14 @@
 
     <TextView
         android:id="@+id/textview_visit_date"
-        style="@android:style/Widget.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:focusable="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_visit_place" />
 
