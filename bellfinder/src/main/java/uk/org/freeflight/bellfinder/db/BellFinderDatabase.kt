@@ -93,7 +93,6 @@ abstract class BellFinderDatabase : RoomDatabase() {
             val cursor = database.query("SELECT VisitId, TowerId FROM Visits")
             val visits = generateSequence { if (cursor.moveToNext()) cursor else null }
                 .map { Pair(it.getInt(0), it.getInt(1)) }
-            cursor.close()
 
             for (visit in visits) {
                 database.update(
@@ -104,6 +103,8 @@ abstract class BellFinderDatabase : RoomDatabase() {
                     null
                 )
             }
+            
+            cursor.close()
         }
     }
 }
