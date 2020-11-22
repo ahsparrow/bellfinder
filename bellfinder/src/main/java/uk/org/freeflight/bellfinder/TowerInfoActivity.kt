@@ -47,11 +47,11 @@ class TowerInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val towerId = intent.extras?.get("TOWER_ID") as Long?
-        towerId?.let {
+        towerId?.let { id ->
             lifecycleScope.launch {
                 tower = withContext(Dispatchers.IO) {
                     val viewModel: ViewModel by viewModels()
-                    viewModel.getTower(it)
+                    viewModel.getTower(id)
                 }
 
                 // Tower place
@@ -157,10 +157,8 @@ class TowerInfoActivity : AppCompatActivity() {
     }
 
     private fun startNewVisit() {
-        tower.let {
-            val intent = Intent(this, VisitNewActivity::class.java)
-            intent.putExtra("TOWER_ID", it.towerId)
-            startActivity(intent)
-        }
+        val intent = Intent(this, VisitNewActivity::class.java)
+        intent.putExtra("TOWER_ID", tower.towerId)
+        startActivity(intent)
     }
 }
