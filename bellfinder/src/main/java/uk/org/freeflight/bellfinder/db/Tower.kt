@@ -27,7 +27,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "towers")
 data class Tower(
     @PrimaryKey @ColumnInfo(name = "TowerID") val towerId: Long,
-    @ColumnInfo(name = "DoveID") val doveId: String,
     @ColumnInfo(name = "Place") val place: String,
     @ColumnInfo(name = "Place2") val place2: String,
     @ColumnInfo(name = "County") val county: String,
@@ -41,8 +40,7 @@ data class Tower(
     @ColumnInfo(name = "Long") val longitude: Double
 ) {
     constructor(data: Map<String, String>) : this(
-        data.getValue("TowerID").toLong(),
-        data.getValue("DoveID"),
+        data.getValue("TowerBase").toLong(),
         data.getValue("Place"),
         data.getValue("Place2"),
         data.getValue("County"),
@@ -57,6 +55,7 @@ data class Tower(
     )
 
     companion object {
-        val DB_COLS = listOf("TowerID", "DoveID", "Place", "Place2", "County", "Dedicn", "Bells", "Wt", "UR", "PracN", "PrXF", "Lat", "Long")
+        // These are really the field names in the Dove data file
+        val DB_COLS = listOf("TowerBase", "Place", "Place2", "County", "Dedicn", "Bells", "Wt", "UR", "PracN", "PrXF", "Lat", "Long")
     }
 }

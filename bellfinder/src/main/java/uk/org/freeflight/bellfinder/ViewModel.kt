@@ -75,12 +75,12 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
         dao.insertVisit(visit)
     }
 
-    fun insertVisit(doveId: String,
+    fun insertVisit(towerId: Long,
                     date: GregorianCalendar,
                     notes: String,
                     peal: Boolean,
                     quarter: Boolean) = viewModelScope.launch(Dispatchers.IO) {
-        dao.insertVisit(doveId, date, notes, peal, quarter)
+        dao.insertVisit(towerId, date, notes, peal, quarter)
     }
 
     fun insertVisits(visits: List<Visit>) = viewModelScope.launch(Dispatchers.IO) {

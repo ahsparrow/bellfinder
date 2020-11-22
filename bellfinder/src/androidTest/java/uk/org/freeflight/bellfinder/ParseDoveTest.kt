@@ -8,11 +8,11 @@ import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 
-const val HEADER = """TowerID\DoveID\County\Place\Place2\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long"""
-const val BAD_HEADER = """TowerID\XDoveID\County\Place\Place2\Dedicn\Bells\UR\Wt\PracN\PrXF\Lat\Long"""
-const val DATA = """1\LOCKERLEY\Hants\Lockerley\\S John\6\1387\u/r\Thu\\51.03862\-1.57589"""
-const val BAD_DATA = """LOCKERLEY\Hants\Lockerley\\S John\6\1387\Thu\\51.03862\-1.57589"""
-const val BAD_DATA_VALUE = """"BAD,LOCKERLEY\Hants\Lockerley\\S John\6\1387\\Thu\\51.03862\-1.57589"""
+const val HEADER = """TowerBase\County\Place\Place2\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long"""
+const val BAD_HEADER = """TowerBase\\County\Place\Place2\Dedicn\Bells\UR\Wt\PracN\PrXF\Lat\Long"""
+const val DATA = """1\Hants\Lockerley\\S John\6\1387\u/r\Thu\\51.03862\-1.57589"""
+const val BAD_DATA = """Hants\Lockerley\\S John\6\1387\Thu\\51.03862\-1.57589"""
+const val BAD_DATA_VALUE = """"BAD\Hants\Lockerley\\S John\6\1387\\Thu\\51.03862\-1.57589"""
 
 @RunWith(AndroidJUnit4::class)
 class ParseDoveTest {

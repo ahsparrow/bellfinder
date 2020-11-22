@@ -28,7 +28,7 @@ interface BellFinderDao {
     // Towers...
 
     // All towers
-    @Query("SELECT * FROM towers ORDER BY DoveID ASC")
+    @Query("SELECT * FROM towers ORDER BY Place ASC")
     fun liveTowers(): LiveData<List<Tower>>
 
     // ...non-live, unsorted
@@ -70,9 +70,8 @@ interface BellFinderDao {
     suspend fun insertVisit(visit: Visit)
 
     @Query("INSERT INTO visits (towerId, date, notes, peal, quarter) " +
-            "SELECT TowerID, :date, :notes, :peal, :quarter FROM towers " +
-            "WHERE DoveID=:doveId")
-    suspend fun insertVisit(doveId: String, date: GregorianCalendar, notes: String, peal: Boolean, quarter: Boolean)
+            "VALUES(:towerId, :date, :notes, :peal, :quarter)")
+    suspend fun insertVisit(towerId: Long, date: GregorianCalendar, notes: String, peal: Boolean, quarter: Boolean)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertVisits(visits: List<Visit>)

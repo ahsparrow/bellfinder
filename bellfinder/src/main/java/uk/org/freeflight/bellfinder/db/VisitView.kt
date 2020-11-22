@@ -26,7 +26,7 @@ import java.util.*
     "SELECT visits.visitId, visits.towerId, visits.date, visits.notes, " +
             "visits.peal, visits.quarter, " +
             "towers.place AS place, towers.place2 AS place2, " +
-            "towers.dedicn AS dedication, towers.bells AS bells, towers.doveId AS doveId " +
+            "towers.dedicn AS dedication, towers.bells AS bells " +
             "FROM visits INNER JOIN towers ON visits.towerId = towers.towerId")
 data class VisitView (
     val visitId: Long,
@@ -38,6 +38,5 @@ data class VisitView (
     val place: String,
     val place2: String,
     val dedication: String,
-    val bells: Int,
-    val doveId: String
+    val bells: Int
 )

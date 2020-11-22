@@ -95,7 +95,7 @@ class TowerInfoActivity : AppCompatActivity() {
 
                 // Goto Dove web page
                 findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
-                    val url = "https://dove.cccbr.org.uk/detail.php?DoveID=${tower.doveId}"
+                    val url = "https://dove.cccbr.org.uk/detail.php?TowerBase=${tower.towerId}"
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     startActivity(intent)
                 }

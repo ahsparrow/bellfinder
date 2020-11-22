@@ -244,9 +244,9 @@ class MainActivity : AppCompatActivity() {
                     val viewModel: ViewModel by viewModels()
                     val visits = viewModel.getVisitViews()
 
-                    // CSV header (place and doveId are info only, not for backup)
+                    // CSV header (place is for info only, not for backup)
                     val header = listOf(listOf(
-                        "VisitId", "TowerId", "Date", "Notes", "Peal", "Quarter", "Place", "DoveId"))
+                        "VisitId", "TowerBase", "Date", "Notes", "Peal", "Quarter", "Place"))
 
                     val rows = visits.map { visit ->
                         val date = getString(R.string.date_format_iso).format(visit.date)
@@ -260,8 +260,7 @@ class MainActivity : AppCompatActivity() {
                             visit.notes,
                             if (visit.peal) "Y" else "",
                             if (visit.quarter) "Y" else "",
-                            place,
-                            visit.doveId
+                            place
                         )
                     }
                     csvWriter().writeAll(header + rows, output)
@@ -283,10 +282,9 @@ class MainActivity : AppCompatActivity() {
                 // Read data from CSV file
                 val data = csvReader().readAllWithHeader(input)
 
-                if (data[0].containsKey("TowerId")) {
-                    // If import data contains the TowerId field then it is previously exported
-                    // data. It will also have a VisitId field and so will over write existing
-                    // visits in the database
+                if (data[0].containsKey("VisitId")) {
+                    // If import data contains the VisitId field then it is previously exported
+                    // data, and so will overwrite existing visits in the database
 
                     // Convert into list of visits
                     val visits = data.map { visit ->
@@ -296,7 +294,7 @@ class MainActivity : AppCompatActivity() {
 
                         Visit(
                             visit.getValue("VisitId").toLong(),
-                            visit.getValue("TowerId").toLong(),
+                            visit.getValue("TowerBase").toLong(),
                             date,
                             visit.getValue("Notes"),
                             visit.getValue("Peal") == "Y",
@@ -308,16 +306,15 @@ class MainActivity : AppCompatActivity() {
                     viewModel.insertVisits(visits)
 
                 } else {
-                    // The import data doesn't have a TowerId field so it's "foreign" data and
-                    // will identify the tower using the DoveId. There won't be a VisitId
-                    // field and so visits will be appended to existing visits
+                    // The import data doesn't have a VisitId field so it's "foreign" data and
+                    // will be appended to existing visits
 
                     for (d in data) {
                         val s = d.getValue("Date").split("-")
                         val date = GregorianCalendar(s[0].toInt(), s[1].toInt() - 1, s[2].toInt())
 
                         viewModel.insertVisit(
-                            d.getValue("DoveId"),
+                            d.getValue("TowerBase").toLong(),
                             date,
                             d.getValue("Notes"),
                             d.getValue("Peal") == "Y",
