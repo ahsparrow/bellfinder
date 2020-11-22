@@ -45,6 +45,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import uk.org.freeflight.bellfinder.db.TowerBaseIds
 import uk.org.freeflight.bellfinder.db.Visit
 import java.io.InputStream
 import java.io.OutputStream
@@ -292,9 +293,16 @@ class MainActivity : AppCompatActivity() {
                         val s = visit.getValue("Date").split("-")
                         val date = GregorianCalendar(s[0].toInt(), s[1].toInt() - 1, s[2].toInt())
 
+                        val towerId = if (data[0].containsKey("TowerId")) {
+                            // Convert old tower id to TowerBase
+                            TowerBaseIds[visit.getValue("TowerId").toInt()].toLong()
+                        } else {
+                            visit.getValue("TowerBase").toLong()
+                        }
+
                         Visit(
                             visit.getValue("VisitId").toLong(),
-                            visit.getValue("TowerBase").toLong(),
+                            towerId,
                             date,
                             visit.getValue("Notes"),
                             visit.getValue("Peal") == "Y",
