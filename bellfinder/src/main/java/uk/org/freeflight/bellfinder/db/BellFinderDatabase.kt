@@ -19,7 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder.db
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -59,7 +61,49 @@ abstract class BellFinderDatabase : RoomDatabase() {
 
     class MIGRATION1TO2 : Migration(1, 2) {
         override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE Towers ADD COLUMN UR INTEGER DEFAULT 0 NOT NULL")
+            // Can't drop individual columns, so drop and recreate the entire towers table
+            database.execSQL("DROP TABLE `Towers`")
+            database.execSQL("CREATE TABLE `Towers` (" +
+                    "TowerID INTEGER NOT NULL, " +
+                    "Place TEXT NOT NULL, " +
+                    "Place2 TEXT NOT NULL, " +
+                    "County TEXT NOT NULL, " +
+                    "Dedicn TEXT NOT NULL, " +
+                    "Bells INTEGER NOT NULL, " +
+                    "Wt INTEGER NOT NULL, " +
+                    "UR INTEGER NOT NULL, " +
+                    "PracN TEXT NOT NULL, " +
+                    "PrXF TEXT NOT NULL, " +
+                    "Lat REAL NOT NULL, " +
+                    "Long REAL NOT NULL, " +
+                    "PRIMARY KEY(TowerId))"
+            )
+
+            // Drop and recreate the VisitView view
+            database.execSQL("DROP VIEW `VisitView`")
+            database.execSQL("CREATE VIEW `VisitView` AS SELECT " +
+                    "visits.visitId, visits.towerId, visits.date, visits.notes, " +
+                    "visits.peal, visits.quarter, " +
+                    "towers.place AS place, towers.place2 AS place2, " +
+                    "towers.dedicn AS dedication, towers.bells AS bells " +
+                    "FROM visits INNER JOIN towers ON visits.towerId = towers.towerId"
+            )
+
+            // Translate TowerId from old internal ID to TowerBase
+            val cursor = database.query("SELECT VisitId, TowerId FROM Visits")
+            val visits = generateSequence { if (cursor.moveToNext()) cursor else null }
+                .map { Pair(it.getInt(0), it.getInt(1)) }
+            cursor.close()
+
+            for (visit in visits) {
+                database.update(
+                    "Visits",
+                    SQLiteDatabase.CONFLICT_IGNORE,
+                    ContentValues(1).apply { put("TowerId", TowerBaseIds[visit.second]) },
+                    "VisitId = ${visit.first}",
+                    null
+                )
+            }
         }
     }
 }
