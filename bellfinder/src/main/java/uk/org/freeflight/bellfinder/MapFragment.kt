@@ -138,11 +138,7 @@ class MapFragment : SearchableFragment() {
                         val newMarkers = newTowers.map { tower ->
                             val marker = CustomMarker(tower.towerId, infoWindow, mapView).apply {
                                 position = GeoPoint(tower.latitude, tower.longitude)
-                                title = if (tower.place2 != "") {
-                                    tower.place + ", " + tower.place2
-                                } else {
-                                    tower.place
-                                }
+                                title = tower.placeCountyList ?: tower.place
                                 snippet = tower.dedication
 
                                 val resid = if (tower.unringable) {

@@ -55,24 +55,19 @@ class TowerInfoActivity : AppCompatActivity() {
                 }
 
                 // Tower place
-                val place = if (tower.unringable) {
-                    tower.place + " (Unringable)"
-                } else {
-                    tower.place
+                var place = tower.placeCountyList ?: tower.place
+                if (tower.unringable) {
+                    place = "$place (Unringable)"
                 }
                 findViewById<TextView>(R.id.textview_towerinfo_place).text = place
 
                 // Tower place details
-                val place2 = if (tower.place2 != "") {
-                    "${tower.place2}, ${tower.dedication}"
-                } else {
-                    tower.dedication
-                }
+                val place2 = tower.dedication ?: ""
                 findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
 
                 // County
                 findViewById<TextView>(R.id.textview_towerinfo_county).text =
-                    CountyLookup.lookup(tower.county)
+                    tower.county?.let {CountyLookup.lookup(it)} ?: ""
 
                 // Number of bells
                 findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()
@@ -86,10 +81,14 @@ class TowerInfoActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
 
                 // Practice night
-                val practiceNight = if (tower.practiceExtra != "") {
-                    "${tower.practiceNight} ${tower.practiceExtra}"
+                val practiceNight = if (tower.practiceExtra != null) {
+                    if (tower.practiceNight != null) {
+                        "${tower.practiceNight} ${tower.practiceExtra}"
+                    } else {
+                        tower.practiceExtra ?: ""
+                    }
                 } else {
-                    tower.practiceNight
+                    tower.practiceNight ?: ""
                 }
                 findViewById<TextView>(R.id.textview_towerinfo_practice).text = practiceNight
 
@@ -137,12 +136,7 @@ class TowerInfoActivity : AppCompatActivity() {
     
     private fun showMap() {
         // Tower place details
-        val place2 = if (tower.place2 != "") {
-            "${tower.place2}, ${tower.dedication}"
-        } else {
-            tower.dedication
-        }
-        val place = "$place2, ${tower.place}"
+        val place = tower.placeCountyList ?: tower.place
 
         // Display labelled marker at tower position
         val uriStr = "geo:${tower.latitude},${tower.longitude}" +

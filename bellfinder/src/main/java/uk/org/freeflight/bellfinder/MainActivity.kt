@@ -251,8 +251,7 @@ class MainActivity : AppCompatActivity() {
 
                     val rows = visits.map { visit ->
                         val date = getString(R.string.date_format_iso).format(visit.date)
-                        val place =
-                            visit.place + ", " + if (visit.place2 != "") visit.place2 else visit.dedication
+                        val place = visit.placeCountyList ?: visit.place
 
                         listOf(
                             visit.visitId.toString(),

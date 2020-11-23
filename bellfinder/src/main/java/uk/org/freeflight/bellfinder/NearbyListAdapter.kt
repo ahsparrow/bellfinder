@@ -46,13 +46,13 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
             holder.id = id
 
             // Set place information in text views
-            holder.place.text = current.place
+            holder.place.text = current.placeCountyList ?: current.place
             holder.place.paintFlags = if (current.unringable) {
                 holder.place.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             } else {
                 holder.place.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
-            holder.place2.text = if (current.place2 != "") current.place2 else current.dedication
+            holder.place2.text = current.county?.let {CountyLookup.lookup(it)} ?: ""
 
             // Number of bells
             holder.bells.text = current.bells.toString()

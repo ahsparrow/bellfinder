@@ -195,11 +195,7 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
             }
 
             val tv: TextView = findViewById(R.id.textview_visit_place)
-            tv.text = if (tower.place2 != "") {
-                "${tower.place2}, ${tower.dedication}"
-            } else {
-                "${tower.place}, ${tower.dedication}"
-            }
+            tv.text = tower.placeCountyList ?: tower.place
 
             if (underline)
                 tv.paintFlags = Paint.UNDERLINE_TEXT_FLAG

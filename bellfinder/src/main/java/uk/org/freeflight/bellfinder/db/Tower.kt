@@ -26,36 +26,16 @@ import androidx.room.PrimaryKey
 // Definition of the towers database table
 @Entity(tableName = "towers")
 data class Tower(
-    @PrimaryKey @ColumnInfo(name = "TowerID") val towerId: Long,
-    @ColumnInfo(name = "Place") val place: String,
-    @ColumnInfo(name = "Place2") val place2: String,
-    @ColumnInfo(name = "County") val county: String,
-    @ColumnInfo(name = "Dedicn") val dedication: String,
-    @ColumnInfo(name = "Bells") val bells: Int,
-    @ColumnInfo(name = "Wt") val weight: Int,
-    @ColumnInfo(name = "UR") val unringable: Boolean,
-    @ColumnInfo(name = "PracN") val practiceNight: String,
-    @ColumnInfo(name = "PrXF") val practiceExtra: String,
-    @ColumnInfo(name = "Lat") val latitude: Double,
-    @ColumnInfo(name = "Long") val longitude: Double
-) {
-    constructor(data: Map<String, String>) : this(
-        data.getValue("TowerBase").toLong(),
-        data.getValue("Place"),
-        data.getValue("Place2"),
-        data.getValue("County"),
-        data.getValue("Dedicn"),
-        data.getValue("Bells").toInt(),
-        data.getValue("Wt").toInt(),
-        data.getValue("UR") != "",
-        data.getValue("PracN"),
-        data.getValue("PrXF"),
-        data.getValue("Lat").toDouble(),
-        data.getValue("Long").toDouble()
-    )
-
-    companion object {
-        // These are really the field names in the Dove data file
-        val DB_COLS = listOf("TowerBase", "Place", "Place2", "County", "Dedicn", "Bells", "Wt", "UR", "PracN", "PrXF", "Lat", "Long")
-    }
-}
+    @PrimaryKey  val towerId: Long,
+    val place: String,
+    val placeCountyList: String?,
+    val county: String?,
+    val dedication: String?,
+    val bells: Int,
+    val weight: Int,
+    val unringable: Boolean,
+    val practiceNight: String?,
+    val practiceExtra: String?,
+    val latitude: Double,
+    val longitude: Double
+)

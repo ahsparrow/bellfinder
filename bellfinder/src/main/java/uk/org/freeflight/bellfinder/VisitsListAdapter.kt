@@ -38,8 +38,8 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
             holder.id = id
 
             // Set place information in text views
-            holder.place.text = current.place
-            holder.place2.text = if (current.place2 != "") current.place2 else current.dedication
+            holder.place.text = current.placeCountyList ?: current.place
+            holder.place2.text = current.county?.let {CountyLookup.lookup(it)} ?: ""
 
             holder.bells.text = current.bells.toString()
 
@@ -64,8 +64,9 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
         } else {
             val regex = Regex("\\b$pattern", RegexOption.IGNORE_CASE)
 
-            visitMap.filter {
-                regex.containsMatchIn(it.value.place) || regex.containsMatchIn(it.value.place2)
+            visitMap.filter { visit ->
+                visit.value.placeCountyList?.let {regex.containsMatchIn(it)}
+                    ?: regex.containsMatchIn(visit.value.place)
             }.map { it.key }
         }
     }
