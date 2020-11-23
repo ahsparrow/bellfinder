@@ -64,19 +64,19 @@ abstract class BellFinderDatabase : RoomDatabase() {
             // Can't drop individual columns, so drop and recreate the entire towers table
             database.execSQL("DROP TABLE `Towers`")
             database.execSQL("CREATE TABLE `Towers` (" +
-                    "TowerID INTEGER NOT NULL, " +
-                    "Place TEXT NOT NULL, " +
-                    "Place2 TEXT NOT NULL, " +
-                    "County TEXT NOT NULL, " +
-                    "Dedicn TEXT NOT NULL, " +
-                    "Bells INTEGER NOT NULL, " +
-                    "Wt INTEGER NOT NULL, " +
-                    "UR INTEGER NOT NULL, " +
-                    "PracN TEXT NOT NULL, " +
-                    "PrXF TEXT NOT NULL, " +
-                    "Lat REAL NOT NULL, " +
-                    "Long REAL NOT NULL, " +
-                    "PRIMARY KEY(TowerId))"
+                    "towerId INTEGER NOT NULL, " +
+                    "place TEXT NOT NULL, " +
+                    "placeCountyList TEXT, " +
+                    "county TEXT, " +
+                    "dedication TEXT, " +
+                    "bells INTEGER NOT NULL, " +
+                    "weight INTEGER NOT NULL, " +
+                    "unringable INTEGER NOT NULL, " +
+                    "practiceNight TEXT, " +
+                    "practiceExtra TEXT, " +
+                    "latitude REAL NOT NULL, " +
+                    "longitude REAL NOT NULL, " +
+                    "PRIMARY KEY(towerId))"
             )
 
             // Drop and recreate the VisitView view
@@ -84,8 +84,8 @@ abstract class BellFinderDatabase : RoomDatabase() {
             database.execSQL("CREATE VIEW `VisitView` AS SELECT " +
                     "visits.visitId, visits.towerId, visits.date, visits.notes, " +
                     "visits.peal, visits.quarter, " +
-                    "towers.place AS place, towers.place2 AS place2, " +
-                    "towers.dedicn AS dedication, towers.bells AS bells " +
+                    "towers.place AS place, towers.placeCountyList AS placeCountyList, " +
+                    "towers.county AS county, towers.bells AS bells " +
                     "FROM visits INNER JOIN towers ON visits.towerId = towers.towerId"
             )
 
