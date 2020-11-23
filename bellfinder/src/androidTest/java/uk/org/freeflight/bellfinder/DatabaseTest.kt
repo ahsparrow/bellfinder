@@ -17,8 +17,8 @@ import uk.org.freeflight.bellfinder.db.*
 import java.io.IOException
 import java.util.*
 
-val TOWER1 = Tower(1, "Lockerley", "", "Hants", "S John", 6, 1000, false, "Thu", "", 51.0, -1.0)
-val TOWER2 = Tower(2, "East Tytherley", "", "Hants", "S Peter", 8, 1200, false, "Thu", "", 51.1, -1.0)
+val TOWER1 = Tower(1, "Lockerley", null, "Hants", "S John", 6, 1000, false, "Thu", null, 51.0, -1.0)
+val TOWER2 = Tower(2, "East Tytherley", null, "Hants", "S Peter", 8, 1200, false, "Thu", null, 51.1, -1.0)
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseTest {
@@ -110,7 +110,7 @@ class DatabaseTest {
 
         val visits = bellFinderDao.liveVisitViews().waitForValue()
 
-        val view = VisitView(2, 1, c2, "Plain Bob", peal=false, quarter=false,"Lockerley", "", "S John", 6)
+        val view = VisitView(2, 1, c2, "Plain Bob", peal=false, quarter=false,"Lockerley", null, "Hants", 6)
         assertThat(visits[0], equalTo(view))
     }
 
