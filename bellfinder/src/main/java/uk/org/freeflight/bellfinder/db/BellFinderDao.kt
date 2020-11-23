@@ -28,7 +28,7 @@ interface BellFinderDao {
     // Towers...
 
     // All towers
-    @Query("SELECT * FROM towers ORDER BY Place ASC")
+    @Query("SELECT * FROM towers ORDER BY place ASC, placeCountyList ASC")
     fun liveTowers(): LiveData<List<Tower>>
 
     // ...non-live, unsorted
