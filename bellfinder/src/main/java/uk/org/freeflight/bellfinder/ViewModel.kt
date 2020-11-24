@@ -71,6 +71,8 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
 
     suspend fun getVisit(visitId: Long): Visit = dao.getVisit(visitId)
 
+    suspend fun getTowerVisits(towerId: Long): List<Visit> = dao.getTowerVisits(towerId)
+
     fun insertVisit(visit: Visit) = viewModelScope.launch(Dispatchers.IO) {
         dao.insertVisit(visit)
     }

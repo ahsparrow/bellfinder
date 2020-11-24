@@ -49,8 +49,8 @@ class TowerInfoActivity : AppCompatActivity() {
         val towerId = intent.extras?.get("TOWER_ID") as Long?
         towerId?.let { id ->
             lifecycleScope.launch {
+                val viewModel: ViewModel by viewModels()
                 tower = withContext(Dispatchers.IO) {
-                    val viewModel: ViewModel by viewModels()
                     viewModel.getTower(id)
                 }
 
@@ -91,6 +91,16 @@ class TowerInfoActivity : AppCompatActivity() {
                     tower.practiceNight ?: ""
                 }
                 findViewById<TextView>(R.id.textview_towerinfo_practice).text = practiceNight
+
+                // Last visit (if any)
+                val visits = withContext(Dispatchers.IO) {
+                    viewModel.getTowerVisits(towerId)
+                }
+
+                if (visits.isNotEmpty()) {
+                    val txt = getString(R.string.date_format_long).format(visits[0].date)
+                    findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
+                }
 
                 // Goto Dove web page
                 findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {

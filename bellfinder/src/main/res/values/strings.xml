@@ -15,6 +15,7 @@
     <string name="import_menuitem">Import visits</string>
     <string name="info">Info</string>
     <string name="initialised_version_code">INITIALISED_VERSION_CODE</string>
+    <string name="last_visit">Visit:</string>
     <string name="no">No</string>
     <string name="notes">Notes</string>
     <string name="novisits_info">Create a new visit by selecting a tower and pressing the add visit button</string>

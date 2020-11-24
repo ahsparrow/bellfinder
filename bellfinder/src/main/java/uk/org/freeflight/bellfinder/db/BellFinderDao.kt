@@ -66,6 +66,10 @@ interface BellFinderDao {
     @Query("SELECT * FROM VisitView ORDER BY date DESC")
     suspend fun getVisitViews(): List<VisitView>
 
+    // Get visits to specified tower
+    @Query("SELECT * from visits WHERE towerId = :towerId ORDER BY date DESC")
+    suspend fun getTowerVisits(towerId: Long): List<Visit>
+
     @Insert
     suspend fun insertVisit(visit: Visit)
 
