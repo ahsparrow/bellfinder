@@ -10,7 +10,7 @@
     <string name="delete">Delete</string>
     <string name="delete_visit">Delete this visit?</string>
     <string name="distance_formatter">"%.1f mi"</string>
-    <string name="dove_link"><u>Open Dove\'s guide</u></string>
+    <string name="dove_link"><u>Open Dove\'s Guide</u></string>
     <string name="export_menuitem">Export visits</string>
     <string name="import_menuitem">Import visits</string>
     <string name="info">Info</string>
@@ -26,7 +26,7 @@
     <string name="save">Save</string>
     <string name="search_hint">Search Place</string>
     <string name="search_title">Search</string>
-    <string name="show_map_item">Show on map</string>
+    <string name="show_map_item">Get directions</string>
     <string name="tenor_label">Tenor:</string>
     <string name="unused">Unused</string>
     <string name="yes">Yes</string>
