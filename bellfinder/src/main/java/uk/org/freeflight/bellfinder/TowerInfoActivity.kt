@@ -49,6 +49,13 @@ class TowerInfoActivity : AppCompatActivity() {
 
         towerId = intent.extras!!.get("TOWER_ID") as Long
 
+        viewModel.liveTowerVisits(towerId).observe(this, { visits ->
+            if (visits.isNotEmpty()) {
+                val txt = getString(R.string.date_format_long).format(visits[0].date)
+                findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
+            }
+        })
+
         lifecycleScope.launch {
             val tower = withContext(Dispatchers.IO) {
                 viewModel.getTower(towerId)
@@ -110,22 +117,6 @@ class TowerInfoActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.tower_info_menu, menu)
 
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        lifecycleScope.launch {
-            // Last visit (if any)
-            val visits = withContext(Dispatchers.IO) {
-                viewModel.getTowerVisits(towerId)
-            }
-
-            if (visits.isNotEmpty()) {
-                val txt = getString(R.string.date_format_long).format(visits[0].date)
-                findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
-            }
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
