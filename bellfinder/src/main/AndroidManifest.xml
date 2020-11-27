@@ -26,10 +26,6 @@
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".VisitNewActivity"
-            android:parentActivityName=".MainActivity" />
-
-        <activity
             android:name=".TowerInfoActivity"
             android:parentActivityName=".MainActivity" />
 
