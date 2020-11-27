@@ -73,7 +73,9 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
 
     fun liveTowerVisits(towerId: Long): LiveData<List<Visit>> = dao.liveTowerVisits(towerId)
 
-    suspend fun insertVisit(visit: Visit) = dao.insertVisit(visit)
+    fun insertVisit(visit: Visit) = viewModelScope.launch(Dispatchers.IO) {
+        dao.insertVisit(visit)
+    }
 
     fun insertVisit(towerId: Long,
                     date: GregorianCalendar,
@@ -87,7 +89,9 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
         dao.insertVisits(visits)
     }
 
-    suspend fun updateVisit(visit: Visit) = dao.updateVisit(visit)
+    fun updateVisit(visit: Visit) = viewModelScope.launch(Dispatchers.IO) {
+        dao.updateVisit(visit)
+    }
 
     // Delete a visit
     fun deleteVisit(visitId: Long) = viewModelScope.launch(Dispatchers.IO) {

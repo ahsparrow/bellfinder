@@ -100,13 +100,9 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
                 .setMessage(R.string.delete_visit)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     visitId?.let {
-                        lifecycleScope.launch {
-                            withContext(Dispatchers.IO) {
-                                viewModel.deleteVisit(it)
-                            }
-                            finish()
-                        }
+                        viewModel.deleteVisit(it)
                     }
+                    finish()
                 }
                 .setNegativeButton(R.string.no) { _, _ -> }
                 .create()
@@ -127,16 +123,13 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
                 quarterCheckBox.isChecked
             )
 
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    if (visitId == null) {
-                        viewModel.insertVisit(visit)
-                    } else {
-                        viewModel.updateVisit(visit)
-                    }
-                }
-                finish()
+            if (visitId == null) {
+                viewModel.insertVisit(visit)
+            } else {
+                viewModel.updateVisit(visit)
             }
+
+            finish()
         }
 
         // Date clicked
