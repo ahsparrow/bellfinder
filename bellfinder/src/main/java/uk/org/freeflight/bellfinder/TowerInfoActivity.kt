@@ -32,10 +32,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import uk.org.freeflight.bellfinder.db.Tower
 
 class TowerInfoActivity : AppCompatActivity() {
-    private lateinit var tower: Tower
+    private val viewModel: ViewModel by viewModels()
+
+    private var towerId: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,73 +47,61 @@ class TowerInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val towerId = intent.extras?.get("TOWER_ID") as Long?
-        towerId?.let { id ->
-            lifecycleScope.launch {
-                val viewModel: ViewModel by viewModels()
-                tower = withContext(Dispatchers.IO) {
-                    viewModel.getTower(id)
-                }
+        towerId = intent.extras!!.get("TOWER_ID") as Long
 
-                // Tower place
-                var place = tower.placeCountyList ?: tower.place
-                if (tower.unringable) {
-                    place = "$place (Unringable)"
-                }
-                findViewById<TextView>(R.id.textview_towerinfo_place).text = place
+        lifecycleScope.launch {
+            val tower = withContext(Dispatchers.IO) {
+                viewModel.getTower(towerId)
+            }
 
-                // Tower place details
-                val place2 = tower.dedication ?: ""
-                findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
+            // Tower place
+            var place = tower.placeCountyList ?: tower.place
+            if (tower.unringable) {
+                place = "$place (Unringable)"
+            }
+            findViewById<TextView>(R.id.textview_towerinfo_place).text = place
 
-                // County
-                findViewById<TextView>(R.id.textview_towerinfo_county).text =
-                    tower.county?.let {CountyLookup.lookup(it)} ?: ""
+            // Tower place details
+            val place2 = tower.dedication ?: ""
+            findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
 
-                // Number of bells
-                findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()
+            // County
+            findViewById<TextView>(R.id.textview_towerinfo_county).text =
+                tower.county?.let {CountyLookup.lookup(it)} ?: ""
 
-                // Tenor weight
-                val weight = tower.weight
-                val cwt = weight / 112
-                val qtr = (weight - cwt * 112) / 28
-                val lbs = weight % 28
-                val tenor = "$cwt-$qtr-$lbs"
-                findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
+            // Number of bells
+            findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()
 
-                // Practice night
-                val practiceNight = if (tower.practiceExtra != null) {
-                    if (tower.practiceNight != null) {
-                        "${tower.practiceNight} ${tower.practiceExtra}"
-                    } else {
-                        tower.practiceExtra ?: ""
-                    }
+            // Tenor weight
+            val weight = tower.weight
+            val cwt = weight / 112
+            val qtr = (weight - cwt * 112) / 28
+            val lbs = weight % 28
+            val tenor = "$cwt-$qtr-$lbs"
+            findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
+
+            // Practice night
+            val practiceNight = if (tower.practiceExtra != null) {
+                if (tower.practiceNight != null) {
+                    "${tower.practiceNight} ${tower.practiceExtra}"
                 } else {
-                    tower.practiceNight ?: ""
+                    tower.practiceExtra
                 }
-                findViewById<TextView>(R.id.textview_towerinfo_practice).text = practiceNight
+            } else {
+                tower.practiceNight ?: ""
+            }
+            findViewById<TextView>(R.id.textview_towerinfo_practice).text = practiceNight
 
-                // Last visit (if any)
-                val visits = withContext(Dispatchers.IO) {
-                    viewModel.getTowerVisits(towerId)
-                }
+            // Goto Dove web page
+            findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
+                val url = "https://dove.cccbr.org.uk/detail.php?TowerBase=${tower.towerId}"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
 
-                if (visits.isNotEmpty()) {
-                    val txt = getString(R.string.date_format_long).format(visits[0].date)
-                    findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
-                }
-
-                // Goto Dove web page
-                findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
-                    val url = "https://dove.cccbr.org.uk/detail.php?TowerBase=${tower.towerId}"
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    startActivity(intent)
-                }
-
-                // Start a new visit
-                findViewById<FloatingActionButton>(R.id.button_add_visit).setOnClickListener {
-                    startNewVisit()
-                }
+            // Start a new visit
+            findViewById<FloatingActionButton>(R.id.button_add_visit).setOnClickListener {
+                startNewVisit()
             }
         }
     }
@@ -121,6 +110,22 @@ class TowerInfoActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.tower_info_menu, menu)
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        lifecycleScope.launch {
+            // Last visit (if any)
+            val visits = withContext(Dispatchers.IO) {
+                viewModel.getTowerVisits(towerId)
+            }
+
+            if (visits.isNotEmpty()) {
+                val txt = getString(R.string.date_format_long).format(visits[0].date)
+                findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -145,24 +150,30 @@ class TowerInfoActivity : AppCompatActivity() {
     }
     
     private fun showMap() {
-        // Tower place details
-        val place = tower.placeCountyList ?: tower.place
+        lifecycleScope.launch {
+            val tower = withContext(Dispatchers.IO) {
+                viewModel.getTower(towerId)
+            }
 
-        // Display labelled marker at tower position
-        val uriStr = "geo:${tower.latitude},${tower.longitude}" +
-                "?z=8&" +
-                "q=${tower.latitude},${tower.longitude}(${Uri.encode(place)})"
+            // Tower place details
+            val place = tower.placeCountyList ?: tower.place
 
-        val gmmIntentUri = Uri.parse(uriStr)
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-        if (mapIntent.resolveActivity(packageManager) != null) {
-            startActivity(mapIntent)
+            // Display labelled marker at tower position
+            val uriStr = "geo:${tower.latitude},${tower.longitude}" +
+                    "?z=8&" +
+                    "q=${tower.latitude},${tower.longitude}(${Uri.encode(place)})"
+
+            val gmmIntentUri = Uri.parse(uriStr)
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            if (mapIntent.resolveActivity(packageManager) != null) {
+                startActivity(mapIntent)
+            }
         }
     }
 
     private fun startNewVisit() {
-        val intent = Intent(this, VisitNewActivity::class.java)
-        intent.putExtra("TOWER_ID", tower.towerId)
+        val intent = Intent(this, VisitEditActivity::class.java)
+        intent.putExtra("TOWER_ID", towerId)
         startActivity(intent)
     }
 }

@@ -21,10 +21,10 @@ package uk.org.freeflight.bellfinder
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -39,15 +39,16 @@ import java.util.*
 open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private val viewModel: ViewModel by viewModels()
 
-    protected var towerId: Long? = null
+    private var towerId: Long = 0
     private var visitId: Long? = null
+
+    // Defaults to today's date
     private var visitDate = GregorianCalendar()
 
     companion object {
         const val STATE_YEAR = "year"
         const val STATE_MONTH = "month"
         const val STATE_DAY = "day"
-        const val STATE_TOWERID = "towerid"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,14 +56,15 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
         setContentView(R.layout.activity_visit_details)
 
         // Get intent data
-        towerId = intent.extras?.get("TOWER_ID") as Long?
+        towerId = intent.extras!!.get("TOWER_ID") as Long
         visitId = intent.extras?.get("VISIT_ID") as Long?
+
+        setPlaceName(towerId, visitId != null)
 
         val pealCheckBox: CheckBox = findViewById(R.id.checkbox_visit_peal)
         val quarterCheckBox: CheckBox = findViewById(R.id.checkbox_visit_quarter)
         val notesEditText: EditText = findViewById(R.id.edittext_visit_notes)
 
-        // Initialise a previous visit
         if (savedInstanceState == null) {
             visitId?.let { id ->
                 lifecycleScope.launch {
@@ -71,27 +73,18 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
                     }
 
                     visitDate = visit.date
+                    setVisitDate()
+
                     pealCheckBox.isChecked = visit.peal
                     quarterCheckBox.isChecked = visit.quarter
                     notesEditText.setText(visit.notes)
-
-                    towerId = visit.towerId
-                    setPlaceName(visit.towerId, true)
-
-                    setVisitDate()
                 }
-            }
+            } ?: setVisitDate()
         } else {
             savedInstanceState.run {
                 visitDate = GregorianCalendar(
                     getInt(STATE_YEAR), getInt(STATE_MONTH), getInt(STATE_DAY))
                 setVisitDate()
-
-                val id = getLong(STATE_TOWERID)
-                if (id != 0L)  {
-                    towerId = id
-                    setPlaceName(id, true)
-                }
             }
         }
 
@@ -101,37 +94,49 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
         }
 
         // Delete button
-        findViewById<Button>(R.id.button_visit_delete).setOnClickListener {
+        val buttonDelete = findViewById<Button>(R.id.button_visit_delete)
+        buttonDelete.setOnClickListener {
             AlertDialog.Builder(this)
                 .setMessage(R.string.delete_visit)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    visitId?.let { viewModel.deleteVisit(it) }
-                    finish()
+                    visitId?.let {
+                        lifecycleScope.launch {
+                            withContext(Dispatchers.IO) {
+                                viewModel.deleteVisit(it)
+                            }
+                            finish()
+                        }
+                    }
                 }
                 .setNegativeButton(R.string.no) { _, _ -> }
                 .create()
                 .show()
         }
 
+        if (visitId == null)
+            buttonDelete.visibility = View.GONE
+
         // Save button
         findViewById<Button>(R.id.button_visit_save).setOnClickListener {
-            towerId?.let { id ->
-                val visit = Visit(
-                    visitId,
-                    id,
-                    visitDate,
-                    notesEditText.text.toString(),
-                    pealCheckBox.isChecked,
-                    quarterCheckBox.isChecked
-                )
+            val visit = Visit(
+                visitId,
+                towerId,
+                visitDate,
+                notesEditText.text.toString(),
+                pealCheckBox.isChecked,
+                quarterCheckBox.isChecked
+            )
 
-                if (visitId == null) {
-                    viewModel.insertVisit(visit)
-                } else {
-                    viewModel.updateVisit(visit)
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    if (visitId == null) {
+                        viewModel.insertVisit(visit)
+                    } else {
+                        viewModel.updateVisit(visit)
+                    }
                 }
+                finish()
             }
-            finish()
         }
 
         // Date clicked
@@ -157,12 +162,6 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
             if (quarterCheckBox.isChecked)
                 pealCheckBox.isChecked = false
         }
-
-        findViewById<TextView>(R.id.textview_visit_place).setOnClickListener {
-            val intent = Intent(this, TowerInfoActivity::class.java)
-            intent.putExtra("TOWER_ID", towerId)
-            startActivity(intent)
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -172,10 +171,6 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
             putInt(STATE_YEAR, visitDate.get(Calendar.YEAR))
             putInt(STATE_MONTH, visitDate.get(Calendar.MONTH))
             putInt(STATE_DAY, visitDate.get(Calendar.DAY_OF_MONTH))
-
-            towerId?.let {
-                putLong(STATE_TOWERID, it)
-            }
         }
     }
 
@@ -187,23 +182,32 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
         setVisitDate()
     }
 
-    // Get tower info from database and update text view
-    protected fun setPlaceName(towerId: Long, underline: Boolean) {
+    private fun setPlaceName(towerId: Long, isClickable: Boolean) {
+        findViewById<TextView>(R.id.textview_visit_place).setOnClickListener {
+            val intent = Intent(this, TowerInfoActivity::class.java)
+            intent.putExtra("TOWER_ID", towerId)
+            startActivity(intent)
+        }
+
         lifecycleScope.launch {
             val tower = withContext(Dispatchers.IO) {
                 viewModel.getTower(towerId)
             }
 
-            val tv: TextView = findViewById(R.id.textview_visit_place)
-            tv.text = tower.placeCountyList ?: tower.place
+            val textView: TextView = findViewById(R.id.textview_visit_place)
 
-            if (underline)
-                tv.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            val txt = SpannableString(tower.placeCountyList ?: tower.place)
+            if (isClickable)
+                txt.setSpan(UnderlineSpan(), 0, txt.length, 0)
+
+            textView.text = txt
+            textView.isClickable = isClickable
+            textView.isFocusable = isClickable
         }
     }
 
     // Format and display date
-    protected fun setVisitDate() {
+    private fun setVisitDate() {
         val txt = getString(R.string.date_format_long).format(visitDate)
         val span = SpannableString(txt).apply {
             setSpan(UnderlineSpan(), 0, txt.length, 0)

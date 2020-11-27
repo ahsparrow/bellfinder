@@ -59,6 +59,7 @@ class VisitsListFragment : ListFragment() {
 
     private fun onClick(id: Long) {
         val intent = Intent(activity, VisitEditActivity::class.java)
+        intent.putExtra("TOWER_ID", adapter.visitMap[id]?.towerId ?: 0)
         intent.putExtra("VISIT_ID", id)
         startActivity(intent)
     }
