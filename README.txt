@@ -7,9 +7,8 @@ with rings of three or more bells. The app also allows you to record
 details of any visits.
 
 Bell Finder uses the Dove data file from the Central Council of Church
-Bellringers (CCCBR). The file (app/src/main/assets/dove.txt) is a
-modified version of the CCCBR's original with the addition of an
-integer tower identification key and the removal some unused fields.
+Bellringers (CCCBR). The file (bellfinder/src/main/assets/dove.txt) is a
+modified version of the CCCBR's original with the removal some unused fields.
 The file is distributed under a Creative Commons license (see below.)
 
 The tower map is rendered using the osmdroid library, see
