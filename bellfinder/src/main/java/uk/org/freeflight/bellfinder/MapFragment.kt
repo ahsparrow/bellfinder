@@ -48,6 +48,7 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.CopyrightOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
+import kotlin.math.round
 
 class MapFragment : SearchableFragment() {
     companion object {
@@ -141,12 +142,8 @@ class MapFragment : SearchableFragment() {
                                 title = tower.placeCountyList ?: tower.place
 
                                 // Tenor weight
-                                val weight = tower.weight
-                                val cwt = weight / 112
-                                val qtr = (weight - cwt * 112) / 28
-                                val lbs = weight % 28
-                                val tenor = "$cwt-$qtr-$lbs cwt"
-                                snippet = tenor
+                                val weight = round(tower.weight / 112.0).toInt()
+                                snippet = "$weight cwt"
 
                                 val resid = if (tower.unringable) {
                                     R.drawable.tower_unringable
