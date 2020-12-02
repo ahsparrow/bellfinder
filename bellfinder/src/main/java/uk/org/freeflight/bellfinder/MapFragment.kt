@@ -140,6 +140,14 @@ class MapFragment : SearchableFragment() {
                                 position = GeoPoint(tower.latitude, tower.longitude)
                                 title = tower.placeCountyList ?: tower.place
 
+                                // Tenor weight
+                                val weight = tower.weight
+                                val cwt = weight / 112
+                                val qtr = (weight - cwt * 112) / 28
+                                val lbs = weight % 28
+                                val tenor = "$cwt-$qtr-$lbs cwt"
+                                snippet = tenor
+
                                 val resid = if (tower.unringable) {
                                     R.drawable.tower_unringable
                                 } else when (tower.bells) {

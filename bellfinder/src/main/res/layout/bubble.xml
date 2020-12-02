@@ -17,6 +17,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/bubble_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubble_title" />
+
     <Button
         android:id="@+id/bubble_cancel"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -26,7 +36,7 @@
         app:layout_constraintEnd_toStartOf="@+id/bubble_moreinfo"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bubble_title" />
+        app:layout_constraintTop_toBottomOf="@+id/bubble_description" />
 
     <Button
         android:id="@+id/bubble_moreinfo"
@@ -37,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bubble_cancel"
-        app:layout_constraintTop_toBottomOf="@+id/bubble_title" />
+        app:layout_constraintTop_toBottomOf="@+id/bubble_description" />
 
     <!-- Unused - visibility - Gone -->
     <ImageView
@@ -48,15 +58,6 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Unused - visibility - Gone -->
-    <TextView
-        android:id="@+id/bubble_description"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/bubble_title" />
 
     <!-- Unused - visibility - Gone -->
     <TextView
