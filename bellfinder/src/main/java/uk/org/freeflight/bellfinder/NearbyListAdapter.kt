@@ -19,10 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.location.Location
 import androidx.core.content.ContextCompat.getDrawable
 import uk.org.freeflight.bellfinder.db.Tower
+import kotlin.math.round
 
 class NearbyListAdapter(onClick: (id: Long) -> Unit,
                         onLongClick: (id: Long) -> Boolean
@@ -38,6 +40,7 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
     private var location: Location? = null
 
     // Populate list view holder with tower details
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val id = itemIds[position]
         val current = towerMap[id]
@@ -63,6 +66,10 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
                 val miles = dist / 1609.3
                 holder.extra.text = holder.itemView.context.getString(R.string.distance_formatter).format(miles)
             }
+
+            // Show tenor weight
+            val weight = round(current.weight / 112.0).toInt()
+            holder.extra2.text = "$weight cwt"
 
             // Set background drawable
             holder.layout.background = if (visitedTowers.contains(id)) {
