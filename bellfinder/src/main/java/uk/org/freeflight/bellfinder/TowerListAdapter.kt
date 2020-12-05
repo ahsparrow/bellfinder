@@ -82,9 +82,12 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
         } else {
             val regex = Regex("\\b$pattern", RegexOption.IGNORE_CASE)
 
-            towerMap.filter {visit ->
-                visit.value.placeCountyList?.let {regex.containsMatchIn(it)}
-                    ?: regex.containsMatchIn(visit.value.place)
+            // Match on place name or county
+            towerMap.filter { visit ->
+                (visit.value.placeCountyList?.let { regex.containsMatchIn(it) }
+                    ?: regex.containsMatchIn(visit.value.place)) ||
+                        (visit.value.county?.let { regex.containsMatchIn(CountyLookup.lookup(it)) }
+                            ?: false)
             }.map { it.key }
         }
     }
