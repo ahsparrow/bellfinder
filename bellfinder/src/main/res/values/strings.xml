@@ -16,6 +16,7 @@
     <string name="info">Info</string>
     <string name="initialised_version_code">INITIALISED_VERSION_CODE</string>
     <string name="first_visit">First Visit:</string>
+    <string name="location">Location</string>
     <string name="no">No</string>
     <string name="notes">Notes</string>
     <string name="novisits_info">Create a new visit by selecting a tower and pressing the add visit button</string>

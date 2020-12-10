@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 package uk.org.freeflight.bellfinder
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
@@ -26,6 +27,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
@@ -33,6 +35,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenResumed
 import androidx.preference.PreferenceManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,6 +91,10 @@ class MapFragment : SearchableFragment() {
 
         // Necessary to work with view pager - see onDestroy()
         mapView.setDestroyMode(false)
+
+        view.findViewById<FloatingActionButton>(R.id.button_location).setOnClickListener {
+            startLocation(it)
+        }
 
         return view
     }
@@ -272,6 +279,12 @@ class MapFragment : SearchableFragment() {
             cancelButton.setOnClickListener {
                 markerReference.closeInfoWindow()
             }
+        }
+    }
+
+    private fun startLocation(view: View) {
+        context?.let {
+            view.background.setTint(ContextCompat.getColor(it, R.color.location_active))
         }
     }
 }
