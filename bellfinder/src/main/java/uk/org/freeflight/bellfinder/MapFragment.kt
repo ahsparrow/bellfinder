@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package uk.org.freeflight.bellfinder
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -115,6 +116,7 @@ class MapFragment : SearchableFragment(), LocationListener {
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -132,10 +134,17 @@ class MapFragment : SearchableFragment(), LocationListener {
         // Create marker pop-up window
         infoWindow = CustomInfoWindow(mapView)
 
+        // Set location marker
         locationMarker = Marker(mapView).apply {
             icon = ResourcesCompat.getDrawable(mapView.resources, R.drawable.person, null)
         }
         mapView.overlays.add(locationMarker)
+
+        // Disable location tracking if any user interaction
+        mapView.setOnTouchListener {_, _ ->
+            setTracking(false)
+            false
+        }
 
         mapView.addMapListener(DelayedMapListener(object : MapListener {
             override fun onScroll(p: ScrollEvent): Boolean {
