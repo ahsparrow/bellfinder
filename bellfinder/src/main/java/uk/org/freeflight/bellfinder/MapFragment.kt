@@ -18,11 +18,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 package uk.org.freeflight.bellfinder
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,13 +58,17 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 import kotlin.math.round
 
-class MapFragment : SearchableFragment() {
+class MapFragment : SearchableFragment(), LocationListener {
     companion object {
         const val NUM_MARKERS = 100
 
         const val DEFAULT_LAT = 51.04F
         const val DEFAULT_LON = -1.58F
         const val DEFAULT_ZOOM = 10.0F
+
+        const val MAX_INITIAL_AGE = 30000L
+        const val LOCATION_UPDATE_INTERVAL = 5000L
+        const val LOCATiON_UPDATE_DIST = 50.0F
     }
 
     private val viewModel: ViewModel by activityViewModels()
@@ -70,6 +79,11 @@ class MapFragment : SearchableFragment() {
 
     private lateinit var sharedPrefs: SharedPreferences
 
+    private var locationManager: LocationManager? = null
+    private var lastLocation: Location? = null
+    private lateinit var locationMarker: Marker
+    private var locationTracking: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -78,6 +92,8 @@ class MapFragment : SearchableFragment() {
             sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx)
             Configuration.getInstance().load(ctx, sharedPrefs)
         }
+
+        locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     override fun onCreateView(
@@ -93,7 +109,7 @@ class MapFragment : SearchableFragment() {
         mapView.setDestroyMode(false)
 
         view.findViewById<FloatingActionButton>(R.id.button_location).setOnClickListener {
-            startLocation(it)
+            setTracking(true)
         }
 
         return view
@@ -115,6 +131,11 @@ class MapFragment : SearchableFragment() {
 
         // Create marker pop-up window
         infoWindow = CustomInfoWindow(mapView)
+
+        locationMarker = Marker(mapView).apply {
+            icon = ResourcesCompat.getDrawable(mapView.resources, R.drawable.person, null)
+        }
+        mapView.overlays.add(locationMarker)
 
         mapView.addMapListener(DelayedMapListener(object : MapListener {
             override fun onScroll(p: ScrollEvent): Boolean {
@@ -194,17 +215,19 @@ class MapFragment : SearchableFragment() {
     }
 
     override fun onPause() {
-        super.onPause()
-
+        stopLocation()
         sharedPrefs.edit {
             val center = mapView.mapCenter
             putFloat("map_center_latitude", center.latitude.toFloat())
             putFloat("map_center_longitude", center.longitude.toFloat())
             putFloat("map_zoom_level", mapView.zoomLevelDouble.toFloat())
+            putBoolean("location_tracking", locationTracking)
             commit()
         }
 
         mapView.onPause()
+        super.onPause()
+
     }
 
     override fun onResume() {
@@ -212,6 +235,7 @@ class MapFragment : SearchableFragment() {
         mapView.onResume()
 
         restorePreferences()
+        startLocation()
     }
 
     override fun onDestroy() {
@@ -222,26 +246,31 @@ class MapFragment : SearchableFragment() {
     }
 
     private fun restorePreferences() {
-        var lat: Double
-        var lon: Double
-        var zoom: Double
-        var animate: Boolean
+        val lat: Double
+        val lon: Double
+        val zoom: Double
+        val animate: Boolean
+
+        var locTracking = sharedPrefs.getBoolean("location_tracking", false)
 
         // Get center/zoom from view model (if set) otherwise shared preferences
-        viewModel.towerPosition.let { pos ->
-            if (pos == null) {
-                lat = sharedPrefs.getFloat("map_center_latitude", DEFAULT_LAT).toDouble()
-                lon = sharedPrefs.getFloat("map_center_longitude", DEFAULT_LON).toDouble()
-                zoom = sharedPrefs.getFloat("map_zoom_level", DEFAULT_ZOOM).toDouble()
-                animate = false
-            } else {
-                lat = pos.latitude
-                lon = pos.longitude
-                zoom = 12.0
-                animate = true
-            }
+        val pos = viewModel.towerPosition
+        if (pos == null) {
+            lat = sharedPrefs.getFloat("map_center_latitude", DEFAULT_LAT).toDouble()
+            lon = sharedPrefs.getFloat("map_center_longitude", DEFAULT_LON).toDouble()
+            zoom = sharedPrefs.getFloat("map_zoom_level", DEFAULT_ZOOM).toDouble()
+            animate = false
+
+            setTracking(sharedPrefs.getBoolean("location_tracking", false))
+        } else {
+            lat = pos.latitude
+            lon = pos.longitude
+            zoom = 12.0
+            animate = true
+
+            setTracking(false)
+            viewModel.towerPosition = null
         }
-        viewModel.towerPosition = null
         val center = GeoPoint(lat, lon)
 
         // Must be zoom first, then center
@@ -282,9 +311,88 @@ class MapFragment : SearchableFragment() {
         }
     }
 
-    private fun startLocation(view: View) {
-        context?.let {
-            view.background.setTint(ContextCompat.getColor(it, R.color.location_active))
+    private fun setTracking(enabled: Boolean) {
+        locationTracking = enabled
+
+        context?.let { ctx->
+            view?.let {
+                val button = it.findViewById<FloatingActionButton>(R.id.button_location)
+                val tintList = ContextCompat.getColorStateList(
+                    ctx, if (enabled) R.color.location_active else R.color.location_inactive)
+                button.backgroundTintList = tintList
+            }
+        }
+
+        if (enabled) {
+            lastLocation?.let {
+                mapView.controller.animateTo(GeoPoint(it))
+                mapView.invalidate()
+            }
+        }
+    }
+
+    private fun startLocation() {
+        val gpsLocation = requestLocation(LocationManager.GPS_PROVIDER)
+        val networkLocation = requestLocation(LocationManager.NETWORK_PROVIDER)
+
+        lastLocation = gpsLocation ?: networkLocation
+        lastLocation?.let {
+            locationMarker.position = GeoPoint(lastLocation)
+        }
+    }
+
+    private fun stopLocation() {
+        locationManager?.removeUpdates(this)
+    }
+
+    override fun onLocationChanged(location: Location) {
+        // Ignore network location once GPS location have been received
+        lastLocation?.let {
+            if ((it.provider == LocationManager.GPS_PROVIDER) && (location.provider == LocationManager.NETWORK_PROVIDER))
+                return
+        }
+        lastLocation = location
+
+        locationMarker.position = GeoPoint(lastLocation)
+        if (locationTracking)
+            mapView.controller.animateTo(GeoPoint(location))
+
+        mapView.invalidate()
+    }
+
+    // Start location requests
+    private fun requestLocation(provider: String): Location? {
+        val permission = if (provider == LocationManager.GPS_PROVIDER) {
+            Manifest.permission.ACCESS_FINE_LOCATION
+        } else {
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        }
+
+        val ctx = context
+        return if ((ctx != null) && (ContextCompat.checkSelfPermission(
+                ctx,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED)
+        ) {
+            locationManager?.requestLocationUpdates(provider, LOCATION_UPDATE_INTERVAL, LOCATiON_UPDATE_DIST, this)
+
+            var lastLocation: Location? = null
+            try {
+                lastLocation = locationManager?.getLastKnownLocation(provider)
+            } catch (e: SecurityException) {
+                Log.w(TAG, "Unexpected security exception getting find locoation")
+            } catch (e: IllegalArgumentException) {
+                Log.w(TAG, "Unknown fine location provider")
+            }
+
+            if (lastLocation != null) {
+                if ((System.currentTimeMillis() - lastLocation.time) > MAX_INITIAL_AGE) {
+                    lastLocation = null
+                }
+            }
+            lastLocation
+        } else {
+            null
         }
     }
 }
