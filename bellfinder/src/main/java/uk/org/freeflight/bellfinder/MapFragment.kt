@@ -109,8 +109,9 @@ class MapFragment : SearchableFragment(), LocationListener {
         // Necessary to work with view pager - see onDestroy()
         mapView.setDestroyMode(false)
 
+        // Toggle location tracking
         view.findViewById<FloatingActionButton>(R.id.button_location).setOnClickListener {
-            setTracking(true)
+            setTracking(!locationTracking)
         }
 
         return view
