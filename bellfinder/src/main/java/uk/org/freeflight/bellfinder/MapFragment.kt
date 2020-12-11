@@ -137,6 +137,8 @@ class MapFragment : SearchableFragment(), LocationListener {
         // Set location marker
         locationMarker = Marker(mapView).apply {
             icon = ResourcesCompat.getDrawable(mapView.resources, R.drawable.person, null)
+            setInfoWindow(null)
+            setPanToView(false)
         }
         mapView.overlays.add(locationMarker)
 
