@@ -214,8 +214,12 @@ class MapFragment : SearchableFragment(), LocationListener {
         }, 200))
     }
 
+    // Pause activity
     override fun onPause() {
-        stopLocation()
+        // Stop location requests
+        locationManager?.removeUpdates(this)
+
+        // Save settings
         sharedPrefs.edit {
             val center = mapView.mapCenter
             putFloat("map_center_latitude", center.latitude.toFloat())
@@ -227,15 +231,23 @@ class MapFragment : SearchableFragment(), LocationListener {
 
         mapView.onPause()
         super.onPause()
-
     }
 
+    // Resume activity
     override fun onResume() {
         super.onResume()
         mapView.onResume()
 
         restorePreferences()
-        startLocation()
+
+        // Start location requests for GPS and NETWORK and set last location
+        val gpsLocation = requestLocation(LocationManager.GPS_PROVIDER)
+        val networkLocation = requestLocation(LocationManager.NETWORK_PROVIDER)
+
+        lastLocation = gpsLocation ?: networkLocation
+        lastLocation?.let {
+            locationMarker.position = GeoPoint(lastLocation)
+        }
     }
 
     override fun onDestroy() {
@@ -250,8 +262,6 @@ class MapFragment : SearchableFragment(), LocationListener {
         val lon: Double
         val zoom: Double
         val animate: Boolean
-
-        var locTracking = sharedPrefs.getBoolean("location_tracking", false)
 
         // Get center/zoom from view model (if set) otherwise shared preferences
         val pos = viewModel.towerPosition
@@ -282,14 +292,17 @@ class MapFragment : SearchableFragment(), LocationListener {
         }
     }
 
+    // Dummy search function
     override fun search(pattern: String) {}
 
+    // Custom marker with towerId property
     class CustomMarker(val towerId: Long, infoWindow: CustomInfoWindow, mapView: MapView): Marker(mapView) {
         init {
             this.infoWindow = infoWindow
         }
     }
 
+    // Pop-up window for custom marker
     class CustomInfoWindow(mapView: MapView):
         MarkerInfoWindow(R.layout.bubble, mapView) {
 
@@ -311,6 +324,7 @@ class MapFragment : SearchableFragment(), LocationListener {
         }
     }
 
+    // Enable/disable location tracking
     private fun setTracking(enabled: Boolean) {
         locationTracking = enabled
 
@@ -331,20 +345,7 @@ class MapFragment : SearchableFragment(), LocationListener {
         }
     }
 
-    private fun startLocation() {
-        val gpsLocation = requestLocation(LocationManager.GPS_PROVIDER)
-        val networkLocation = requestLocation(LocationManager.NETWORK_PROVIDER)
-
-        lastLocation = gpsLocation ?: networkLocation
-        lastLocation?.let {
-            locationMarker.position = GeoPoint(lastLocation)
-        }
-    }
-
-    private fun stopLocation() {
-        locationManager?.removeUpdates(this)
-    }
-
+    // Location changed callback
     override fun onLocationChanged(location: Location) {
         // Ignore network location once GPS location have been received
         lastLocation?.let {
@@ -360,7 +361,7 @@ class MapFragment : SearchableFragment(), LocationListener {
         mapView.invalidate()
     }
 
-    // Start location requests
+    // Start location requests for given progider
     private fun requestLocation(provider: String): Location? {
         val permission = if (provider == LocationManager.GPS_PROVIDER) {
             Manifest.permission.ACCESS_FINE_LOCATION
