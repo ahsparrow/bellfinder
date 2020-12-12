@@ -136,15 +136,17 @@ class MainActivity : AppCompatActivity() {
         searchMenuItem?.let {
             (it.actionView as SearchView).apply {
                 setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            }.apply {
+
                 // Reset tower list when search widget is closed
                 setOnCloseListener {
                     setFilter("")
                     false
                 }
-            }.apply {
+
                 // Listen for updated search data
                 setOnQueryTextListener(QueryTextListener())
+
+                queryHint = getString(R.string.search_hint)
             }
         }
 
