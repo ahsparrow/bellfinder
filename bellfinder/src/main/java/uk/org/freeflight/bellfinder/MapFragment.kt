@@ -343,9 +343,8 @@ class MapFragment : SearchableFragment(), LocationListener {
         context?.let { ctx->
             view?.let {
                 val button = it.findViewById<FloatingActionButton>(R.id.button_location)
-                val tintList = ContextCompat.getColorStateList(
-                    ctx, if (enabled) R.color.location_active else R.color.location_inactive)
-                button.backgroundTintList = tintList
+                button.setImageDrawable(ContextCompat.getDrawable(ctx, 
+                    if (enabled) R.drawable.location_active else R.drawable.location_inactive))
             }
         }
 
