@@ -30,9 +30,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4940139"
-     inkscape:cx="188.97638"
-     inkscape:cy="238.30155"
+     inkscape:zoom="1.494"
+     inkscape:cx="189"
+     inkscape:cy="238.3"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -81,7 +81,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -89,18 +89,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0.390625,0.390625)">
+     transform="translate(0.3906,0.3906)">
     <path
        id="path1444"
        style="fill:#0000ff;fill-opacity:0.6;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 99.609375,49.479505 C 99.609375,77.022017 50,149.60938 50,149.60938 c 0,0 -50.390625,-72.587363 -50.390625,-100.129875 0,-27.542512 22.385763,-49.87013 50,-49.87013 27.614237,0 50,22.327618 50,49.87013 z"
+       d="M 99.61,49.48 C 99.61,77.02 50,149.6 50,149.6 50,149.6 -0.3906,77.02 -0.3906,49.48 -0.3906,21.94 22,-0.3906 49.61,-0.3906 c 27.61,0 50,22.3306 50,49.8706 z"
        sodipodi:nodetypes="scsss" />
     <g
        aria-label="8"
        id="text2211"
-       style="font-size:110px;line-height:125%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Normal';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:0.99997;stroke:#ffffff;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+       style="font-size:110px;line-height:125%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans, Normal';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:0.99997;stroke:#ffffff;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="translate(1.57,0.72)">
       <path
-         d="m 48.252517,56.037025 q -7.734375,0 -12.192383,4.135743 -4.404297,4.135742 -4.404297,11.386718 0,7.250977 4.404297,11.386719 4.458008,4.135742 12.192383,4.135742 7.734375,0 12.192383,-4.135742 4.458007,-4.189453 4.458007,-11.386719 0,-7.250976 -4.458007,-11.386718 -4.404297,-4.135743 -12.192383,-4.135743 z m -10.84961,-4.61914 Q 30.420485,49.699135 26.499587,44.918861 22.6324,40.138588 22.6324,33.263588 q 0,-9.614258 6.821289,-15.200195 6.875,-5.585938 18.798828,-5.585938 11.977539,0 18.798828,5.585938 6.821289,5.585937 6.821289,15.200195 0,6.875 -3.920899,11.655273 -3.867187,4.780274 -10.795898,6.499024 7.841797,1.826172 12.192383,7.143555 4.404297,5.317382 4.404297,12.998046 0,11.655274 -7.143555,17.885743 -7.089844,6.230468 -20.356445,6.230468 -13.266602,0 -20.410157,-6.230468 -7.089843,-6.230469 -7.089843,-17.885743 0,-7.680664 4.404297,-12.998046 4.404296,-5.317383 12.246093,-7.143555 z M 33.428298,34.284096 q 0,6.230469 3.867187,9.721679 3.920899,3.491211 10.957032,3.491211 6.982422,0 10.90332,-3.491211 3.974609,-3.49121 3.974609,-9.721679 0,-6.230469 -3.974609,-9.72168 -3.920898,-3.491211 -10.90332,-3.491211 -7.036133,0 -10.957032,3.491211 -3.867187,3.491211 -3.867187,9.72168 z"
+         d="m 48.25,56.04 q -7.73,0 -12.19,4.13 -4.4,4.14 -4.4,11.39 0,7.25 4.4,11.39 4.46,4.13 12.19,4.13 7.74,0 12.19,-4.13 4.46,-4.19 4.46,-11.39 0,-7.25 -4.46,-11.39 -4.4,-4.13 -12.19,-4.13 z M 37.4,51.42 q -6.98,-1.72 -10.9,-6.5 -3.87,-4.78 -3.87,-11.66 0,-9.61 6.82,-15.2 6.88,-5.58 18.8,-5.58 11.98,0 18.8,5.58 6.82,5.59 6.82,15.2 0,6.88 -3.92,11.66 -3.87,4.78 -10.79,6.5 7.84,1.82 12.19,7.14 4.4,5.32 4.4,13 0,11.65 -7.14,17.89 -7.09,6.23 -20.36,6.23 -13.26,0 -20.41,-6.23 -7.09,-6.24 -7.09,-17.89 0,-7.68 4.41,-13 4.4,-5.32 12.24,-7.14 z M 33.43,34.28 q 0,6.23 3.87,9.73 3.92,3.49 10.95,3.49 6.98,0 10.91,-3.49 3.97,-3.5 3.97,-9.73 0,-6.23 -3.97,-9.72 -3.93,-3.49 -10.91,-3.49 -7.03,0 -10.95,3.49 -3.87,3.49 -3.87,9.72 z"
          style="fill:#ffffff;fill-opacity:0.99997;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path2255" />
     </g>
