@@ -80,7 +80,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
         itemIds = if (pattern == "") {
             towerMap.map { it.key }
         } else {
-            val regex = Regex("\\b$pattern", RegexOption.IGNORE_CASE)
+            val regex = Regex("\\b${Regex.escape(pattern)}", RegexOption.IGNORE_CASE)
 
             // Match on place name or county
             towerMap.filter { visit ->

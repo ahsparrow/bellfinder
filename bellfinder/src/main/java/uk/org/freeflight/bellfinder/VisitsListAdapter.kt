@@ -62,7 +62,7 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
         itemIds = if (pattern == "") {
             visitMap.map { it.key }
         } else {
-            val regex = Regex("\\b$pattern", RegexOption.IGNORE_CASE)
+            val regex = Regex("\\b${Regex.escape(pattern)}", RegexOption.IGNORE_CASE)
 
             // Match on place name or county
             visitMap.filter { visit ->
