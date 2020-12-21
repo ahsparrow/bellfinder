@@ -58,6 +58,7 @@ import org.osmdroid.views.overlay.CopyrightOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 import kotlin.math.round
+import kotlin.math.min
 
 class MapFragment : SearchableFragment(), LocationListener {
     companion object {
@@ -164,7 +165,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                         }
 
                         // Limit number of towers to be displayed
-                        val towers = nearbyTowers.slice(0 until NUM_MARKERS)
+                        val towers = nearbyTowers.slice(0 until min(NUM_MARKERS, nearbyTowers.size))
                         val ids = towers.map { it.towerId }
 
                         // Old markers to remove
