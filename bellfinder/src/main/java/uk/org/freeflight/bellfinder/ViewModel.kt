@@ -55,10 +55,11 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
         return towers.sortedBy { distances[it.towerId] }
     }
 
+    // Insert towers
+    suspend fun insertTowers(towers: List<Tower>) = dao.insertTowers(towers)
+
     // Delete all towers
-    fun deleteTowers() = viewModelScope.launch(Dispatchers.IO) {
-        dao.deleteTowers()
-    }
+    suspend fun deleteTowers() = dao.deleteTowers()
 
     // Live list (unordered) of visited tower IDs
     val liveVisitedTowerIds: LiveData<List<Long>> = dao.liveVisitedTowerIds()
@@ -96,13 +97,6 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     // Delete a visit
     fun deleteVisit(visitId: Long) = viewModelScope.launch(Dispatchers.IO) {
         dao.deleteVisit(visitId)
-    }
-
-    // Read data from dove file asset into database
-    fun parseDove(stream: InputStream) = viewModelScope.launch(Dispatchers.IO) {
-        // Load from asset file
-        val data = stream.bufferedReader().use { it.readLines() }
-        dao.insertTowers(parseDove(data))
     }
 
     // Tower position to pass to map

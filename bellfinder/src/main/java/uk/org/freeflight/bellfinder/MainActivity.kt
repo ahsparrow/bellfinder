@@ -70,17 +70,23 @@ class MainActivity : AppCompatActivity() {
         val sharedPref = this.getPreferences(MODE_PRIVATE)
         val initialisedVersionCode = sharedPref.getInt(getString(R.string.initialised_version_code), 0)
         if (BuildConfig.VERSION_CODE != initialisedVersionCode) {
-            with (sharedPref.edit()) {
-                putInt(getString(R.string.initialised_version_code), BuildConfig.VERSION_CODE)
-                apply()
+
+            val stream = assets.open("dove.txt")
+            lifecycleScope.launch {
+                val towers = withContext(Dispatchers.IO) {
+                    val data = stream.bufferedReader().use { it.readLines() }
+                    parseDove(data)
+                }
+
+                val viewModel: ViewModel by viewModels()
+                viewModel.deleteTowers()
+                viewModel.insertTowers(towers)
+
+                with (sharedPref.edit()) {
+                    putInt(getString(R.string.initialised_version_code), BuildConfig.VERSION_CODE)
+                    apply()
+                }
             }
-
-            // Delete old database
-            val viewModel: ViewModel by viewModels()
-            viewModel.deleteTowers()
-
-            // Get new database
-            viewModel.parseDove(assets.open("dove.txt"))
         }
 
         // Set up view pager for towers/nearby/visits
