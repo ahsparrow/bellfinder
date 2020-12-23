@@ -310,7 +310,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 0254\Worcs\Badsey\\S James\8\1684\\Mon\\52.08634\-1.89796
 0255\W Yorks\Badsworth\\S Mary V\6\1480\\Fri\\53.62919\-1.30103
 0256\Suffolk\Badwell Ash\\S Mary\5\1521\\\\52.28290\0.91513
-0257\Neath PT\Baglan\\S Catharine\6\1436\\Tue\\51.61497\-3.80279
+0257\Neath PT\Baglan\\S Catharine\6\1436\\\\51.61497\-3.80279
 0258\Surrey\Bagshot\\S Anne\8\1923\\Thu\\51.36064\-0.69902
 0259\Cambs\Bainton\\S Mary\4\1232\u/r\\\52.64115\-0.38413
 0260\Derbys\Bakewell\\All Saints\8\1897\\Thu\\53.21298\-1.67866
@@ -351,7 +351,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 5824\Warks\Barford\\S Peter\6\554\\Mon\\52.24567\-1.60268
 0286\Wilts\Barford St Martin\\S Martin\6\1568\\\\51.08180\-1.92056
 0287\Kent\Barham\\S John Bapt\5\1319\\Mon\\51.20648\1.16178
-0288\Suffolk\Barham\\S Mary\4\1340\u/r\\\52.11552\1.11937
+0288\Suffolk\Barham\\S Mary\6\1336\\\\52.11552\1.11937
 6936\Lincs\Barholm\\S Martin\3\683\\\\52.68550\-0.38897
 0289\Leics\Barkby\\S Mary\6\1539\\Tue\(alt: check)\52.68267\-1.05969
 5825\Leics\Barkestone le Vale\\S Peter & S Paul\4\896\u/r\\\52.90629\-0.84517
@@ -558,7 +558,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 0450\Worcs\Bewdley\\S Anne\8\1759\\Wed\(exc 1st)\52.37530\-2.31625
 0451\E Sussex\Bexhill on Sea\\S Peter\10\1975\\Tue\\50.84611\0.47863
 0452\Gr London\Bexley\\S Mary\8\802\\Thu\\51.44009\0.15354
-0453\Glos\Bibury\\S Mary\6\1023\\Fri\(alt)\51.75717\-1.83032
+0453\Glos\Bibury\\S Mary\6\1008\\Fri\(alt)\51.75717\-1.83032
 0454\Oxon\Bicester\\S Edburg\10\1687\\Mon\\51.89607\-1.15444
 0455\W Mids\Bickenhill\\S Peter\6\1064\\Tue\\52.43934\-1.72464
 0456\Lincs\Bicker\\S Swithin\8\883\\Tue\(3rd: Apr-Oct)\52.92425\-0.17996
@@ -1260,7 +1260,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 0999\Devon\Chagford\\S Michael\8\2038\\Tue\(exc Aug)\50.67265\-3.83927
 1000\E Sussex\Chailey\\S Peter\6\825\\Mon\\50.95664\-0.01928
 6854\Dorset\Chaldon Herring\\S Nicholas\3\728\u/r\\\50.64732\-2.29841
-1001\IoW\Chale\\S Andrew\6\936\\Thu\\50.59580\-1.31874
+1001\IoW\Chale\\S Andrew\6\924\\Thu\\50.59580\-1.31874
 1002\Bucks\Chalfont St Giles\\S Giles\8\883\\Tue\\51.63162\-0.56978
 1003\Bucks\Chalfont St Peter\\S Peter\6\1234\\Wed\\51.60784\-0.55678
 1004\Glos\Chalford\\Christ Church\6\960\\\\51.72143\-2.15802
@@ -1433,7 +1433,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 1151\Worcs\Church Lench\\All Saints\6\1566\\\\52.15970\-1.96627
 1152\Cheshire\Church Minshull\\S Bartholomew\6\1120\\\\53.14142\-2.50070
 1153\Hants\Church Oakley\\S Leonard\6\971\\\\51.24950\-1.18863
-1155\Northants\Church Stowe\\S Michael\4\1456\u/r\\\52.21366\-1.06642
+1155\Northants\Church Stowe\\S Michael\5\1552\u/r\\\52.21366\-1.06642
 1156\Shrops\Church Stretton\\S Laurence\8\1237\\\\52.53818\-2.80875
 1157\Glos\Churcham\\S Andrew\6\1557\\\\51.86188\-2.33772
 1158\Glos\Churchdown\\S Bartholomew\6\1065\\Mon\\51.87039\-2.17237
@@ -2060,7 +2060,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 1674\Devon\East Worlington\\S Mary\6\611\\\\50.90992\-3.74396
 1675\E Sussex\Eastbourne\Eastbourne, All Ss\All Saints\8\2044\\Mon\\50.76188\0.27930
 1676\E Sussex\Eastbourne\Eastbourne, ChCh\Christ Church\8\980\\Tue\\50.77419\0.29669
-1677\E Sussex\Eastbourne\Eastbourne, S Mary\S Mary\8\1758\\Tue\\50.77271\0.26557
+1677\E Sussex\Eastbourne\Eastbourne, S Mary\S Mary\8\1726\\Tue\\50.77271\0.26557
 1678\E Sussex\Eastbourne\Eastbourne, S Saviour\S Saviour & S Peter\10\2739\\\PN: by arrangement\50.76607\0.28267
 1679\Kent\Eastchurch\\All Saints\6\1127\\Sat\(with exceptions)\51.40708\0.85736
 1680\Mers\Eastham\\S Mary BV\6\1369\\\\53.31326\-2.96171
@@ -2092,7 +2092,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 1702\Wilts\Ebbesbourne Wake\\S John Bapt\5\678\\Tue\\51.01695\-2.01362
 1703\Bl Gwent\Ebbw Vale\\Christ Church\8\2797\\\\51.77206\-3.20659
 1704\Glos\Ebrington\\S Eadburgha\6\1412\\\\52.05804\-1.73365
-6122\Hants\Ecchinswell\\S Lawrence\3\784\\\\51.33586\-1.28201
+6122\Hants\Ecchinswell\\S Lawrence\3\745\\\\51.33586\-1.28201
 7809\DumfGallwy\Ecclefechan\\Church House (former church)\3\644\\\\55.05891\-3.26572
 1705\Gr Man\Eccles\\S Mary V\8\2225\\Thu\\53.48441\-2.33483
 1706\S Yorks\Ecclesfield\\S Mary V\10\1618\\Tue\\53.44360\-1.46989
@@ -2114,7 +2114,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 1722\C Edin\Edinburgh\Edinburgh, Fettes\Fettes College Chapel\6\266\\\\55.96404\-3.22623
 1725\C Edin\Edinburgh\Edinburgh, Ss Andrew & George\S Andrew & S George West\8\1647\\Mon\\55.95400\-3.19580
 1723\C Edin\Edinburgh\Edinburgh, S Cuthbert\S Cuthbert\10\2352\\Tue\\55.94950\-3.20549
-1726\Wilts\Edington\\S Mary, S Katharine, & All Saints\10\2712\\\\51.27891\-2.10687
+1726\Wilts\Edington\\S Mary, S Katharine, & All Saints\10\2712\\Tue\\51.27891\-2.10687
 1727\Rutland\Edith Weston\\S Mary\6\797\\\\52.63795\-0.63144
 1728\Bucks\Edlesborough\\S Mary V\6\1508\\\\51.86163\-0.59288
 6317\Lincs\Edlington\\S Helen\3\812\\\\53.22603\-0.15387
@@ -2291,7 +2291,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 1864\Northants\Farthinghoe\\S Michael & All Angels\5\1232\u/r\\\52.05393\-1.21964
 1865\Northants\Farthingstone\\S Mary V\5\675\\\\52.18989\-1.10460
 6177\Devon\Farway\\S Michael & All Angels\6\1246\\Thu\\50.76182\-3.17497
-1866\Kent\Faversham\\S Mary of Charity\8\1852\\\\51.31729\0.89442
+1866\Kent\Faversham\\S Mary of Charity\10\1795\\\\51.31729\0.89442
 1867\Hants\Fawley\\All Saints\6\772\\Thu\\50.82968\-1.35168
 1868\Northants\Fawsley\\S Mary V\4\1264\\\\52.20644\-1.17425
 1869\Worcs\Feckenham\\S John Bapt\8\1340\\Tue\\52.25296\-1.98824
@@ -2763,7 +2763,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 2252\E Sussex\Hammerwood\\S Stephen\6\722\\\\51.13676\0.05598
 2253\Dorset\Hampreston\\All Saints\6\1121\\Thu\\50.78874\-1.92326
 6441\Gr London\Hampstead\\Christ Church\8\2693\\Sun\(1st, 3rd)\51.55954\-0.17679
-2254\Berks\Hampstead Norreys\\S Mary\6\1120\u/r\\\51.48278\-1.23932
+2254\Berks\Hampstead Norreys\\S Mary\6\1237\u/r\\\51.48278\-1.23932
 6201\N Yorks\Hampsthwaite\\S Thomas a Becket\6\1047\\\\54.02674\-1.60558
 2255\Gr London\Hampton\\S Mary V\8\1404\\Tue\(not always: check)\51.41307\-0.36154
 2256\Herefs\Hampton Bishop\\S Andrew\6\1120\\\\52.03876\-2.64462
@@ -3041,7 +3041,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 2494\Herts\Hinxworth\\S Nicholas\6\1008\\\\52.04769\-0.19719
 2495\Cambs\Histon\\S Andrew\8\1063\\Tue\\52.25532\0.10265
 2496\Bucks\Hitcham\\S Mary\6\683\\Wed\\51.53467\-0.67513
-2497\Suffolk\Hitcham\\All Saints\6\1848\u/r\\\52.12256\0.89729
+2497\Suffolk\Hitcham\\All Saints\8\1750\\\\52.12256\0.89729
 2498\Herts\Hitchin\\S Mary\12\1920\\Mon\\51.94795\-0.27761
 2499\Staffs\Hoar Cross\\Holy Angels\6\3181\\\\52.80474\-1.81623
 7186\Kent\Hoath\\Holy Cross\3\532\u/r\\\51.33405\1.16115
@@ -3212,7 +3212,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 2630\Devon\Ideford\\S Mary V\6\877\\\\50.58581\-3.56343
 2631\E Sussex\Iden\\All Saints\6\1680\\\\50.98131\0.72729
 2633\Wilts\Idmiston\\All Saints\4\784\u/r\\\51.13508\-1.71975
-7559\E Sussex\Iford\\S Nicholas\3\784\u/r\\\50.84840\-0.00075
+7559\E Sussex\Iford\\S Nicholas\3\784\\\\50.84840\-0.00075
 2635\Shrops\Ightfield\\S John Bapt\6\1276\\Mon\(alt)\52.94384\-2.60806
 2636\Kent\Ightham\\S Peter\6\806\\Mon\\51.28915\0.28563
 2637\Suffolk\Iken\\S Botolph\5\992\\\\52.15528\1.52460
@@ -3319,7 +3319,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 2714\Cumbria\Kendal\\Holy Trinity\10\2680\\Wed\\54.32251\-2.74457
 2715\Warks\Kenilworth\\S Nicholas\6\1590\\Tue\\52.34929\-1.58236
 7198\Gr London\Kenley\\All Saints\3\608\\\\51.32209\-0.09943
-2716\Devon\Kenn\\S Andrew\6\1509\\Tue\\50.66096\-3.52680
+2716\Devon\Kenn\\S Andrew\6\1484\\Tue\\50.66096\-3.52680
 7478\Cambs\Kennett\\S Nicholas\3\896\u/r\\\52.28699\0.49072
 2717\Norfolk\Kenninghall\\S Mary\8\1739\\Wed\\52.43384\1.00095
 2718\Kent\Kennington\\S Mary\6\1201\\Mon\(2nd, 4th)\51.16997\0.89128
@@ -4258,7 +4258,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3432\Devon\Monkleigh\\S George\6\967\\\\50.96517\-4.19803
 5793\Devon\Monkokehampton\\All Saints\4\896\u/r\\\50.83173\-4.01652
 3433\Suffolk\Monks Eleigh\\S Peter\6\2016\\\\52.09314\0.86866
-3434\Warks\Monks Kirby\\S Editha\8\2751\\\\52.44422\-1.32008
+3434\Warks\Monks Kirby\\S Editha\8\2751\\Tue\\52.44422\-1.32008
 3435\Bucks\Monks Risborough\\S Dunstan\6\1456\\Thu\\51.73255\-0.82477
 3437\Som\Monksilver\\All Saints\5\1091\\\\51.12859\-3.32653
 3438\Devon\Monkton\\former ch of S Mary Magd\6\935\\\\50.82183\-3.15510
@@ -4375,7 +4375,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3531\Kent\Nettlestead\\S Mary V\6\582\\Tue\(with exceptions)\51.24336\0.41267
 6374\Lincs\Nettleton\\S John Bapt\3\1120\u/r\\\53.48674\-0.32709
 3532\Wilts\Nettleton\\S Mary\6\1299\\\\51.51297\-2.26661
-3533\Pembs\Nevern\\S Brynach\6\896\u/r\\\52.02552\-4.79537
+3533\Pembs\Nevern\\S Brynach\6\869\u/r\\\52.02552\-4.79537
 3534\Hants\New Alresford\\S John Bapt\8\1782\\Fri\\51.09008\-1.16135
 3535\Norfolk\New Buckenham\\S Martin\8\1239\\\\52.47298\1.07273
 5866\DE\New Castle\\Immanuel on the Green\6\416\\Tue\(1st)\39.66078\-75.56268
@@ -4548,7 +4548,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3659\Northants\Norton\\All Saints\5\1742\\\\52.26809\-1.11794
 7565\Powys\Norton\\S Andrew\3\231\\\\52.29901\-3.02137
 3671\Worcs\Norton\\S Egwin\8\1454\\\\52.12814\-1.94030
-3660\Wilts\Norton Bavant\\All Saints\5\1167\u/r\\\51.18895\-2.13423
+3660\Wilts\Norton Bavant\\All Saints\5\1166\u/r\\\51.18895\-2.13423
 3661\Staffs\Norton Canes\\S James\8\938\\Mon\\52.66823\-1.98722
 3662\Herefs\Norton Canon\\S Nicholas\6\772\\Thu\(5th: check)\52.12474\-2.90422
 3663\Lincs\Norton Disney\\S Peter\6\923\\Mon\(2nd, 4th, 5th)\53.12033\-0.67184
@@ -4640,14 +4640,13 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3736\Berks\Old Windsor\\S Peter & S Andrew\8\1309\\Tue\\51.46217\-0.57289
 6288\Warks\Oldberrow\\S Mary\3\560\u/r\\\52.29184\-1.82368
 7039\W Mids\Oldbury\\Christ Church\8\1176\u/r\\\52.50324\-2.01512
-2029\Gr Man\Oldham\Oldham, Glodwick\S Mark\8\960\\\\53.53535\-2.09671
 3740\Gr Man\Oldham\\S Mary\12\3924\\\\53.54259\-2.11144
 3445\Gr Man\Oldham\Oldham, Moorside\S Thomas\8\1272\\Mon\\53.56437\-2.07631
 3741\Bucks\Olney\\S Peter & S Paul\10\2697\\\\52.14992\-0.70108
 3742\Glos\Olveston\\S Mary V\8\2108\\Fri\\51.58304\-2.57748
 3743\Worcs\Ombersley\\S Andrew\6\1823\\\\52.26997\-2.22968
 3744\Shrops\Onibury\\S Michael & All Angels\4\644\u/r\\\52.40773\-2.80155
-7623\NSW\Orange\\Holy Trinity\8\771\\\\-33.28114\149.09880
+7623\NSW\Orange\\Holy Trinity\8\771\\Tue\(confirm first)\-33.28114\149.09880
 6295\Lincs\Orby\\All Saints\3\916\\\\53.18145\0.22905
 3745\Som\Orchard Portman\\S Michael\4\560\\\\50.98930\-3.07904
 3746\Wilts\Orcheston\Orcheston, S George\S George\4\784\\\\51.20322\-1.91596
@@ -4691,7 +4690,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3773\Northants\Oundle\\S Peter\8\2839\\\\52.48181\-0.46747
 3774\Suffolk\Ousden\\S Peter\5\1606\u/r\\\52.20722\0.53902
 3775\Norfolk\Outwell\\S Clement\6\1259\u/r\\\52.60966\0.23390
-3776\Surrey\Outwood\\S John\4\448\\Mon\(2nd, 4th)\51.19818\-0.11300
+3776\Surrey\Outwood\\S John Bapt\4\448\\Mon\(2nd, 4th)\51.19818\-0.11300
 3777\Cambs\Over\\S Mary\8\1521\\Thu\\52.31790\0.01203
 3778\Cheshire\Over\\S Chad\8\1527\\Wed\\53.18178\-2.52517
 3779\Dorset\Over Compton\\S Michael\4\1317\u/r\\\50.95010\-2.57866
@@ -4802,7 +4801,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3867\ValeGlam\Penmark\\S Mary\6\952\\Thu\(on a rota basis)\51.41084\-3.35541
 3868\Bucks\Penn\\Holy Trinity\6\1120\\Mon\\51.63093\-0.67778
 3870\Monmths\Penrhos\\S Cadoc\4\961\\\\51.80122\-2.84850
-3871\Cumbria\Penrith\\S Andrew\8\2106\\Tue\(see tower website)\54.66410\-2.75148
+3871\Cumbria\Penrith\\S Andrew\8\2106\\Tue\\54.66410\-2.75148
 3856\Som\Penselwood\\S Michael\6\840\\Mon\(exc Bank Hols)\51.08164\-2.34953
 3872\Kent\Penshurst\\S John Bapt\8\1971\\Thu\\51.17347\0.18326
 3873\W Mids\Pensnett\\S Mark\8\1077\\\\52.50231\-2.12687
@@ -4895,7 +4894,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 3938\Suffolk\Polstead\\S Mary\6\1058\\Mon\\52.00552\0.89631
 3939\Devon\Poltimore\\S Mary V\6\1120\\Tue\\50.76188\-3.46760
 3940\W Yorks\Pontefract\Pontefract, All Ss\All Saints\8\1379\\Thu\(with additions)\53.69608\-1.30073
-3941\W Yorks\Pontefract\Pontefract, S Giles\S Giles\10\2035\\\\53.69145\-1.31196
+3941\W Yorks\Pontefract\Pontefract, S Giles\S Giles\10\2035\\Mon\\53.69145\-1.31196
 6148\Northumb\Ponteland\\S Mary V\8\760\\Thu\\55.05082\-1.74213
 3942\Shrops\Pontesbury\\S George\6\1268\\Thu\(not always: check)\52.64909\-2.88891
 3943\RhonddaCT\Pontypridd\\S Catherine\8\1421\\Wed\(not always: check)\51.60237\-3.34205
@@ -5132,7 +5131,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 5993\WA\Rockingham\\Civic Centre\8\355\\Mon\\-32.28664\115.74712
 4123\Norfolk\Rockland All Saints\Rockland All Ss\All Saints\5\1008\\\\52.52547\0.93839
 4126\Som\Rode\\S Lawrence\6\1270\\\\51.27925\-2.27671
-4127\E Sussex\Rodmell\\S Peter\6\784\u/r\\\50.83843\0.01758
+4127\E Sussex\Rodmell\\S Peter\6\699\u/r\\\50.83843\0.01758
 4128\Kent\Rodmersham\\S Nicholas\6\1064\\\\51.32284\0.76257
 4129\Som\Rodney Stoke\\S Leonard\4\784\\Thu\(by arrangement)\51.24551\-2.74326
 4130\W Sussex\Rogate\\S Bartholomew\6\945\\\\51.00793\-0.85040
@@ -5364,7 +5363,7 @@ TowerBase\County\Place\PlaceCL\Dedicn\Bells\Wt\UR\PracN\PrXF\Lat\Long
 4311\Beds\Sharnbrook\\S Peter\8\1097\\Tue\\52.22552\-0.54702
 4312\Leics\Sharnford\\S Helen\6\1182\\Mon\\52.52287\-1.28878
 4313\N Yorks\Sharow\\S John Div\8\1349\\Tue\(by arrangement)\54.14364\-1.50016
-4314\Devon\Shaugh Prior\\S Edward\6\1711\\\\50.44973\-4.05400
+4314\Devon\Shaugh Prior\\S Edward\6\1711\\Mon\(1st)\50.44973\-4.05400
 4315\Berks\Shaw\\S Mary\6\796\\\\51.41174\-1.31877
 4316\Shrops\Shawbury\\S Mary V\6\1288\\\\52.78633\-2.65524
 4317\Leics\Shawell\\All Saints\6\974\\Tue\\52.41241\-1.20565
