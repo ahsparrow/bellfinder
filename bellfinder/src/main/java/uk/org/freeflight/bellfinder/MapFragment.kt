@@ -373,6 +373,12 @@ class MapFragment : SearchableFragment(), LocationListener {
         mapView.invalidate()
     }
 
+    // Shouldn't really need these next three, but seeing a crash (in Google console)
+    // in LocationManager._handleMessage (Android v8) that looks they might be missing
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+    override fun onProviderEnabled(provider: String) {}
+    override fun onProviderDisabled(provider: String) {}
+
     // Start location requests for given progider
     private fun requestLocation(provider: String): Location? {
         val permission = if (provider == LocationManager.GPS_PROVIDER) {
