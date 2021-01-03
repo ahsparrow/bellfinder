@@ -27,7 +27,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uk.org.freeflight.bellfinder.db.*
-import java.io.InputStream
 import java.util.*
 
 class ViewModel (application: Application) : AndroidViewModel(application) {
