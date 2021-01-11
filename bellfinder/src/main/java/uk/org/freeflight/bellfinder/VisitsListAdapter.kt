@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package uk.org.freeflight.bellfinder
 
 import android.annotation.SuppressLint
+import androidx.core.content.ContextCompat
 import uk.org.freeflight.bellfinder.db.VisitView
 
 class VisitsListAdapter(onClick: (id: Long) -> Unit,
@@ -47,6 +48,10 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
                 .getString(R.string.date_format_short).format(current.date)
             holder.extra2.text = if (current.peal) "P" else if (current.quarter) "Q" else ""
         }
+
+        // Set background drawable
+        holder.layout.background =
+            ContextCompat.getDrawable(holder.layout.context, R.drawable.visited_item_selector)
     }
 
     // Set visit details
