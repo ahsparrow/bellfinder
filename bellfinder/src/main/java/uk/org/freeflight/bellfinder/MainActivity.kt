@@ -22,6 +22,7 @@ package uk.org.freeflight.bellfinder
 import android.Manifest
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -170,6 +171,12 @@ class MainActivity : AppCompatActivity() {
             R.id.import_menuitem -> {
                 // text/csv would be better, but it doesn't seem to work
                 getImport.launch("*/*")
+                true
+            }
+
+            R.id.about_menuitem -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
                 true
             }
 

@@ -1,3 +1,6 @@
+ext {
+    foobar = 'Foobar'
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -12,6 +15,7 @@ android {
         targetSdkVersion 30
         versionCode 9
         versionName "1.3"
+        buildConfigField("String", "DOVE_DATE", "\"20-Jan-2021\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

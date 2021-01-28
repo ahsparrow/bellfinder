@@ -1,8 +1,16 @@
 <resources>
+    <string name="about_title">About Bell Finder</string>
     <string name="add_visit_menuitem">Add visit</string>
     <string name="app_name">Bell Finder</string>
+    <string name="app_version_label">Application version</string>
     <string name="bells_label">Bells:</string>
     <string name="cancel">Cancel</string>
+    <string name="copyright_notice">
+        Bell Finder is copyright Alan Sparrow and licensed under GPLv3
+        \n\nDove data is copyright Central Council of Church Bell Ringers and licensed under the
+        Creative Commons Attribution-ShareAlike 4.0 International License
+        \n\nSee https://github.com/ahsparrow/bellfinder for more  details
+    </string>
     <string name="county_label">County:</string>
     <string name="date_format_iso">%1$tY-%1$tm-%1$te</string>
     <string name="date_format_long">%1$ta, %1$te %1$tb %1$tY</string>
@@ -10,6 +18,7 @@
     <string name="delete">Delete</string>
     <string name="delete_visit">Delete this visit?</string>
     <string name="distance_formatter">"%.1f mi"</string>
+    <string name="dove_info_label">Dove data release date</string>
     <string name="dove_link"><u>Open Dove\'s Guide</u></string>
     <string name="export_menuitem">Export visits</string>
     <string name="import_menuitem">Import visits</string>
