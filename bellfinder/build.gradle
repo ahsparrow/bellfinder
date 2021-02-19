@@ -118,6 +118,5 @@ dependencies {
     implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.13.0'
 
     // osmdroid
-    // TBD - Required for Android 11, upgrade to 6.1.9 when available
-    implementation "org.osmdroid:osmdroid-android:6.1.9-SNAPSHOT:debug@aar"
+    implementation "org.osmdroid:osmdroid-android:6.1.10"
 }
