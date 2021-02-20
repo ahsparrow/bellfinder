@@ -22,12 +22,6 @@ android {
 
     repositories {
         mavenCentral()
-
-        // TBD - Remove when release version of osmdroid is available
-        maven {
-            url  'https://oss.sonatype.org/content/repositories/snapshots/'
-            name 'OSS-Sonatype'
-        }
     }
 
     signingConfigs {
