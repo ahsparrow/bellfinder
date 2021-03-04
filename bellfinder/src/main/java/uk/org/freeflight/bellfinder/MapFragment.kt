@@ -33,6 +33,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.edit
@@ -57,8 +58,9 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.CopyrightOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
-import kotlin.math.round
 import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.round
 
 class MapFragment : SearchableFragment(), LocationListener {
     companion object {
@@ -78,6 +80,7 @@ class MapFragment : SearchableFragment(), LocationListener {
     private lateinit var mapView: MapView
     private var markers = listOf<CustomMarker>()
     private lateinit var infoWindow: CustomInfoWindow
+    private var nearbyDialog: AlertDialog? = null
 
     private lateinit var sharedPrefs: SharedPreferences
 
@@ -242,6 +245,13 @@ class MapFragment : SearchableFragment(), LocationListener {
             commit()
         }
 
+        // Dismiss nearby dialog if showing
+        nearbyDialog?.let { dialog ->
+            if (dialog.isShowing) {
+                dialog.dismiss()
+            }
+        }
+
         mapView.onPause()
         super.onPause()
     }
@@ -309,9 +319,49 @@ class MapFragment : SearchableFragment(), LocationListener {
     override fun search(pattern: String) {}
 
     // Custom marker with towerId property
-    class CustomMarker(val towerId: Long, infoWindow: CustomInfoWindow, mapView: MapView): Marker(mapView) {
+    inner class CustomMarker(val towerId: Long, infoWindow: CustomInfoWindow, mapView: MapView): Marker(mapView) {
         init {
             this.infoWindow = infoWindow
+        }
+
+        override fun onMarkerClickDefault(marker: Marker?, mapView: MapView ?) : Boolean {
+            if ((marker != null) && (mapView != null)) {
+                // Get list of markers closer than threshold distance
+                val thresholdDistance = 3000000.0 / 2.0.pow(mapView.zoomLevelDouble)
+                val nearby = markers.filter { m ->
+                    marker.position.distanceToAsDouble(m.position) < thresholdDistance
+                }
+
+                if (nearby.size == 1) {
+                    // Only one candiate, so simply show the info window
+                    marker.showInfoWindow()
+                    mapView.controller.animateTo(marker.position)
+
+                } else {
+                    // Sort markers by distance, and restrict list size to 5
+                    val nearMarkers = nearby.sortedBy {
+                        marker.position.distanceToAsDouble(it.position)
+                    }.subList(0, min(5, nearby.size))
+
+                    activity?.let { act ->
+                        // Create dialog
+                        val builder = AlertDialog.Builder(act).apply {
+                            setTitle("Which tower?")
+                            setItems(nearMarkers.map {it.title}.toTypedArray()) { _, which ->
+                                // Show the info window of the selected marker
+                                val mrk = nearMarkers[which]
+                                mrk.showInfoWindow()
+                                mapView.controller.animateTo(mrk.position)
+                            }
+                        }
+
+                        nearbyDialog = builder.create()
+                        nearbyDialog?.show()
+                    }
+                }
+            }
+
+            return true
         }
     }
 
