@@ -149,6 +149,7 @@ class MapFragment : SearchableFragment(), LocationListener {
 
         // Disable location tracking if any user interaction
         mapView.setOnTouchListener {_, _ ->
+            infoWindow.close()
             setTracking(false)
             false
         }
@@ -378,11 +379,12 @@ class MapFragment : SearchableFragment(), LocationListener {
                 val marker = markerReference as CustomMarker
                 intent.putExtra("TOWER_ID", marker.towerId)
                 startActivity(view.context, intent, null)
+                close()
             }
 
             val cancelButton: Button = view.findViewById(R.id.bubble_cancel)
             cancelButton.setOnClickListener {
-                markerReference.closeInfoWindow()
+                close()
             }
         }
     }
