@@ -22,6 +22,7 @@ package uk.org.freeflight.bellfinder
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Browser
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -103,6 +104,9 @@ class TowerInfoActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
                 val url = "https://dove.cccbr.org.uk/detail.php?TowerBase=${tower.towerId}"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                
+                // Re-use existing browswer tab
+                intent.putExtra(Browser.EXTRA_APPLICATION_ID, packageName)
                 startActivity(intent)
             }
 
