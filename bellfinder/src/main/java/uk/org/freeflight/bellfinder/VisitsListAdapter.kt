@@ -72,9 +72,7 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
             // Match on place name or county
             visitMap.filter { visit ->
                 (visit.value.placeCountyList?.let { regex.containsMatchIn(it) }
-                    ?: regex.containsMatchIn(visit.value.place)) ||
-                        (visit.value.county?.let { regex.containsMatchIn(CountyLookup.lookup(it)) }
-                            ?: false)
+                    ?: regex.containsMatchIn(visit.value.place))
             }.map { it.key }
         }
     }
