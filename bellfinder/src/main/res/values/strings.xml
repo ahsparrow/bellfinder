@@ -9,6 +9,8 @@
         Bell Finder is copyright Alan Sparrow and licensed under GPLv3
         \n\nDove data is copyright Central Council of Church Bell Ringers and licensed under the
         Creative Commons Attribution-ShareAlike 4.0 International License
+        \n\nMap data is copyright OpenStreetMap contributors and licensed under the Open Data
+        Commons Open Database License, see https://www.openstreetmap.org/copyright
         \n\nSee https://github.com/ahsparrow/bellfinder for more  details
     </string>
     <string name="county_label">County:</string>
