@@ -182,7 +182,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                         // New markers to add
                         val newTowers = towers.filter { it.towerId !in existingIds }
                         val newMarkers = newTowers.map { tower ->
-                            val marker = CustomMarker(tower.towerId, infoWindow, mapView).apply {
+                            val marker = CustomMarker(tower.towerId, tower.bells, infoWindow, mapView).apply {
                                 position = GeoPoint(tower.latitude, tower.longitude)
                                 title = tower.placeCountyList ?: tower.place
 
@@ -320,7 +320,7 @@ class MapFragment : SearchableFragment(), LocationListener {
     override fun search(pattern: String) {}
 
     // Custom marker with towerId property
-    inner class CustomMarker(val towerId: Long, infoWindow: CustomInfoWindow, mapView: MapView): Marker(mapView) {
+    inner class CustomMarker(val towerId: Long, val bells: Int, infoWindow: CustomInfoWindow, mapView: MapView): Marker(mapView) {
         init {
             this.infoWindow = infoWindow
         }
@@ -348,7 +348,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                         // Create dialog
                         val builder = AlertDialog.Builder(act).apply {
                             setTitle("Which tower?")
-                            setItems(nearMarkers.map {it.title}.toTypedArray()) { _, which ->
+                            setItems(nearMarkers.map {it.title + " (" + it.bells + ")"}.toTypedArray()) { _, which ->
                                 // Show the info window of the selected marker
                                 val mrk = nearMarkers[which]
                                 mrk.showInfoWindow()
