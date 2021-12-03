@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="110.04156mm"
+   height="75.390625mm"
+   viewBox="0 0 110.04156 75.390627"
+   version="1.1"
+   id="svg879"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="shadow.svg">
+  <defs
+     id="defs873">
+    <rect
+       x="135"
+       y="-5"
+       width="125"
+       height="30"
+       id="rect2201" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0564274"
+     inkscape:cx="163.15003"
+     inkscape:cy="88.371104"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     showguides="true"
+     inkscape:window-width="1916"
+     inkscape:window-height="1052"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1442"
+       dotted="true"
+       units="mm"
+       spacingx="5"
+       spacingy="5"
+       originx="-6.4425966"
+       originy="0.390625" />
+    <sodipodi:guide
+       position="-6.4425961,75.000007"
+       orientation="0,793.70079"
+       id="guide1453" />
+    <sodipodi:guide
+       position="203.55741,75.000007"
+       orientation="1122.5197,0"
+       id="guide1455" />
+    <sodipodi:guide
+       position="203.55741,-222.00001"
+       orientation="0,-793.70079"
+       id="guide1457" />
+    <sodipodi:guide
+       position="43.557406,94.999997"
+       orientation="-1122.5197,0"
+       id="guide1459" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata876">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-6.442596,0.390625)">
+    <path
+       id="path1444"
+       style="fill:#000000;fill-opacity:0.15000001;stroke:none;stroke-width:0;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 111.32763,24.674309 C 98.484346,38.51729 15.026924,75 15.026924,75 c 0,0 -16.5425813,-36.48271 -3.699297,-50.325691 12.843285,-13.842981 45.640587,-25.064934 73.254824,-25.064934 27.614239,0 39.588459,11.221953 26.745179,25.064934 z"
+       sodipodi:nodetypes="scsss"
+       inkscape:export-filename="/home/ahs/src/bellfinder/src/assets/icons/tower_shadow.png"
+       inkscape:export-xdpi="7.1554785"
+       inkscape:export-ydpi="7.1554785" />
+  </g>
+</svg>
