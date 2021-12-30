@@ -72,11 +72,10 @@ class MainActivity : AppCompatActivity() {
         val initialisedVersionCode = sharedPref.getInt(getString(R.string.initialised_version_code), 0)
         if (BuildConfig.VERSION_CODE != initialisedVersionCode) {
 
-            val stream = assets.open("dove.txt")
+            val stream = assets.open("dove.csv")
             lifecycleScope.launch {
                 val towers = withContext(Dispatchers.IO) {
-                    val data = stream.bufferedReader().use { it.readLines() }
-                    parseDove(data)
+                    parseDove(stream)
                 }
 
                 val viewModel: ViewModel by viewModels()

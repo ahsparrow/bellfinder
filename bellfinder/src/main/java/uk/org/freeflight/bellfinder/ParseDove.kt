@@ -19,82 +19,31 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder
 
-import android.util.Log
+import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import uk.org.freeflight.bellfinder.db.Tower
+import java.io.InputStream
 
-// List of columns in Dove data file
-private val DOVE_COLS = listOf(
-    "TowerBase",
-    "Place",
-    "PlaceCL",
-    "County",
-    "Dedicn",
-    "Bells",
-    "Wt",
-    "UR",
-    "PracN",
-    "PrXF",
-    "Lat",
-    "Long"
-)
+fun parseDove(input: InputStream) : List<Tower> {
+    val data = csvReader().readAllWithHeader(input)
 
-fun parseDove(data: List<String>) : List<Tower> {
-    val columns = data[0].split("\\")
+    fun String.maybeNull(): String? {return if (this == "") null else this}
 
-    // Check for correct column names
-    for (c in DOVE_COLS) {
-        if (c !in columns ) {
-            Log.w(TAG, "Dove data: missing column name: $c")
-            return emptyList()
-        }
+    val towers = data.map { tower ->
+        Tower(
+            tower.getValue("TowerBase").toLong(),
+            tower.getValue("Place"),
+            tower.getValue("PlaceCL").maybeNull(),
+            tower.getValue("County").maybeNull(),
+            tower.getValue("Dedicn").maybeNull(),
+            tower.getValue("Bells").toInt(),
+            tower.getValue("Wt").toInt(),
+            tower.getValue("UR") != "",
+            tower.getValue("PracN").maybeNull(),
+            tower.getValue("PrXF").maybeNull(),
+            tower.getValue("Lat").toDouble(),
+            tower.getValue("Long").toDouble()
+        )
     }
 
-    // Get column indices for database fields
-    val indices = DOVE_COLS.map {columns.indexOf(it)}
-
-    val result = mutableListOf<Tower>()
-    data.subList(1, data.size).forEachIndexed { i, line ->
-        val doveValues = line.split("\\")
-
-        // Check we have correct number of values
-        if (doveValues.size != columns.size) {
-            Log.w(TAG, "Dove data: wrong number of fields at line ${i + 1}")
-            return emptyList()
-        }
-
-        // Extract required values and create map
-        val values = indices.map {doveValues[it]}
-        val t = DOVE_COLS.zip(values).toMap()
-
-        fun String.maybeNull(): String? {return if (this == "") null else this}
-
-        val towerInfo = try {
-            val towerId = t.getValue("TowerBase").toLong()
-            val place = t.getValue("Place")
-            val placeCountyList = t.getValue("PlaceCL").maybeNull()
-            val county = t.getValue("County").maybeNull()
-            val dedication = t.getValue("Dedicn").maybeNull()
-            val bells = t.getValue("Bells").toInt()
-            val weight = t.getValue("Wt").toInt()
-            val unringable = t.getValue("UR") != ""
-            val practiceNight = t.getValue("PracN").maybeNull()
-            val practiceExtra = t.getValue("PrXF").maybeNull()
-            val lat = t.getValue("Lat").toDouble()
-            val lon = t.getValue("Long").toDouble()
-
-            Tower(towerId, place, placeCountyList, county, dedication,
-                  bells, weight, unringable,  practiceNight, practiceExtra, lat, lon)
-        }
-        catch (e: NumberFormatException) {
-            Log.w(TAG, "Dove data: bad value at line ${i + 1}")
-            null
-        }
-
-        // Add new tower to result
-        if (towerInfo != null) {
-            result.add(towerInfo)
-        }
-    }
-
-    return result
+    return towers
 }
