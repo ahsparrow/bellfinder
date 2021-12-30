@@ -74,8 +74,7 @@ class TowerInfoActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
 
             // County
-            findViewById<TextView>(R.id.textview_towerinfo_county).text =
-                tower.county?.let {CountyLookup.lookup(it)} ?: ""
+            findViewById<TextView>(R.id.textview_towerinfo_county).text = tower.county ?: ""
 
             // Number of bells
             findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()

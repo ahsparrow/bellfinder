@@ -40,7 +40,7 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
 
             // Set place information in text views
             holder.place.text = current.placeCountyList ?: current.place
-            holder.place2.text = current.county?.let {CountyLookup.lookup(it)} ?: ""
+            holder.place2.text = current.county ?: ""
 
             holder.bells.text = current.bells.toString()
 

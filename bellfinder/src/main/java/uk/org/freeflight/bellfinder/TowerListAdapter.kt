@@ -48,7 +48,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
             } else {
                 holder.place.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
-            holder.place2.text = current.county?.let {CountyLookup.lookup(it)} ?: ""
+            holder.place2.text = current.county ?: ""
 
             // Number of bells
             holder.bells.text = current.bells.toString()
