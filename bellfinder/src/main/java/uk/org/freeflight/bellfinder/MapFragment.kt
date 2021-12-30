@@ -207,7 +207,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                         }
 
                         // Update marker overlays and list of markers
-                        mapView.overlays.removeAll(oldMarkers)
+                        mapView.overlays.removeAll(oldMarkers.toSet())
                         mapView.overlays.addAll(newMarkers)
                         markers = existingMarkers + newMarkers
 
