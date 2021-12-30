@@ -89,16 +89,7 @@ class TowerInfoActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
 
             // Practice night
-            val practiceNight = if (tower.practiceExtra != null) {
-                if (tower.practiceNight != null) {
-                    "${tower.practiceNight} ${tower.practiceExtra}"
-                } else {
-                    tower.practiceExtra
-                }
-            } else {
-                tower.practiceNight ?: ""
-            }
-            findViewById<TextView>(R.id.textview_towerinfo_practice).text = practiceNight
+            findViewById<TextView>(R.id.textview_towerinfo_practice).text = tower.practice ?: ""
 
             // Goto Dove web page
             findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {

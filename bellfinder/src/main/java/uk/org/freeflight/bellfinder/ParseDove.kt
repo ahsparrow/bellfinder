@@ -38,8 +38,7 @@ fun parseDove(input: InputStream) : List<Tower> {
             tower.getValue("Bells").toInt(),
             tower.getValue("Wt").toInt(),
             tower.getValue("UR") != "",
-            tower.getValue("PracN").maybeNull(),
-            tower.getValue("PrXF").maybeNull(),
+            tower.getValue("Practice").maybeNull(),
             tower.getValue("Lat").toDouble(),
             tower.getValue("Long").toDouble()
         )

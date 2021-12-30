@@ -33,8 +33,7 @@ data class Tower(
     val bells: Int,
     val weight: Int,
     val unringable: Boolean,
-    val practiceNight: String?,
-    val practiceExtra: String?,
+    val practice: String?,
     val latitude: Double,
     val longitude: Double
 )
