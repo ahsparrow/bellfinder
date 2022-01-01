@@ -11,9 +11,9 @@ android {
         applicationId "uk.org.freeflight.bellfinder"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 11
-        versionName "1.4"
-        buildConfigField("String", "DOVE_DATE", "\"13-Jul-2021\"")
+        versionCode 12
+        versionName "1.5"
+        buildConfigField("String", "DOVE_DATE", "\"1-Jan-2022\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
