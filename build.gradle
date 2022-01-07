@@ -31,7 +31,7 @@ ext {
     kotlinCsvJvmVersion = '1.2.0'
     lifecycleVersion = '2.4.0'
     materialVersion = '1.4.0'
-    osmDroidVersion = '6.1.10'
+    osmDroidVersion = '6.1.11'
     preferenceKtxVersion = '1.1.1'
     recyclerViewVersion = '1.2.1'
     recyclerViewSelectionVersion = '1.1.0'
