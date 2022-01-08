@@ -29,7 +29,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 @Database(
     entities = [Tower::class, Visit::class],
     views = [VisitView::class],
-    version = 2,
+    version = 3,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class BellFinderDatabase : RoomDatabase() {
@@ -51,11 +51,33 @@ abstract class BellFinderDatabase : RoomDatabase() {
                     context.applicationContext,
                     BellFinderDatabase::class.java,
                     "tower_database")
-                    .addMigrations(MIGRATION1TO2())
+                    .addMigrations(MIGRATION1TO2(), MIGRATION2TO3())
                     .build()
                 INSTANCE = instance
                 return instance
             }
+        }
+    }
+
+    class MIGRATION2TO3 : Migration(2, 3) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            // Can't drop individual columns, so drop and recreate the entire towers table
+            database.execSQL("DROP TABLE `Towers`")
+            database.execSQL(
+                "CREATE TABLE `Towers` (" +
+                        "towerId INTEGER NOT NULL, " +
+                        "place TEXT NOT NULL, " +
+                        "placeCountyList TEXT, " +
+                        "county TEXT, " +
+                        "dedication TEXT, " +
+                        "bells INTEGER NOT NULL, " +
+                        "weight INTEGER NOT NULL, " +
+                        "unringable INTEGER NOT NULL, " +
+                        "practice TEXT, " +
+                        "latitude REAL NOT NULL, " +
+                        "longitude REAL NOT NULL, " +
+                        "PRIMARY KEY(towerId))"
+            )
         }
     }
 
