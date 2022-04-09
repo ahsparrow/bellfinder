@@ -63,18 +63,18 @@ class TowerInfoActivity : AppCompatActivity() {
             }
 
             // Tower place
-            var place = tower.placeCountyList ?: tower.place
+            var place = tower.place
             if (tower.unringable) {
                 place = "$place (Unringable)"
             }
             findViewById<TextView>(R.id.textview_towerinfo_place).text = place
 
             // Tower place details
-            val place2 = tower.dedication ?: ""
+            val place2 = tower.dedication
             findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
 
             // County
-            findViewById<TextView>(R.id.textview_towerinfo_county).text = tower.county ?: ""
+            findViewById<TextView>(R.id.textview_towerinfo_county).text = tower.county
 
             // Number of bells
             findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()
@@ -88,7 +88,7 @@ class TowerInfoActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
 
             // Practice night
-            findViewById<TextView>(R.id.textview_towerinfo_practice).text = tower.practice ?: ""
+            findViewById<TextView>(R.id.textview_towerinfo_practice).text = tower.practice
 
             // Goto Dove web page
             findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
@@ -140,13 +140,10 @@ class TowerInfoActivity : AppCompatActivity() {
                 viewModel.getTower(towerId)
             }
 
-            // Tower place details
-            val place = tower.placeCountyList ?: tower.place
-
             // Display labelled marker at tower position
             val uriStr = "geo:${tower.latitude},${tower.longitude}" +
                     "?z=8&" +
-                    "q=${tower.latitude},${tower.longitude}(${Uri.encode(place)})"
+                    "q=${tower.latitude},${tower.longitude}(${Uri.encode(tower.place)})"
 
             val gmmIntentUri = Uri.parse(uriStr)
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)

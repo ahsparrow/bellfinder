@@ -272,7 +272,6 @@ class MainActivity : AppCompatActivity() {
 
                     val rows = visits.map { visit ->
                         val date = getString(R.string.date_format_iso).format(visit.date)
-                        val place = visit.placeCountyList ?: visit.place
 
                         listOf(
                             visit.visitId.toString(),
@@ -281,7 +280,7 @@ class MainActivity : AppCompatActivity() {
                             visit.notes,
                             if (visit.peal) "Y" else "",
                             if (visit.quarter) "Y" else "",
-                            place
+                            visit.place
                         )
                     }
                     csvWriter().writeAll(header + rows, output)

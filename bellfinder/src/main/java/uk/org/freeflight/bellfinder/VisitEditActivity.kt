@@ -189,7 +189,7 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
 
             val textView: TextView = findViewById(R.id.textview_visit_place)
 
-            val txt = SpannableString(tower.placeCountyList ?: tower.place)
+            val txt = SpannableString(tower.place)
             if (isClickable)
                 txt.setSpan(UnderlineSpan(), 0, txt.length, 0)
 

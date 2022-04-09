@@ -25,7 +25,7 @@ import java.util.*
 @DatabaseView(
     "SELECT visits.visitId, visits.towerId, visits.date, visits.notes, " +
             "visits.peal, visits.quarter, " +
-            "towers.place AS place, towers.placeCountyList AS placeCountyList, " +
+            "towers.place AS place, " +
             "towers.county AS county, towers.bells AS bells " +
             "FROM visits INNER JOIN towers ON visits.towerId = towers.towerId")
 data class VisitView (
@@ -36,7 +36,6 @@ data class VisitView (
     val peal: Boolean,
     val quarter: Boolean,
     val place: String,
-    val placeCountyList: String?,
     val county: String?,
     val bells: Int
 )

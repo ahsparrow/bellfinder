@@ -184,7 +184,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                         val newMarkers = newTowers.map { tower ->
                             val marker = CustomMarker(tower.towerId, tower.bells, infoWindow, mapView).apply {
                                 position = GeoPoint(tower.latitude, tower.longitude)
-                                title = tower.placeCountyList ?: tower.place
+                                title = tower.place
 
                                 // Tenor weight
                                 val weight = round(tower.weight / 112.0).toInt()

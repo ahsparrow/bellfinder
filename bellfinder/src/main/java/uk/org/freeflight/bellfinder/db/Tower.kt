@@ -27,13 +27,12 @@ import androidx.room.PrimaryKey
 data class Tower(
     @PrimaryKey  val towerId: Long,
     val place: String,
-    val placeCountyList: String?,
-    val county: String?,
-    val dedication: String?,
+    val county: String,
+    val dedication: String,
     val bells: Int,
     val weight: Int,
     val unringable: Boolean,
-    val practice: String?,
+    val practice: String,
     val latitude: Double,
     val longitude: Double
 )

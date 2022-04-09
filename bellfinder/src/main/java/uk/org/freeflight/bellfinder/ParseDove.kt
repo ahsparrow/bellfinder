@@ -26,21 +26,18 @@ import java.io.InputStream
 fun parseDove(input: InputStream) : List<Tower> {
     val data = csvReader().readAllWithHeader(input)
 
-    fun String.maybeNull(): String? {return if (this == "") null else this}
-
     val towers = data.map { tower ->
         Tower(
-            tower.getValue("TowerBase").toLong(),
-            tower.getValue("Place"),
-            tower.getValue("PlaceCL").maybeNull(),
-            tower.getValue("County").maybeNull(),
-            tower.getValue("Dedicn").maybeNull(),
-            tower.getValue("Bells").toInt(),
-            tower.getValue("Wt").toInt(),
-            tower.getValue("UR") != "",
-            tower.getValue("Practice").maybeNull(),
-            tower.getValue("Lat").toDouble(),
-            tower.getValue("Long").toDouble()
+            tower.getValue("towerId").toLong(),
+            tower.getValue("place"),
+            tower.getValue("county"),
+            tower.getValue("dedication"),
+            tower.getValue("bells").toInt(),
+            tower.getValue("weight").toInt(),
+            tower.getValue("unringable").equals("True"),
+            tower.getValue("practice"),
+            tower.getValue("latitude").toDouble(),
+            tower.getValue("longitude").toDouble()
         )
     }
 
