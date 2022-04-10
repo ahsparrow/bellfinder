@@ -50,12 +50,12 @@ class TowerInfoActivity : AppCompatActivity() {
 
         towerId = intent.extras!!.get("TOWER_ID") as Long
 
-        viewModel.liveTowerVisits(towerId).observe(this, { visits ->
+        viewModel.liveTowerVisits(towerId).observe(this) { visits ->
             if (visits.isNotEmpty()) {
                 val txt = getString(R.string.date_format_long).format(visits[0].date)
                 findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
             }
-        })
+        }
 
         lifecycleScope.launch {
             val tower = withContext(Dispatchers.IO) {
