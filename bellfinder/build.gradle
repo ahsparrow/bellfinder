@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "uk.org.freeflight.bellfinder"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 14
         versionName "1.6"
         buildConfigField("String", "DOVE_DATE", "\"1-Jan-2022\"")
