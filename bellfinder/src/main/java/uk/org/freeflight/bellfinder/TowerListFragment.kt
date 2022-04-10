@@ -37,14 +37,14 @@ class TowerListFragment: ListFragment() {
         super.onCreate(savedInstanceState)
 
         // Set tower information in list adapter
-        viewModel.liveTowers.observe(this, { towers ->
+        viewModel.liveTowers.observe(this) { towers ->
             towers?.let { adapter.setTowers(towers) }
-        })
+        }
 
         // Set visited towers in list adapter
-        viewModel.liveVisitedTowerIds.observe(this, { towerIds ->
-            towerIds?.let { adapter.setVisitedTowers(towerIds)}
-        })
+        viewModel.liveVisitedTowerIds.observe(this) { towerIds ->
+            towerIds?.let { adapter.setVisitedTowers(towerIds) }
+        }
     }
 
     override fun search(pattern: String) {
