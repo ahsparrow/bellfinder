@@ -34,7 +34,7 @@ fun parseDove(input: InputStream) : List<Tower> {
             tower.getValue("dedication"),
             tower.getValue("bells").toInt(),
             tower.getValue("weight").toInt(),
-            tower.getValue("unringable").equals("True"),
+            tower.getValue("unringable") == "True",
             tower.getValue("practice"),
             tower.getValue("latitude").toDouble(),
             tower.getValue("longitude").toDouble()
