@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package uk.org.freeflight.bellfinder
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -188,6 +189,7 @@ class NearbyListFragment : ListFragment(), LocationListener {
         return System.currentTimeMillis() - location.time
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun sort(location: Location) {
         lifecycleScope.launch {
             withContext(Dispatchers.Default) {

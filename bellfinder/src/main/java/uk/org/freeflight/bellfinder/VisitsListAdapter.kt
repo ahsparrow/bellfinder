@@ -55,6 +55,7 @@ class VisitsListAdapter(onClick: (id: Long) -> Unit,
     }
 
     // Set visit details
+    @SuppressLint("NotifyDataSetChanged")
     internal fun setVisits(visits: List<VisitView>) {
         itemIds = visits.map { it.visitId }
         visitMap = visits.associateBy({ it.visitId }, { it })

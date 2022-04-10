@@ -86,6 +86,7 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
     }
 
     // Set tower details (initially display all towers)
+    @SuppressLint("NotifyDataSetChanged")
     internal fun setTowers(towers: List<Tower>) {
         itemIds = towers.map { it.towerId }
         towerMap = towers.associateBy({ it.towerId }, { it })
@@ -96,6 +97,7 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
     }
 
     // Set list of visited towers
+    @SuppressLint("NotifyDataSetChanged")
     internal fun setVisitedTowers(towers: List<Long>) {
         visitedTowers = towers
         notifyDataSetChanged()

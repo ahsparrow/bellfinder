@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import androidx.core.content.ContextCompat.getDrawable
 import uk.org.freeflight.bellfinder.db.Tower
@@ -63,6 +64,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
     }
 
     // Set tower details (initially display all towers)
+    @SuppressLint("NotifyDataSetChanged")
     internal fun setTowers(towers: List<Tower>) {
         itemIds = towers.map { it.towerId }
         towerMap = towers.associateBy({ it.towerId }, { it })
@@ -70,6 +72,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
     }
 
     // Set list of visited towers
+    @SuppressLint("NotifyDataSetChanged")
     internal fun setVisitedTowers(towers: List<Long>) {
         visitedTowers = towers
         notifyDataSetChanged()

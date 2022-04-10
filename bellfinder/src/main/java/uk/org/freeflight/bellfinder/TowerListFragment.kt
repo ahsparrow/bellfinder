@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
@@ -47,6 +48,7 @@ class TowerListFragment: ListFragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun search(pattern: String) {
         lifecycleScope.launch {
             withContext(Dispatchers.Default) {
