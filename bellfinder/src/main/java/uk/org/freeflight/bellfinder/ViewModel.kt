@@ -42,14 +42,14 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     suspend fun getTowersByLocation(location: Location): List<Tower> {
         val towers = dao.getTowers()
 
-        val distances = towers.map {
+        val distances = towers.associate {
             val loc = Location("").apply {
                 latitude = it.latitude
                 longitude = it.longitude
             }
 
             it.towerId to location.distanceTo(loc).toDouble()
-        }.toMap()
+        }
 
         return towers.sortedBy { distances[it.towerId] }
     }
