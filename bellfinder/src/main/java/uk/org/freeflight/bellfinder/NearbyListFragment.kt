@@ -57,14 +57,14 @@ class NearbyListFragment : ListFragment(), LocationListener {
         super.onCreate(savedInstanceState)
 
         // Set tower information in list adapter
-        viewModel.liveTowers.observe(this, { towers ->
+        viewModel.liveTowers.observe(this) { towers ->
             towers?.let { adapter.setTowers(it) }
-        })
+        }
 
         // Set visited towers in list adapter
-        viewModel.liveVisitedTowerIds.observe(this, { towerIds ->
-            towerIds?.let { adapter.setVisitedTowers(towerIds)}
-        })
+        viewModel.liveVisitedTowerIds.observe(this) { towerIds ->
+            towerIds?.let { adapter.setVisitedTowers(towerIds) }
+        }
 
         locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
