@@ -38,14 +38,14 @@ class VisitsListFragment : ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.liveVisitViews.observe(this, { visits ->
+        viewModel.liveVisitViews.observe(this) { visits ->
             visits?.let {
                 adapter.setVisits(visits)
 
                 val tv: TextView? = view?.findViewById(R.id.textview_visits_info)
-                tv?.visibility =  if (visits.isEmpty()) View.VISIBLE else View.GONE
+                tv?.visibility = if (visits.isEmpty()) View.VISIBLE else View.GONE
             }
-        })
+        }
     }
 
     override fun search(pattern: String) {
