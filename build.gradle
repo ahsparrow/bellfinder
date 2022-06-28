@@ -42,7 +42,7 @@ ext {
     coreTestingVersion = '2.1.0'
     espressoCoreVersion = '3.4.0'
     hamcrestVersion = '2.2'
-    kotlinxCoroutinesTestVersion = '1.3.2'
+    kotlinxCoroutinesTestVersion = '1.6.1'
     junitVersion = '4.13.2'
 }
 
