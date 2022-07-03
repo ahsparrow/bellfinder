@@ -51,12 +51,8 @@ class VisitsListFragment : ListFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun search(pattern: String) {
-        lifecycleScope.launch {
-            withContext(Dispatchers.Default) {
-                adapter.search(pattern)
-            }
-            adapter.notifyDataSetChanged()
-        }
+        adapter.search(pattern)
+        adapter.notifyDataSetChanged()
     }
 
     private fun onClick(id: Long) {

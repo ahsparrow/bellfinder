@@ -23,10 +23,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TowerListFragment: ListFragment() {
     private val adapter = TowerListAdapter(::onClick, ::onLongClick)
@@ -50,12 +46,8 @@ class TowerListFragment: ListFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun search(pattern: String) {
-        lifecycleScope.launch {
-            withContext(Dispatchers.Default) {
-                adapter.search(pattern)
-            }
-            adapter.notifyDataSetChanged()
-        }
+        adapter.search(pattern)
+        adapter.notifyDataSetChanged()
     }
 
     private fun onClick(id: Long) {
