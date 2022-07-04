@@ -77,6 +77,16 @@ abstract class BellFinderDatabase : RoomDatabase() {
                         "longitude REAL NOT NULL, " +
                         "PRIMARY KEY(towerId))"
             )
+
+            // Drop and recreate the VisitView view
+            database.execSQL("DROP VIEW `VisitView`")
+            database.execSQL("CREATE VIEW `VisitView` AS SELECT " +
+                    "visits.visitId, visits.towerId, visits.date, visits.notes, " +
+                    "visits.peal, visits.quarter, " +
+                    "towers.place AS place, " +
+                    "towers.county AS county, towers.bells AS bells " +
+                    "FROM visits INNER JOIN towers ON visits.towerId = towers.towerId"
+            )
         }
     }
 
