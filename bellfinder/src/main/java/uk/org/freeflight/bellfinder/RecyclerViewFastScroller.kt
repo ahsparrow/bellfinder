@@ -835,7 +835,7 @@ class RecyclerViewFastScroller @JvmOverloads constructor(
                 state: RecyclerView.State
             ) {
                 super.getItemOffsets(outRect, view, parent, state)
-                if (parent.getChildAdapterPosition(view) == parent.adapter?.itemCount ?: 0 - 1) {
+                if (parent.getChildAdapterPosition(view) == (parent.adapter?.itemCount ?: (0 - 1))) {
                     val currentVisiblePos: Int =
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (currentVisiblePos != RecyclerView.NO_POSITION) {
