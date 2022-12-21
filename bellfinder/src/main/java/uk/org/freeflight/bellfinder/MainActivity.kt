@@ -33,6 +33,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             importHandler(it)
         }
 
-        getExport = registerForActivityResult(ActivityResultContracts.CreateDocument()) {
+        getExport = registerForActivityResult(CreateDocument("text/csv")) {
             exportHandler(it)
         }
 
