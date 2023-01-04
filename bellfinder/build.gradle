@@ -13,7 +13,7 @@ android {
         targetSdkVersion 32
         versionCode 17
         versionName "1.7"
-        buildConfigField("String", "DOVE_DATE", "\"30-Jun-2022\"")
+        buildConfigField("String", "DOVE_DATE", "\"02-Jan-2023\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
