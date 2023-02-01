@@ -9,7 +9,4 @@
 
     <!-- Sampe as colorPrimary, but without night variation -->
     <color name="ic_launcher_background">#96B4FF</color>
-
-    <!-- For fast scroller -->
-    <color name="fastscroller_background">#ffffff</color>
 </resources>

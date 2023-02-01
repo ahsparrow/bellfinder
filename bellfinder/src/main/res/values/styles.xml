@@ -5,8 +5,4 @@
     </style>
 
     <!-- For fast scroller -->
-    <style name="FastScrollerTextAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/fastscroller_background</item>
-        <item name="android:textSize">18sp</item>
-    </style>
 </resources>
