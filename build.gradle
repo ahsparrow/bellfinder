@@ -27,6 +27,7 @@ allprojects {
 ext {
     appCompatVersion = '1.5.1'
     constraintLayoutVersion = '2.1.4'
+    fastScrollerVersion = '1.2.0'
     fragmentKtxVersion = '1.5.5'
     kotlinCsvJvmVersion = '1.7.0'
     lifecycleVersion = '2.5.1'

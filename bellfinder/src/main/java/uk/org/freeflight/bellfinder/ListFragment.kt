@@ -25,6 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import me.zhanghai.android.fastscroll.FastScrollerBuilder
 
 abstract class ListFragment: SearchableFragment() {
     abstract fun getAdapter(): ListAdapter
@@ -42,6 +43,11 @@ abstract class ListFragment: SearchableFragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.contentDescription = getAdapter().name
 
+        val builder = FastScrollerBuilder(recyclerView)
+        builder.useMd2Style()
+        builder.setPadding(8, 16, 0, 16)
+        builder.disableScrollbarAutoHide()
+        builder.build()
         return view
     }
 }

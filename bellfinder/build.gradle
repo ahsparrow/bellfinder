@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "uk.org.freeflight.bellfinder"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 18
         versionName "1.8"
         buildConfigField("String", "DOVE_DATE", "\"02-Jan-2023\"")
@@ -46,14 +46,13 @@ android {
         }
     }
 
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     namespace 'uk.org.freeflight.bellfinder'
 }
@@ -96,4 +95,7 @@ dependencies {
 
     // osmdroid
     implementation "org.osmdroid:osmdroid-android:$rootProject.osmDroidVersion"
+
+    // Fast scroller
+    implementation "me.zhanghai.android.fastscroll:library:$rootProject.fastScrollerVersion"
 }
