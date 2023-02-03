@@ -48,7 +48,7 @@ class TowerInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        towerId = intent.extras!!.get("TOWER_ID") as Long
+        towerId = intent.extras!!.getLong("TOWER_ID")
 
         viewModel.liveTowerVisits(towerId).observe(this) { visits ->
             if (visits.isNotEmpty()) {

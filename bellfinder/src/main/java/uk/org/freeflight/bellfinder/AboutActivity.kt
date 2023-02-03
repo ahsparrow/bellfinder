@@ -15,8 +15,7 @@ class AboutActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val pinfo = packageManager.getPackageInfo(packageName, 0)
-        findViewById<TextView>(R.id.textview_app_version).text = pinfo.versionName
+        findViewById<TextView>(R.id.textview_app_version).text = BuildConfig.VERSION_NAME
         findViewById<TextView>(R.id.textview_dove_info).text = BuildConfig.DOVE_DATE
     }
 

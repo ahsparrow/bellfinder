@@ -56,8 +56,12 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
         setContentView(R.layout.activity_visit_details)
 
         // Get intent data
-        towerId = intent.extras!!.get("TOWER_ID") as Long
-        visitId = intent.extras?.get("VISIT_ID") as Long?
+        towerId = intent.extras!!.getLong("TOWER_ID")
+        visitId = if (intent.extras!!.containsKey("VISIT_ID")) {
+            intent.extras!!.getLong("VISIT_ID")
+        } else {
+            null
+        }
 
         setPlaceName(towerId, visitId != null)
 
