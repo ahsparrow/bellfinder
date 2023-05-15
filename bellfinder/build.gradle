@@ -1,10 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 android {
+    namespace 'uk.org.freeflight.bellfinder'
     compileSdk 33
 
     defaultConfig {
@@ -14,13 +15,6 @@ android {
         versionCode 18
         versionName "1.8"
         buildConfigField("String", "DOVE_DATE", "\"02-Jan-2023\"")
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    repositories {
-        google()
-        mavenCentral()
     }
 
     signingConfigs {
@@ -47,55 +41,51 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = '17'
     }
-    namespace 'uk.org.freeflight.bellfinder'
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.2'
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentKtxVersion"
-    implementation "androidx.preference:preference-ktx:$rootProject.preferenceKtxVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-    implementation "androidx.recyclerview:recyclerview-selection:$rootProject.recyclerViewSelectionVersion"
-    implementation "androidx.viewpager2:viewpager2:$rootProject.viewpager2Version"
-
-    // Testing
-    testImplementation "junit:junit:$rootProject.junitVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.kotlinxCoroutinesTestVersion"
-    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCoreVersion"
-    androidTestImplementation "org.hamcrest:hamcrest-library:$rootProject.hamcrestVersion"
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
+    implementation "androidx.preference:preference-ktx:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.3.0"
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Room components
-    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
-    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
-    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
-    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     // Lifecycle components
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
+    def lifecycle_version = "2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // Material design
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "com.google.android.material:material:1.9.0"
 
     // CSV reader/writer
-    implementation "com.github.doyaaaaaken:kotlin-csv-jvm:$rootProject.kotlinCsvJvmVersion"
+    implementation "com.github.doyaaaaaken:kotlin-csv-jvm:1.7.0"
 
     // osmdroid
-    implementation "org.osmdroid:osmdroid-android:$rootProject.osmDroidVersion"
+    implementation "org.osmdroid:osmdroid-android:6.1.14"
 
     // Fast scroller
-    implementation "me.zhanghai.android.fastscroll:library:$rootProject.fastScrollerVersion"
+    implementation "me.zhanghai.android.fastscroll:library:1.2.0"
 }
