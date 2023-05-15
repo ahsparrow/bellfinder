@@ -79,7 +79,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
     }
 
     // Filter displayed towers by match with start of word name
-    override fun search(pattern: String) {
+    fun search(pattern: String) {
         itemIds = if (pattern == "") {
             towerMap.map { it.key }
         } else {

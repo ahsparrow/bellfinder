@@ -117,6 +117,4 @@ class NearbyListAdapter(onClick: (id: Long) -> Unit,
         val tmp = itemIds.sortedBy { towerDistances[it] }
         itemIds = tmp
     }
-
-    override fun search(pattern: String) {}
 }

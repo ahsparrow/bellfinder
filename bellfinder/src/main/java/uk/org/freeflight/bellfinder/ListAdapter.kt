@@ -65,6 +65,4 @@ abstract class ListAdapter(val name: String,
     }
 
     override fun getItemCount() = itemIds.size
-
-    abstract fun search(pattern: String)
 }
