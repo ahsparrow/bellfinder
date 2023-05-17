@@ -40,7 +40,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenResumed
+import androidx.lifecycle.withResumed
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
@@ -157,69 +157,78 @@ class MapFragment : SearchableFragment(), LocationListener {
         mapView.addMapListener(DelayedMapListener(object : MapListener {
             override fun onScroll(p: ScrollEvent): Boolean {
                 lifecycleScope.launch {
-                    whenResumed {
-                        // Get surrounding towers
-                        val nearbyTowers = withContext(Dispatchers.IO) {
-                            val location = Location("").apply {
-                                latitude = mapView.mapCenter.latitude
-                                longitude = mapView.mapCenter.longitude
-                            }
-
-                            viewModel.getTowersByLocation(location)
-                        }
-
-                        // Limit number of towers to be displayed
-                        val towers = nearbyTowers.slice(0 until min(NUM_MARKERS, nearbyTowers.size))
-                        val ids = towers.map { it.towerId }
-
-                        // Old markers to remove
-                        val oldMarkers = markers.filter { it.towerId !in ids }
-
-                        // Existing markers to keep
-                        val existingMarkers = markers.filter { it.towerId in ids }
-                        val existingIds = existingMarkers.map { it.towerId }
-
-                        // New markers to add
-                        val newTowers = towers.filter { it.towerId !in existingIds }
-                        val newMarkers = newTowers.map { tower ->
-                            val marker = CustomMarker(tower.towerId, tower.bells, infoWindow, mapView).apply {
-                                position = GeoPoint(tower.latitude, tower.longitude)
-                                title = tower.place
-
-                                // Tenor weight
-                                val weight = round(tower.weight / 112.0).toInt()
-                                snippet = "$weight cwt"
-
-                                val resid = if (tower.unringable) {
-                                    R.drawable.tower_unringable
-                                } else when (tower.bells) {
-                                    1, 2, 3 -> R.drawable.tower3
-                                    4 -> R.drawable.tower4
-                                    5 -> R.drawable.tower5
-                                    6, 7 -> R.drawable.tower6
-                                    8, 9 -> R.drawable.tower8
-                                    10, 11 -> R.drawable.tower10
-                                    else -> R.drawable.tower12
+                    withResumed {
+                        lifecycleScope.launch {
+                            // Get surrounding towers
+                            val nearbyTowers = withContext(Dispatchers.IO) {
+                                val location = Location("").apply {
+                                    latitude = mapView.mapCenter.latitude
+                                    longitude = mapView.mapCenter.longitude
                                 }
-                                icon = ResourcesCompat.getDrawable(mapView.resources, resid, null)
+
+                                viewModel.getTowersByLocation(location)
                             }
-                            marker
+
+                            // Limit number of towers to be displayed
+                            val towers =
+                                nearbyTowers.slice(0 until min(NUM_MARKERS, nearbyTowers.size))
+                            val ids = towers.map { it.towerId }
+
+                            // Old markers to remove
+                            val oldMarkers = markers.filter { it.towerId !in ids }
+
+                            // Existing markers to keep
+                            val existingMarkers = markers.filter { it.towerId in ids }
+                            val existingIds = existingMarkers.map { it.towerId }
+
+                            // New markers to add
+                            val newTowers = towers.filter { it.towerId !in existingIds }
+                            val newMarkers = newTowers.map { tower ->
+                                val marker = CustomMarker(
+                                    tower.towerId,
+                                    tower.bells,
+                                    infoWindow,
+                                    mapView
+                                ).apply {
+                                    position = GeoPoint(tower.latitude, tower.longitude)
+                                    title = tower.place
+
+                                    // Tenor weight
+                                    val weight = round(tower.weight / 112.0).toInt()
+                                    snippet = "$weight cwt"
+
+                                    val resid = if (tower.unringable) {
+                                        R.drawable.tower_unringable
+                                    } else when (tower.bells) {
+                                        1, 2, 3 -> R.drawable.tower3
+                                        4 -> R.drawable.tower4
+                                        5 -> R.drawable.tower5
+                                        6, 7 -> R.drawable.tower6
+                                        8, 9 -> R.drawable.tower8
+                                        10, 11 -> R.drawable.tower10
+                                        else -> R.drawable.tower12
+                                    }
+                                    icon =
+                                        ResourcesCompat.getDrawable(mapView.resources, resid, null)
+                                }
+                                marker
+                            }
+
+                            // Update marker overlays and list of markers
+                            mapView.overlays.removeAll(oldMarkers.toSet())
+                            mapView.overlays.addAll(newMarkers)
+                            markers = existingMarkers + newMarkers
+
+                            // Close the info window if open on an old marker
+                            if (infoWindow.isOpen) {
+                                val marker = infoWindow.markerReference as CustomMarker
+                                if (marker.towerId !in existingIds)
+                                    marker.closeInfoWindow()
+                            }
+
+                            // Redraw
+                            mapView.invalidate()
                         }
-
-                        // Update marker overlays and list of markers
-                        mapView.overlays.removeAll(oldMarkers.toSet())
-                        mapView.overlays.addAll(newMarkers)
-                        markers = existingMarkers + newMarkers
-
-                        // Close the info window if open on an old marker
-                        if (infoWindow.isOpen) {
-                            val marker = infoWindow.markerReference as CustomMarker
-                            if (marker.towerId !in existingIds)
-                                marker.closeInfoWindow()
-                        }
-
-                        // Redraw
-                        mapView.invalidate()
                     }
                 }
                 return false
