@@ -26,6 +26,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.osmdroid.util.BoundingBox
+import org.osmdroid.util.GeoPoint
 import uk.org.freeflight.bellfinder.db.*
 import java.util.*
 
@@ -52,6 +54,13 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
         }
 
         return towers.sortedBy { distances[it.towerId] }
+    }
+
+    // Get towers in area
+    suspend fun getTowersByArea(boundingBox: BoundingBox): List<Tower> {
+        val towers = dao.getTowers()
+
+        return towers.filter { boundingBox.contains(GeoPoint(it.latitude, it.longitude)) }
     }
 
     // Insert towers
