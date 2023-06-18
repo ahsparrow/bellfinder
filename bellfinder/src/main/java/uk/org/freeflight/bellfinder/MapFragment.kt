@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -86,6 +87,8 @@ class MapFragment : SearchableFragment(), LocationListener {
     private var lastLocation: Location? = null
     private lateinit var locationMarker: Marker
     private var locationTracking: Boolean = false
+
+    private lateinit var infoMarker: Marker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,6 +155,12 @@ class MapFragment : SearchableFragment(), LocationListener {
             false
         }
 
+        infoMarker = Marker(mapView).apply {
+            setTextLabelFontSize(48)
+            setTextIcon(" Zoom in to see towers ")
+        }
+        mapView.overlays.add(infoMarker)
+
         mapView.addMapListener(DelayedMapListener(object : MapListener {
             override fun onScroll(p: ScrollEvent): Boolean {
                 updateMarkers()
@@ -170,6 +179,8 @@ class MapFragment : SearchableFragment(), LocationListener {
             withResumed {
                 lifecycleScope.launch {
                     if (mapView.zoomLevelDouble > 9.5) {
+                        infoMarker.setVisible(false)
+
                         // Get visible towers
                         val towers = withContext(Dispatchers.IO) {
                             viewModel.getTowersByArea(mapView.boundingBox)
@@ -232,6 +243,10 @@ class MapFragment : SearchableFragment(), LocationListener {
                                 marker.closeInfoWindow()
                         }
                     } else {
+                        infoMarker.setPosition(GeoPoint(mapView.getMapCenter()))
+                        infoMarker.setVisible(true)
+                        infoMarker.setAlpha(0.6F)
+
                         mapView.overlays.removeAll(markers)
                         markers = ArrayList()
                     }
