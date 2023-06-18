@@ -171,7 +171,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                 updateMarkers()
                 return false
             }
-        }, 200))
+        }, 50))
     }
 
     private fun updateMarkers() {
