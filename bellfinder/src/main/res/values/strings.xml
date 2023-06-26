@@ -1,5 +1,4 @@
 <resources>
-    <string name="about_title">About Bell Finder</string>
     <string name="add_visit_menuitem">Add visit</string>
     <string name="app_name">Bell Finder</string>
     <string name="app_version_label">Application version</string>
@@ -44,5 +43,6 @@
     <string name="unused">Unused</string>
     <string name="yes">Yes</string>
 
+    <string name="title_activity_about">About Bell Finder</string>
     <string name="title_activity_settings">Settings</string>
 </resources>
