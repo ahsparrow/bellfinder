@@ -32,6 +32,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -58,8 +59,10 @@ class NearbyListFragment : ListFragment(), LocationListener {
         super.onCreate(savedInstanceState)
 
         // Set tower information in list adapter
-        viewModel.liveTowers.observe(this) { towers ->
-            towers?.let { adapter.setTowers(it) }
+        lifecycle.coroutineScope.launch {
+            viewModel.getTowers.collect() { towers ->
+                towers.let { adapter.setTowers(towers) }
+            }
         }
 
         // Set visited towers in list adapter

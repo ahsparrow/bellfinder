@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package uk.org.freeflight.bellfinder
 
 import android.app.Application
-import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -35,32 +34,15 @@ import java.util.*
 class ViewModel (application: Application) : AndroidViewModel(application) {
     private val dao: BellFinderDao = BellFinderDatabase.getDatabase(application).bellFinderDao()
 
-    // Live list (ordered) of all towers
-    val liveTowers: LiveData<List<Tower>> = dao.liveTowers()
-    val liveTowersFlow: Flow<List<Tower>> = dao.liveTowersFlow()
+    // List of towers
+    val getTowers: Flow<List<Tower>> = dao.getTowers()
 
     // Get single tower
     suspend fun getTower(towerId: Long): Tower = dao.getTower(towerId)
 
-    // Sorted list of towers
-    suspend fun getTowersByLocation(location: Location): List<Tower> {
-        val towers = dao.getTowers()
-
-        val distances = towers.associate {
-            val loc = Location("").apply {
-                latitude = it.latitude
-                longitude = it.longitude
-            }
-
-            it.towerId to location.distanceTo(loc).toDouble()
-        }
-
-        return towers.sortedBy { distances[it.towerId] }
-    }
-
     // Get towers in area
     suspend fun getTowersByArea(boundingBox: BoundingBox): List<Tower> {
-        val towers = dao.getTowers()
+        val towers = dao.getTowersX()
 
         return towers.filter { boundingBox.contains(GeoPoint(it.latitude, it.longitude)) }
     }

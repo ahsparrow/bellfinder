@@ -28,16 +28,12 @@ import java.util.*
 interface BellFinderDao {
     // Towers...
 
-    // All towers
-    @Query("SELECT * FROM towers ORDER BY place ASC")
-    fun liveTowers(): LiveData<List<Tower>>
-
     @Query("SELECT towers.* FROM towers LEFT JOIN Preferences WHERE towers.unringable = Preferences.unringable ORDER BY place ASC")
-    fun liveTowersFlow(): Flow<List<Tower>>
+    fun getTowers(): Flow<List<Tower>>
 
     // ...non-live, unsorted
     @Query("SELECT * FROM towers")
-    suspend fun getTowers() : List<Tower>
+    suspend fun getTowersX() : List<Tower>
 
     // Single tower
     @Query("SELECT * FROM towers WHERE TowerId = :towerId LIMIT 1")

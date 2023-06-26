@@ -22,10 +22,8 @@ package uk.org.freeflight.bellfinder
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
-import androidx.preference.SwitchPreference
 import kotlinx.coroutines.launch
 
 class TowerListFragment: ListFragment() {
@@ -43,7 +41,7 @@ class TowerListFragment: ListFragment() {
         //}
 
         lifecycle.coroutineScope.launch {
-            viewModel.liveTowersFlow.collect() { towers ->
+            viewModel.getTowers.collect() { towers ->
                 towers.let { adapter.setTowers(towers) }
             }
         }
