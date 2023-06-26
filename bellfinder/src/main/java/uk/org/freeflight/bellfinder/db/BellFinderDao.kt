@@ -21,6 +21,7 @@ package uk.org.freeflight.bellfinder.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
@@ -30,6 +31,9 @@ interface BellFinderDao {
     // All towers
     @Query("SELECT * FROM towers ORDER BY place ASC")
     fun liveTowers(): LiveData<List<Tower>>
+
+    @Query("SELECT towers.* FROM towers LEFT JOIN Preferences WHERE towers.unringable = Preferences.unringable ORDER BY place ASC")
+    fun liveTowersFlow(): Flow<List<Tower>>
 
     // ...non-live, unsorted
     @Query("SELECT * FROM towers")
@@ -85,4 +89,10 @@ interface BellFinderDao {
 
     @Query("DELETE FROM visits WHERE visitId = :visitId")
     suspend fun deleteVisit(visitId: Long)
+
+    @Query("SELECT * FROM preferences LIMIT 1")
+    fun getPreferences(): Flow<Preferences>
+
+    @Query("UPDATE Preferences SET unringable=:unringable")
+    suspend fun updatePreferences(unringable: Boolean)
 }

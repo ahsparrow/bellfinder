@@ -22,7 +22,11 @@ package uk.org.freeflight.bellfinder
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
+import androidx.preference.SwitchPreference
+import kotlinx.coroutines.launch
 
 class TowerListFragment: ListFragment() {
     private val adapter = TowerListAdapter(::onClick, ::onLongClick)
@@ -34,8 +38,14 @@ class TowerListFragment: ListFragment() {
         super.onCreate(savedInstanceState)
 
         // Set tower information in list adapter
-        viewModel.liveTowers.observe(this) { towers ->
-            towers?.let { adapter.setTowers(towers) }
+        //viewModel.liveTowers.observe(this) { towers ->
+        //    towers?.let { adapter.setTowers(towers) }
+        //}
+
+        lifecycle.coroutineScope.launch {
+            viewModel.liveTowersFlow.collect() { towers ->
+                towers.let { adapter.setTowers(towers) }
+            }
         }
 
         // Set visited towers in list adapter

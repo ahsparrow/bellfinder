@@ -25,6 +25,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
@@ -36,6 +37,7 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
 
     // Live list (ordered) of all towers
     val liveTowers: LiveData<List<Tower>> = dao.liveTowers()
+    val liveTowersFlow: Flow<List<Tower>> = dao.liveTowersFlow()
 
     // Get single tower
     suspend fun getTower(towerId: Long): Tower = dao.getTower(towerId)
@@ -111,4 +113,10 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     var towerPosition: Position? = null
 
     class Position(val latitude: Double, val longitude: Double)
+
+    val getPreferences: Flow<Preferences> = dao.getPreferences()
+
+    fun updatePreferences(unringable: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        dao.updatePreferences(unringable)
+    }
 }

@@ -3,6 +3,4 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
-
-    <!-- For fast scroller -->
 </resources>

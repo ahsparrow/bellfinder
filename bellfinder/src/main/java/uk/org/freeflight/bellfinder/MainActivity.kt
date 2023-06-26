@@ -168,6 +168,12 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.settings_menuitem -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
             R.id.import_menuitem -> {
                 // text/csv would be better, but it doesn't seem to work
                 getImport.launch("*/*")

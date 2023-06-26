@@ -38,10 +38,11 @@
     <string name="save">Save</string>
     <string name="search_hint">Search Place</string>
     <string name="search_title">Search</string>
+    <string name="settings_menuitem">Settings</string>
     <string name="show_map_item">Get directions</string>
     <string name="tenor_label">Tenor:</string>
     <string name="unused">Unused</string>
     <string name="yes">Yes</string>
 
-    <!-- For fast scroller -->
+    <string name="title_activity_settings">Settings</string>
 </resources>

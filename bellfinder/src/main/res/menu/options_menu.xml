@@ -9,6 +9,10 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
     <item
+        android:id="@+id/settings_menuitem"
+        android:title="@string/settings_menuitem"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/export_menuitem"
         android:title="@string/export_menuitem"
         app:showAsAction="never" />

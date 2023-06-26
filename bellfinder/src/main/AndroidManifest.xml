@@ -21,17 +21,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
+        <activity
             android:name=".AboutActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".VisitEditActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".TowerInfoActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

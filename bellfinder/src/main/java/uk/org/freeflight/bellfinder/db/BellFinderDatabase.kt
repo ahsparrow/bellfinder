@@ -27,7 +27,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [Tower::class, Visit::class],
+    entities = [Tower::class, Visit::class, Preferences::class],
     views = [VisitView::class],
     version = 4,
     exportSchema = false)
@@ -52,10 +52,17 @@ abstract class BellFinderDatabase : RoomDatabase() {
                     BellFinderDatabase::class.java,
                     "tower_database")
                     .addMigrations(MIGRATION1TO2(), MIGRATION2TO3(), MIGRATION3TO4())
+                    .addCallback(RoomCallback())
                     .build()
                 INSTANCE = instance
                 return instance
             }
+        }
+    }
+
+    class RoomCallback : Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            db.execSQL("INSERT INTO Preferences (idx, unringable) VALUES (1, 0)")
         }
     }
 
