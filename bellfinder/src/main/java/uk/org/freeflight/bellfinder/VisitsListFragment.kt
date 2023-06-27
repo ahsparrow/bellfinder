@@ -25,10 +25,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class VisitsListFragment : ListFragment() {
     private val adapter = VisitsListAdapter(::onClick, ::onLongClick)
@@ -39,12 +38,14 @@ class VisitsListFragment : ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.liveVisitViews.observe(this) { visits ->
-            visits?.let {
-                adapter.setVisits(visits)
+        lifecycle.coroutineScope.launch {
+            viewModel.getVisitViews.collect { visits ->
+                visits.let {
+                    adapter.setVisits(visits)
 
-                val tv: TextView? = view?.findViewById(R.id.textview_visits_info)
-                tv?.visibility = if (visits.isEmpty()) View.VISIBLE else View.GONE
+                    val tv: TextView? = view?.findViewById(R.id.textview_visits_info)
+                    tv?.visibility = if (visits.isEmpty()) View.VISIBLE else View.GONE
+                }
             }
         }
     }
@@ -65,13 +66,13 @@ class VisitsListFragment : ListFragment() {
     private fun onLongClick(id: Long): Boolean {
         val visit = adapter.visitMap[id] ?: return true
 
-        lifecycleScope.launch {
-            val tower = withContext(Dispatchers.IO) {
-                viewModel.getTower(visit.towerId)
-            }
-            viewModel.towerPosition = ViewModel.Position(tower.latitude, tower.longitude)
+        lifecycle.coroutineScope.launch {
+            viewModel.getTower(visit.towerId).first { tower ->
+                viewModel.towerPosition = ViewModel.Position(tower.latitude, tower.longitude)
 
-            (activity as MainActivity).setViewPage("Map", true)
+                (activity as MainActivity).setViewPage("Map", true)
+                true
+            }
         }
         return true
     }

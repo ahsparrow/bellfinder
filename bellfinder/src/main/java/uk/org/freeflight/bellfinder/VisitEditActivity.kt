@@ -25,14 +25,17 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.DatePicker
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import uk.org.freeflight.bellfinder.db.Visit
 import java.util.*
 
@@ -71,17 +74,16 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
 
         if (savedInstanceState == null) {
             visitId?.let { id ->
-                lifecycleScope.launch {
-                    val visit = withContext(Dispatchers.IO) {
-                        viewModel.getVisit(id)
+                lifecycle.coroutineScope.launch {
+                    viewModel.getVisit(id).first { visit ->
+                        visitDate = visit.date
+                        setVisitDate()
+
+                        pealCheckBox.isChecked = visit.peal
+                        quarterCheckBox.isChecked = visit.quarter
+                        notesEditText.setText(visit.notes)
+                        true
                     }
-
-                    visitDate = visit.date
-                    setVisitDate()
-
-                    pealCheckBox.isChecked = visit.peal
-                    quarterCheckBox.isChecked = visit.quarter
-                    notesEditText.setText(visit.notes)
                 }
             } ?: setVisitDate()
         } else {
@@ -186,20 +188,19 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
             startActivity(intent)
         }
 
-        lifecycleScope.launch {
-            val tower = withContext(Dispatchers.IO) {
-                viewModel.getTower(towerId)
+        lifecycle.coroutineScope.launch {
+            viewModel.getTower(towerId).first { tower ->
+                val textView: TextView = findViewById(R.id.textview_visit_place)
+
+                val txt = SpannableString(tower.place)
+                if (isClickable)
+                    txt.setSpan(UnderlineSpan(), 0, txt.length, 0)
+
+                textView.text = txt
+                textView.isClickable = isClickable
+                textView.isFocusable = isClickable
+                true
             }
-
-            val textView: TextView = findViewById(R.id.textview_visit_place)
-
-            val txt = SpannableString(tower.place)
-            if (isClickable)
-                txt.setSpan(UnderlineSpan(), 0, txt.length, 0)
-
-            textView.text = txt
-            textView.isClickable = isClickable
-            textView.isFocusable = isClickable
         }
     }
 

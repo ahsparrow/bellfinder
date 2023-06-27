@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -40,13 +39,11 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.withResumed
+import androidx.lifecycle.coroutineScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.DelayedMapListener
 import org.osmdroid.events.MapListener
@@ -156,7 +153,7 @@ class MapFragment : SearchableFragment(), LocationListener {
         }
 
         infoMarker = Marker(mapView).apply {
-            setTextLabelFontSize(48)
+            textLabelFontSize = 48
             setTextIcon(" Zoom in to see towers ")
         }
         mapView.overlays.add(infoMarker)
@@ -175,85 +172,81 @@ class MapFragment : SearchableFragment(), LocationListener {
     }
 
     private fun updateMarkers() {
-        lifecycleScope.launch {
-            withResumed {
-                lifecycleScope.launch {
-                    if (mapView.zoomLevelDouble > 9.5) {
-                        infoMarker.setVisible(false)
+        lifecycle.coroutineScope.launch {
+            viewModel.getTowersByArea(mapView.boundingBox).first { towers ->
+                if (mapView.zoomLevelDouble > 9.5) {
+                    infoMarker.setVisible(false)
 
-                        // Get visible towers
-                        val towers = withContext(Dispatchers.IO) {
-                            viewModel.getTowersByArea(mapView.boundingBox)
-                        }
-                        val ids = towers.map { it.towerId }
+                    val ids = towers.map { it.towerId }
 
-                        // Old markers to remove
-                        val oldMarkers = markers.filter { it.towerId !in ids }
+                    // Old markers to remove
+                    val oldMarkers = markers.filter { it.towerId !in ids }
 
-                        // Existing markers to keep
-                        val existingMarkers = markers.filter { it.towerId in ids }
-                        val existingIds = existingMarkers.map { it.towerId }
+                    // Existing markers to keep
+                    val existingMarkers = markers.filter { it.towerId in ids }
+                    val existingIds = existingMarkers.map { it.towerId }
 
-                        // New markers to add
-                        val newTowers = towers.filter { it.towerId !in existingIds }
-                        val newMarkers = newTowers.map { tower ->
-                            val marker = CustomMarker(
-                                tower.towerId,
-                                tower.bells,
-                                infoWindow,
-                                mapView
-                            ).apply {
-                                position = GeoPoint(tower.latitude, tower.longitude)
-                                title = tower.place
+                    // New markers to add
+                    val newTowers = towers.filter { it.towerId !in existingIds }
+                    val newMarkers = newTowers.map { tower ->
+                        val marker = CustomMarker(
+                            tower.towerId,
+                            tower.bells,
+                            infoWindow,
+                            mapView
+                        ).apply {
+                            position = GeoPoint(tower.latitude, tower.longitude)
+                            title = tower.place
 
-                                // Tenor weight
-                                val weight = round(tower.weight / 112.0).toInt()
-                                snippet = "$weight cwt"
+                            // Tenor weight
+                            val weight = round(tower.weight / 112.0).toInt()
+                            snippet = "$weight cwt"
 
-                                val resid = if (tower.unringable) {
-                                    R.drawable.tower_unringable
-                                } else when (tower.bells) {
-                                    1, 2, 3 -> R.drawable.tower3
-                                    4 -> R.drawable.tower4
-                                    5 -> R.drawable.tower5
-                                    6, 7 -> R.drawable.tower6
-                                    8, 9 -> R.drawable.tower8
-                                    10, 11 -> R.drawable.tower10
-                                    else -> R.drawable.tower12
-                                }
-                                icon =
-                                    ResourcesCompat.getDrawable(
-                                        mapView.resources,
-                                        resid,
-                                        null
-                                    )
+                            val resid = if (tower.unringable) {
+                                R.drawable.tower_unringable
+                            } else when (tower.bells) {
+                                1, 2, 3 -> R.drawable.tower3
+                                4 -> R.drawable.tower4
+                                5 -> R.drawable.tower5
+                                6, 7 -> R.drawable.tower6
+                                8, 9 -> R.drawable.tower8
+                                10, 11 -> R.drawable.tower10
+                                else -> R.drawable.tower12
                             }
-                            marker
+                            icon =
+                                ResourcesCompat.getDrawable(
+                                    mapView.resources,
+                                    resid,
+                                    null
+                                )
                         }
-
-                        // Update marker overlays and list of markers
-                        mapView.overlays.removeAll(oldMarkers.toSet())
-                        mapView.overlays.addAll(newMarkers)
-                        markers = existingMarkers + newMarkers
-
-                        // Close the info window if open on an old marker
-                        if (infoWindow.isOpen) {
-                            val marker = infoWindow.markerReference as CustomMarker
-                            if (marker.towerId !in existingIds)
-                                marker.closeInfoWindow()
-                        }
-                    } else {
-                        infoMarker.setPosition(GeoPoint(mapView.getMapCenter()))
-                        infoMarker.setVisible(true)
-                        infoMarker.setAlpha(0.6F)
-
-                        mapView.overlays.removeAll(markers)
-                        markers = ArrayList()
+                        marker
                     }
 
-                    // Redraw
-                    mapView.invalidate()
+                    // Update marker overlays and list of markers
+                    mapView.overlays.removeAll(oldMarkers.toSet())
+                    mapView.overlays.addAll(newMarkers)
+                    markers = existingMarkers + newMarkers
+
+                    // Close the info window if open on an old marker
+                    if (infoWindow.isOpen) {
+                        val marker = infoWindow.markerReference as CustomMarker
+                        if (marker.towerId !in existingIds)
+                            marker.closeInfoWindow()
+                    }
+                } else {
+                    infoMarker.position = GeoPoint(mapView.mapCenter)
+                    infoMarker.setVisible(true)
+                    infoMarker.alpha = 0.6F
+
+                    mapView.overlays.removeAll(markers)
+                    markers = ArrayList()
                 }
+
+                // Redraw
+                mapView.invalidate()
+
+                true
             }
         }
     }

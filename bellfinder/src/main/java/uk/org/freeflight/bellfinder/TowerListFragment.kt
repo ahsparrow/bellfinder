@@ -24,6 +24,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class TowerListFragment: ListFragment() {
@@ -35,20 +36,17 @@ class TowerListFragment: ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Set tower information in list adapter
-        //viewModel.liveTowers.observe(this) { towers ->
-        //    towers?.let { adapter.setTowers(towers) }
-        //}
-
         lifecycle.coroutineScope.launch {
-            viewModel.getTowers.collect() { towers ->
+            viewModel.getTowers.first { towers ->
                 towers.let { adapter.setTowers(towers) }
+                true
             }
         }
 
-        // Set visited towers in list adapter
-        viewModel.liveVisitedTowerIds.observe(this) { towerIds ->
-            towerIds?.let { adapter.setVisitedTowers(towerIds) }
+        lifecycle.coroutineScope.launch {
+            viewModel.getVisitedTowerIds.collect { towerIds ->
+                towerIds.let { adapter.setVisitedTowers(towerIds) }
+            }
         }
     }
 

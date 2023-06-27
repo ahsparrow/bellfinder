@@ -28,11 +28,10 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.coroutineScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TowerInfoActivity : AppCompatActivity() {
     private val viewModel: ViewModel by viewModels()
@@ -50,59 +49,62 @@ class TowerInfoActivity : AppCompatActivity() {
 
         towerId = intent.extras!!.getLong("TOWER_ID")
 
-        viewModel.liveTowerVisits(towerId).observe(this) { visits ->
-            if (visits.isNotEmpty()) {
-                val txt = getString(R.string.date_format_long).format(visits[0].date)
-                findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
+        lifecycle.coroutineScope.launch {
+            viewModel.getTowerVisits(towerId).first() { visits ->
+                if (visits.isNotEmpty()) {
+                    val txt = getString(R.string.date_format_long).format(visits[0].date)
+                    findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
+                }
+                true
             }
         }
 
-        lifecycleScope.launch {
-            val tower = withContext(Dispatchers.IO) {
-                viewModel.getTower(towerId)
-            }
+        lifecycle.coroutineScope.launch {
+            viewModel.getTower(towerId).first { tower ->
+                // Tower place
+                var place = tower.place
+                if (tower.unringable) {
+                    place = "$place (Unringable)"
+                }
+                findViewById<TextView>(R.id.textview_towerinfo_place).text = place
 
-            // Tower place
-            var place = tower.place
-            if (tower.unringable) {
-                place = "$place (Unringable)"
-            }
-            findViewById<TextView>(R.id.textview_towerinfo_place).text = place
+                // Tower place details
+                val place2 = tower.dedication
+                findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
 
-            // Tower place details
-            val place2 = tower.dedication
-            findViewById<TextView>(R.id.textview_towerinfo_place2).text = place2
+                // County
+                findViewById<TextView>(R.id.textview_towerinfo_county).text = tower.county
 
-            // County
-            findViewById<TextView>(R.id.textview_towerinfo_county).text = tower.county
+                // Number of bells
+                findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()
 
-            // Number of bells
-            findViewById<TextView>(R.id.textview_towerinfo_bells).text = tower.bells.toString()
+                // Tenor weight
+                val weight = tower.weight
+                val cwt = weight / 112
+                val qtr = (weight - cwt * 112) / 28
+                val lbs = weight % 28
+                val tenor = "$cwt-$qtr-$lbs"
+                findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
 
-            // Tenor weight
-            val weight = tower.weight
-            val cwt = weight / 112
-            val qtr = (weight - cwt * 112) / 28
-            val lbs = weight % 28
-            val tenor = "$cwt-$qtr-$lbs"
-            findViewById<TextView>(R.id.textview_towerinfo_tenor).text = tenor
+                // Practice night
+                findViewById<TextView>(R.id.textview_towerinfo_practice).text = tower.practice
 
-            // Practice night
-            findViewById<TextView>(R.id.textview_towerinfo_practice).text = tower.practice
+                // Goto Dove web page
+                findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
+                    val url = "https://dove.cccbr.org.uk/detail.php?TowerBase=${tower.towerId}"
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 
-            // Goto Dove web page
-            findViewById<TextView>(R.id.textview_towerinfo_dovelink).setOnClickListener {
-                val url = "https://dove.cccbr.org.uk/detail.php?TowerBase=${tower.towerId}"
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                
-                // Re-use existing browswer tab
-                intent.putExtra(Browser.EXTRA_APPLICATION_ID, packageName)
-                startActivity(intent)
-            }
+                    // Re-use existing browswer tab
+                    intent.putExtra(Browser.EXTRA_APPLICATION_ID, packageName)
+                    startActivity(intent)
+                }
 
-            // Start a new visit
-            findViewById<FloatingActionButton>(R.id.button_add_visit).setOnClickListener {
-                startNewVisit()
+                // Start a new visit
+                findViewById<FloatingActionButton>(R.id.button_add_visit).setOnClickListener {
+                    startNewVisit()
+                }
+
+                true
             }
         }
     }
@@ -135,20 +137,20 @@ class TowerInfoActivity : AppCompatActivity() {
     }
     
     private fun showMap() {
-        lifecycleScope.launch {
-            val tower = withContext(Dispatchers.IO) {
-                viewModel.getTower(towerId)
-            }
+        lifecycle.coroutineScope.launch {
+            viewModel.getTower(towerId).first() { tower ->
 
-            // Display labelled marker at tower position
-            val uriStr = "geo:${tower.latitude},${tower.longitude}" +
-                    "?z=8&" +
-                    "q=${tower.latitude},${tower.longitude}(${Uri.encode(tower.place)})"
+                // Display labelled marker at tower position
+                val uriStr = "geo:${tower.latitude},${tower.longitude}" +
+                        "?z=8&" +
+                        "q=${tower.latitude},${tower.longitude}(${Uri.encode(tower.place)})"
 
-            val gmmIntentUri = Uri.parse(uriStr)
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            if (mapIntent.resolveActivity(packageManager) != null) {
-                startActivity(mapIntent)
+                val gmmIntentUri = Uri.parse(uriStr)
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                if (mapIntent.resolveActivity(packageManager) != null) {
+                    startActivity(mapIntent)
+                }
+                true
             }
         }
     }

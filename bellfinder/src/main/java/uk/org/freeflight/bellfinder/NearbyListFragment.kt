@@ -36,6 +36,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -60,14 +61,16 @@ class NearbyListFragment : ListFragment(), LocationListener {
 
         // Set tower information in list adapter
         lifecycle.coroutineScope.launch {
-            viewModel.getTowers.collect() { towers ->
+            viewModel.getTowers.first { towers ->
                 towers.let { adapter.setTowers(towers) }
+                true
             }
         }
 
-        // Set visited towers in list adapter
-        viewModel.liveVisitedTowerIds.observe(this) { towerIds ->
-            towerIds?.let { adapter.setVisitedTowers(towerIds) }
+        lifecycle.coroutineScope.launch {
+            viewModel.getVisitedTowerIds.collect { towerIds ->
+                towerIds.let { adapter.setVisitedTowers(towerIds) }
+            }
         }
 
         locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager

@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 package uk.org.freeflight.bellfinder.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import java.util.*
@@ -37,11 +36,11 @@ interface BellFinderDao {
 
     // Single tower
     @Query("SELECT * FROM towers WHERE TowerId = :towerId LIMIT 1")
-    suspend fun getTower(towerId: Long): Tower
+    fun getTower(towerId: Long): Flow<Tower>
 
     // Visited towers ids
     @Query("SELECT DISTINCT towerId from visits")
-    fun liveVisitedTowerIds(): LiveData<List<Long>>
+    fun getVisitedTowerIds(): Flow<List<Long>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTower(tower: Tower)
@@ -56,19 +55,15 @@ interface BellFinderDao {
 
     // Single visit from visit id
     @Query("SELECT * FROM visits WHERE visitId = :visitId LIMIT 1")
-    suspend fun getVisit(visitId: Long): Visit
+    fun getVisit(visitId: Long): Flow<Visit>
 
     // Ordered (newest first) list of visits
     @Query("SELECT * FROM VisitView ORDER BY date DESC")
-    fun liveVisitViews(): LiveData<List<VisitView>>
-
-    // ...non-live version
-    @Query("SELECT * FROM VisitView ORDER BY date DESC")
-    suspend fun getVisitViews(): List<VisitView>
+    fun getVisitViews(): Flow<List<VisitView>>
 
     // Get visits to specified tower (oldest  first)
     @Query("SELECT * from visits WHERE towerId = :towerId ORDER BY date ASC")
-    fun liveTowerVisits(towerId: Long): LiveData<List<Visit>>
+    fun getTowerVisits(towerId: Long): Flow<List<Visit>>
 
     @Insert
     suspend fun insertVisit(visit: Visit)

@@ -39,6 +39,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
@@ -46,8 +47,8 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import uk.org.freeflight.bellfinder.db.TowerBaseIds
 import uk.org.freeflight.bellfinder.db.Visit
 import java.io.InputStream
@@ -74,10 +75,8 @@ class MainActivity : AppCompatActivity() {
         if (BuildConfig.VERSION_CODE != initialisedVersionCode) {
 
             val stream = assets.open("dove.csv")
-            lifecycleScope.launch {
-                val towers = withContext(Dispatchers.IO) {
-                    parseDove(stream)
-                }
+            lifecycleScope.launch(Dispatchers.IO) {
+                val towers = parseDove(stream)
 
                 val viewModel: ViewModel by viewModels()
                 viewModel.deleteTowers()
@@ -268,11 +267,9 @@ class MainActivity : AppCompatActivity() {
             return
 
         contentResolver.openOutputStream(uri)?.let<OutputStream, Unit> { output ->
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    val viewModel: ViewModel by viewModels()
-                    val visits = viewModel.getVisitViews()
-
+            val viewModel: ViewModel by viewModels()
+            lifecycle.coroutineScope.launch {
+                viewModel.getVisitViews.first() { visits ->
                     // CSV header (place is for info only, not for backup)
                     val header = listOf(listOf(
                         "VisitId", "TowerBase", "Date", "Notes", "Peal", "Quarter", "Place"))
@@ -291,6 +288,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                     csvWriter().writeAll(header + rows, output)
+                    true
                 }
             }
         }

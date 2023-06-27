@@ -21,14 +21,19 @@ package uk.org.freeflight.bellfinder
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
-import uk.org.freeflight.bellfinder.db.*
+import uk.org.freeflight.bellfinder.db.BellFinderDao
+import uk.org.freeflight.bellfinder.db.BellFinderDatabase
+import uk.org.freeflight.bellfinder.db.Preferences
+import uk.org.freeflight.bellfinder.db.Tower
+import uk.org.freeflight.bellfinder.db.Visit
+import uk.org.freeflight.bellfinder.db.VisitView
 import java.util.*
 
 class ViewModel (application: Application) : AndroidViewModel(application) {
@@ -37,14 +42,13 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     // List of towers
     val getTowers: Flow<List<Tower>> = dao.getTowers()
 
-    // Get single tower
-    suspend fun getTower(towerId: Long): Tower = dao.getTower(towerId)
+    // Single tower
+    fun getTower(towerId: Long): Flow<Tower> = dao.getTower(towerId)
 
     // Get towers in area
-    suspend fun getTowersByArea(boundingBox: BoundingBox): List<Tower> {
-        val towers = dao.getTowersX()
-
-        return towers.filter { boundingBox.contains(GeoPoint(it.latitude, it.longitude)) }
+    fun getTowersByArea(boundingBox: BoundingBox): Flow<List<Tower>> {
+        return dao.getTowers().map { towers ->
+            towers.filter { boundingBox.contains(GeoPoint(it.latitude, it.longitude)) }}
     }
 
     // Insert towers
@@ -53,18 +57,15 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     // Delete all towers
     suspend fun deleteTowers() = dao.deleteTowers()
 
-    // Live list (unordered) of visited tower IDs
-    val liveVisitedTowerIds: LiveData<List<Long>> = dao.liveVisitedTowerIds()
+    // Visited tower IDs
+    val getVisitedTowerIds: Flow<List<Long>> = dao.getVisitedTowerIds()
 
     // Live visit views order by date
-    val liveVisitViews: LiveData<List<VisitView>> = dao.liveVisitViews()
+    val getVisitViews: Flow<List<VisitView>> = dao.getVisitViews()
 
-    // ...non-live version of same
-    suspend fun getVisitViews(): List<VisitView> = dao.getVisitViews()
+    fun getVisit(visitId: Long): Flow<Visit> = dao.getVisit(visitId)
 
-    suspend fun getVisit(visitId: Long): Visit = dao.getVisit(visitId)
-
-    fun liveTowerVisits(towerId: Long): LiveData<List<Visit>> = dao.liveTowerVisits(towerId)
+    fun getTowerVisits(towerId: Long): Flow<List<Visit>> = dao.getTowerVisits(towerId)
 
     fun insertVisit(visit: Visit) = viewModelScope.launch(Dispatchers.IO) {
         dao.insertVisit(visit)
