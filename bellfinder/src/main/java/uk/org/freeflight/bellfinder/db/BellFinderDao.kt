@@ -30,10 +30,6 @@ interface BellFinderDao {
     @Query("SELECT towers.* FROM towers LEFT JOIN Preferences WHERE towers.unringable = Preferences.unringable ORDER BY place ASC")
     fun getTowers(): Flow<List<Tower>>
 
-    // ...non-live, unsorted
-    @Query("SELECT * FROM towers")
-    suspend fun getTowersX() : List<Tower>
-
     // Single tower
     @Query("SELECT * FROM towers WHERE TowerId = :towerId LIMIT 1")
     fun getTower(towerId: Long): Flow<Tower>
