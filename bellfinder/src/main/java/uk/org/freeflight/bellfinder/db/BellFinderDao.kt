@@ -27,7 +27,7 @@ import java.util.*
 interface BellFinderDao {
     // Towers...
 
-    @Query("SELECT towers.* FROM towers LEFT JOIN Preferences WHERE towers.unringable = Preferences.unringable ORDER BY place ASC")
+    @Query("SELECT towers.* FROM towers LEFT JOIN Preferences WHERE NOT towers.unringable OR Preferences.unringable ORDER BY place ASC")
     fun getTowers(): Flow<List<Tower>>
 
     // Single tower

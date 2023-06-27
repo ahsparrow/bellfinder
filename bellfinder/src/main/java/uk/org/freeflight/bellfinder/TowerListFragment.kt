@@ -37,9 +37,8 @@ class TowerListFragment: ListFragment() {
         super.onCreate(savedInstanceState)
 
         lifecycle.coroutineScope.launch {
-            viewModel.getTowers.first { towers ->
+            viewModel.getTowers.collect { towers ->
                 towers.let { adapter.setTowers(towers) }
-                true
             }
         }
 

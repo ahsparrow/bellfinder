@@ -61,7 +61,7 @@ class NearbyListFragment : ListFragment(), LocationListener {
 
         // Set tower information in list adapter
         lifecycle.coroutineScope.launch {
-            viewModel.getTowers.first { towers ->
+            viewModel.getTowers.collect { towers ->
                 towers.let { adapter.setTowers(towers) }
                 true
             }

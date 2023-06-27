@@ -173,7 +173,7 @@ class MapFragment : SearchableFragment(), LocationListener {
 
     private fun updateMarkers() {
         lifecycle.coroutineScope.launch {
-            viewModel.getTowersByArea(mapView.boundingBox).first { towers ->
+            viewModel.getTowersByArea(mapView.boundingBox).collect { towers ->
                 if (mapView.zoomLevelDouble > 9.5) {
                     infoMarker.setVisible(false)
 
@@ -245,8 +245,6 @@ class MapFragment : SearchableFragment(), LocationListener {
 
                 // Redraw
                 mapView.invalidate()
-
-                true
             }
         }
     }
