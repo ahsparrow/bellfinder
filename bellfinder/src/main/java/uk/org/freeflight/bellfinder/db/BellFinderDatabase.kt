@@ -70,22 +70,22 @@ abstract class BellFinderDatabase : RoomDatabase() {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL(
                 // Create new preferences table and set default values
-                "CREATE TABLE Preferences (" +
+                "CREATE TABLE `preferences` (" +
                         "idx INTEGER NOT NULL, " +
                         "unringable INTEGER NOT NULL, " +
                         "bells TEXT NOT NULL, " +
                         "PRIMARY KEY(idx))"
             )
-            database.execSQL("INSERT INTO Preferences (idx, unringable, bells) VALUES (1, 0, '345680T')")
+            database.execSQL("INSERT INTO `preferences` (idx, unringable, bells) VALUES (1, 0, '345680T')")
 
             // Add new column to VisitView
-            database.execSQL("DROP VIEW VisitView")
-            database.execSQL("CREATE VIEW VisitView AS " +
-                    "SELECT Visits.visitId, Visits.towerId, Visits.date, Visits.notes, " +
-                    "Visits.peal, Visits.quarter, " +
-                    "Towers.place AS place, Towers.dedication AS dedication, " +
-                    "Towers.county AS county, Towers.bells AS bells " +
-                    "FROM Visits INNER JOIN Towers ON Visits.towerId = Towers.towerId")
+            database.execSQL("DROP VIEW `VisitView`")
+            database.execSQL("CREATE VIEW `VisitView` AS " +
+                    "SELECT visits.visitId, visits.towerId, visits.date, visits.notes, " +
+                    "visits.peal, visits.quarter, " +
+                    "towers.place AS place, towers.dedication AS dedication, " +
+                    "towers.county AS county, towers.bells AS bells " +
+                    "FROM visits INNER JOIN towers ON visits.towerId = towers.towerId")
         }
     }
 
