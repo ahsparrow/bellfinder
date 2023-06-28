@@ -40,14 +40,14 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     private val dao: BellFinderDao = BellFinderDatabase.getDatabase(application).bellFinderDao()
 
     // List of towers
-    val getTowers: Flow<List<Tower>> = dao.getTowers()
+    val getTowers: Flow<List<Tower>> = dao.getPrefTowers()
 
     // Single tower
     fun getTower(towerId: Long): Flow<Tower> = dao.getTower(towerId)
 
     // Get towers in area
     fun getTowersByArea(boundingBox: BoundingBox): Flow<List<Tower>> {
-        return dao.getTowers().map { towers ->
+        return dao.getPrefTowers().map { towers ->
             towers.filter { boundingBox.contains(GeoPoint(it.latitude, it.longitude)) }}
     }
 
@@ -97,9 +97,14 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
 
     class Position(val latitude: Double, val longitude: Double)
 
+    // Preferences
     val getPreferences: Flow<Preferences> = dao.getPreferences()
 
-    fun updatePreferences(unringable: Boolean) = viewModelScope.launch(Dispatchers.IO) {
-        dao.updatePreferences(unringable)
+    fun updatePrefsUnringable(unringable: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        dao.updatePrefsUnringable(unringable)
+    }
+
+    fun updatePrefsBells(bells: String) = viewModelScope.launch(Dispatchers.IO) {
+        dao.updatePrefsBells(bells)
     }
 }

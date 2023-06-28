@@ -5,4 +5,11 @@
         android:key="unringable_preference"
         android:title="Show unringable"
         app:persistent="false" />
+    <MultiSelectListPreference
+        android:key="bells_preference"
+        android:title="Number of bells"
+        app:defaultValue="@array/num_bells_values"
+        app:entries="@array/num_bells"
+        app:entryValues="@array/num_bells_values"
+        app:persistent="false" />
 </PreferenceScreen>

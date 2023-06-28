@@ -1,16 +1,15 @@
 package uk.org.freeflight.bellfinder
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.coroutineScope
+import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import androidx.preference.SwitchPreferenceCompat
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
@@ -38,10 +37,12 @@ class SettingsActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
             lifecycle.coroutineScope.launch {
-                viewModel.getPreferences.collect() {
-                    Log.w(TAG, "Collect " + it)
-                    val pref = findPreference<SwitchPreference>("unringable_preference")
-                    pref?.isChecked = it.unringable
+                viewModel.getPreferences.collect { prefs ->
+                    val prefUnringable = findPreference<SwitchPreference>("unringable_preference")
+                    prefUnringable?.isChecked = prefs.unringable
+
+                    val prefBells = findPreference<MultiSelectListPreference>("bells_preference")
+                    prefBells?.values = prefs.bells.map { it.toString() }.toSet()
                 }
             }
         }
@@ -49,11 +50,21 @@ class SettingsActivity : AppCompatActivity() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            val pref = findPreference<SwitchPreference>("unringable_preference")
-            pref?.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { key, value ->
-                    Log.w(TAG, "Change " + key + " " + value)
-                    viewModel.updatePreferences(value == true)
+            val unringablePref = findPreference<SwitchPreference>("unringable_preference")
+            unringablePref?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, value ->
+                    viewModel.updatePrefsUnringable(value == true)
+                    true
+                }
+
+            val bellsPref = findPreference<MultiSelectListPreference>("bells_preference")
+            bellsPref?.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, value ->
+                    @Suppress("UNCHECKED_CAST")
+                    val bellSet: Set<String> = value as Set<String>
+                    val bells = bellSet.reduce {acc, string -> acc + string}
+
+                    viewModel.updatePrefsBells(bells)
                     true
                 }
         }

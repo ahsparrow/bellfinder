@@ -62,7 +62,7 @@ abstract class BellFinderDatabase : RoomDatabase() {
 
     class RoomCallback : Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
-            db.execSQL("INSERT INTO Preferences (idx, unringable) VALUES (1, 0)")
+            db.execSQL("INSERT INTO Preferences (idx, unringable, bells) VALUES (1, 0, '345680T')")
         }
     }
 

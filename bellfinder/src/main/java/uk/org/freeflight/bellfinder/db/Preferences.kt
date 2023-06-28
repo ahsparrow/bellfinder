@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "preferences")
 data class Preferences(
     @PrimaryKey val idx: Long,
-    val unringable: Boolean
+    val unringable: Boolean,
+    val bells: String
 )

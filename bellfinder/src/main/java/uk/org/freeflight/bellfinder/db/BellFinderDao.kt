@@ -27,8 +27,19 @@ import java.util.*
 interface BellFinderDao {
     // Towers...
 
-    @Query("SELECT towers.* FROM towers LEFT JOIN Preferences WHERE NOT towers.unringable OR Preferences.unringable ORDER BY place ASC")
-    fun getTowers(): Flow<List<Tower>>
+    @Query(
+        "SELECT towers.* FROM towers LEFT JOIN preferences " +
+                "WHERE (NOT towers.unringable OR preferences.unringable) " +
+                "AND ((towers.bells = 3 AND preferences.bells LIKE '%3%') " +
+                "OR (towers.bells = 4 AND preferences.bells LIKE '%4%') " +
+                "OR (towers.bells = 5 AND preferences.bells LIKE '%5%') " +
+                "OR (towers.bells = 6 AND preferences.bells LIKE '%6%') " +
+                "OR (towers.bells = 8 AND preferences.bells LIKE '%8%') " +
+                "OR (towers.bells = 10 AND preferences.bells LIKE '%0%') " +
+                "OR (towers.bells >= 12 AND preferences.bells LIKE '%T%')) " +
+                "ORDER BY place ASC"
+    )
+    fun getPrefTowers(): Flow<List<Tower>>
 
     // Single tower
     @Query("SELECT * FROM towers WHERE TowerId = :towerId LIMIT 1")
@@ -37,9 +48,6 @@ interface BellFinderDao {
     // Visited towers ids
     @Query("SELECT DISTINCT towerId from visits")
     fun getVisitedTowerIds(): Flow<List<Long>>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTower(tower: Tower)
 
     @Insert
     suspend fun insertTowers(tower: List<Tower>)
@@ -80,6 +88,9 @@ interface BellFinderDao {
     @Query("SELECT * FROM preferences LIMIT 1")
     fun getPreferences(): Flow<Preferences>
 
-    @Query("UPDATE Preferences SET unringable=:unringable")
-    suspend fun updatePreferences(unringable: Boolean)
+    @Query("UPDATE preferences SET unringable=:unringable")
+    suspend fun updatePrefsUnringable(unringable: Boolean)
+
+    @Query("UPDATE preferences SET bells=:bells")
+    suspend fun updatePrefsBells(bells: String)
 }
