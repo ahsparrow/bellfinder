@@ -42,7 +42,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.DelayedMapListener
