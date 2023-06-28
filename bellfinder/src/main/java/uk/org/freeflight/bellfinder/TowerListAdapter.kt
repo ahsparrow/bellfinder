@@ -35,6 +35,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
     private var visitedTowers = listOf<Long>()
 
     // Populate list view holder with tower details
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val id = itemIds[position]
         val current = towerMap[id]
@@ -49,7 +50,7 @@ class TowerListAdapter(onClick: (id: Long) -> Unit,
             } else {
                 holder.place.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
-            holder.place2.text = current.county
+            holder.place2.text = "${current.dedication}, ${current.county}"
 
             // Number of bells
             holder.bells.text = current.bells.toString()

@@ -37,7 +37,7 @@ interface BellFinderDao {
                 "OR (towers.bells = 8 AND preferences.bells LIKE '%8%') " +
                 "OR (towers.bells = 10 AND preferences.bells LIKE '%0%') " +
                 "OR (towers.bells >= 12 AND preferences.bells LIKE '%T%')) " +
-                "ORDER BY place ASC"
+                "ORDER BY place, dedication"
     )
     fun getPrefTowers(): Flow<List<Tower>>
 
