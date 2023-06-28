@@ -50,7 +50,7 @@ class TowerInfoActivity : AppCompatActivity() {
         towerId = intent.extras!!.getLong("TOWER_ID")
 
         lifecycle.coroutineScope.launch {
-            viewModel.getTowerVisits(towerId).first() { visits ->
+            viewModel.getTowerVisits(towerId).first { visits ->
                 if (visits.isNotEmpty()) {
                     val txt = getString(R.string.date_format_long).format(visits[0].date)
                     findViewById<TextView>(R.id.textview_towerinfo_visit).text = txt
@@ -138,7 +138,7 @@ class TowerInfoActivity : AppCompatActivity() {
     
     private fun showMap() {
         lifecycle.coroutineScope.launch {
-            viewModel.getTower(towerId).first() { tower ->
+            viewModel.getTower(towerId).first { tower ->
 
                 // Display labelled marker at tower position
                 val uriStr = "geo:${tower.latitude},${tower.longitude}" +

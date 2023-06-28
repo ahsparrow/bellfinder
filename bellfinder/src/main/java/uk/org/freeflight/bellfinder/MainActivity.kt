@@ -269,7 +269,7 @@ class MainActivity : AppCompatActivity() {
         contentResolver.openOutputStream(uri)?.let<OutputStream, Unit> { output ->
             val viewModel: ViewModel by viewModels()
             lifecycle.coroutineScope.launch {
-                viewModel.getVisitViews.first() { visits ->
+                viewModel.getVisitViews.first { visits ->
                     // CSV header (place is for info only, not for backup)
                     val header = listOf(listOf(
                         "VisitId", "TowerBase", "Date", "Notes", "Peal", "Quarter", "Place"))
