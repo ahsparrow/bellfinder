@@ -29,7 +29,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 @Database(
     entities = [Tower::class, Visit::class, Preferences::class],
     views = [VisitView::class],
-    version = 4,
+    version = 5,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class BellFinderDatabase : RoomDatabase() {
@@ -51,7 +51,7 @@ abstract class BellFinderDatabase : RoomDatabase() {
                     context.applicationContext,
                     BellFinderDatabase::class.java,
                     "tower_database")
-                    .addMigrations(MIGRATION1TO2(), MIGRATION2TO3(), MIGRATION3TO4())
+                    .addMigrations(MIGRATION1TO2(), MIGRATION2TO3(), MIGRATION3TO4(), MIGRATION4TO5())
                     .addCallback(RoomCallback())
                     .build()
                 INSTANCE = instance
@@ -63,6 +63,20 @@ abstract class BellFinderDatabase : RoomDatabase() {
     class RoomCallback : Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             db.execSQL("INSERT INTO Preferences (idx, unringable, bells) VALUES (1, 0, '345680T')")
+        }
+    }
+
+    class MIGRATION4TO5 : Migration(4, 5) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                "CREATE TABLE `Preferences` (" +
+                        "idx INTEGER NOT NULL, " +
+                        "unringable INTEGER NOT NULL, " +
+                        "bells TEXT NOT NULL, " +
+                        "PRIMARY KEY(idx))"
+            )
+
+            database.execSQL("INSERT INTO `Preferences` (idx, unringable, bells) VALUES (1, 0, '345680T')")
         }
     }
 
