@@ -24,7 +24,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class TowerListFragment: ListFragment() {
