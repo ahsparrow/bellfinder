@@ -42,6 +42,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.DelayedMapListener
@@ -172,7 +173,7 @@ class MapFragment : SearchableFragment(), LocationListener {
 
     private fun updateMarkers() {
         lifecycle.coroutineScope.launch {
-            viewModel.getTowersByArea(mapView.boundingBox).collect { towers ->
+            viewModel.getTowersByArea(mapView.boundingBox).first { towers ->
                 if (mapView.zoomLevelDouble > 9.5) {
                     infoMarker.setVisible(false)
 
@@ -195,7 +196,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                             mapView
                         ).apply {
                             position = GeoPoint(tower.latitude, tower.longitude)
-                            title = tower.place
+                            title = "${tower.place}, ${tower.dedication}"
 
                             // Tenor weight
                             val weight = round(tower.weight / 112.0).toInt()
@@ -244,6 +245,8 @@ class MapFragment : SearchableFragment(), LocationListener {
 
                 // Redraw
                 mapView.invalidate()
+
+                true
             }
         }
     }
