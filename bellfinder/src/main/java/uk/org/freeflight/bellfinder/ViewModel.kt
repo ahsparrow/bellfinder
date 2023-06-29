@@ -45,12 +45,6 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     // Single tower
     fun getTower(towerId: Long): Flow<Tower> = dao.getTower(towerId)
 
-    // Get towers in area
-    fun getTowersByArea(boundingBox: BoundingBox): Flow<List<Tower>> {
-        return dao.getPrefTowers().map { towers ->
-            towers.filter { boundingBox.contains(GeoPoint(it.latitude, it.longitude)) }}
-    }
-
     // Insert towers
     suspend fun insertTowers(towers: List<Tower>) = dao.insertTowers(towers)
 
