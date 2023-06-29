@@ -23,6 +23,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.Button
@@ -192,9 +193,10 @@ open class VisitEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLi
             viewModel.getTower(towerId).first { tower ->
                 val textView: TextView = findViewById(R.id.textview_visit_place)
 
-                val txt = SpannableString(tower.place)
-                if (isClickable)
-                    txt.setSpan(UnderlineSpan(), 0, txt.length, 0)
+                val txt = SpannableString("${tower.place}\n${tower.dedication}")
+                if (isClickable) {
+                    txt.setSpan(RelativeSizeSpan(0.8f), tower.place.length, txt.length, 0)
+                }
 
                 textView.text = txt
                 textView.isClickable = isClickable
