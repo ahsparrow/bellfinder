@@ -62,7 +62,7 @@ class SettingsActivity : AppCompatActivity() {
                 Preference.OnPreferenceChangeListener { _, value ->
                     @Suppress("UNCHECKED_CAST")
                     val bellSet: Set<String> = value as Set<String>
-                    val bells = bellSet.reduce {acc, string -> acc + string}
+                    val bells = if (bellSet.isEmpty()) "" else  bellSet.reduce { acc, string -> acc + string }
 
                     viewModel.updatePrefsBells(bells)
                     true
