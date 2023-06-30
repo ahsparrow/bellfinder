@@ -24,10 +24,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.osmdroid.util.BoundingBox
-import org.osmdroid.util.GeoPoint
 import uk.org.freeflight.bellfinder.db.BellFinderDao
 import uk.org.freeflight.bellfinder.db.BellFinderDatabase
 import uk.org.freeflight.bellfinder.db.Preferences
