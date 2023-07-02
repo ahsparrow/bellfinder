@@ -129,7 +129,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 98,Alvington,S Andrew,Gloucestershire,GB,51.70344,-2.57578,5,998,False,Wed 15:00
 99,Alwalton,S Andrew,Cambridgeshire,GB,52.5495,-0.32991,5,904,False,Mon (monthly: check)
 100,Alwington,S Andrew,Devon,GB,50.98566,-4.2744,6,1288,False,PN: by arrangement
-101,Amberley,S Michael,West Sussex,GB,50.90914,-0.53961,5,657,False,Fri (confirm first) 19:00
+101,Amberley,S Michael,West Sussex,GB,50.90914,-0.53961,5,657,False,Mon (confirm first)
 102,Amblecote,Holy Trinity,West Midlands,GB,52.46293,-2.14912,8,787,False,Fri (PN alternates with Wolverley)
 103,Ambleside,S Mary,Cumbria,GB,54.4306,-2.96638,8,3642,False,Mon
 104,Ambrosden,S Mary V,Oxfordshire,GB,51.86997,-1.1258,8,2274,False,
@@ -465,7 +465,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 366,Beaminster,S Mary of The Annunciation,Dorset,GB,50.80839,-2.74113,10,2519,False,
 367,Bearsted,Holy Cross,Kent,GB,51.27029,0.58035,6,1249,False,Tue
 368,Beauchamp Roding,S Botolph,Essex,GB,51.76392,0.28502,4,1008,True,
-6383,Beaudesert,S Nicholas,Warwickshire,GB,52.29227,-1.7773,6,740,False,Mon (6.00 - 7.45 pm)
+6383,Beaudesert,S Nicholas,Warwickshire,GB,52.29227,-1.7773,6,740,False,Mon 18:00
 369,Beaumaris,S Mary & S Nicholas,Ynys Mon,GB,53.26364,-4.09453,8,1344,False,Mon 18:30
 6902,Beaworthy,S Alban,Devon,GB,50.7741,-4.18407,3,555,False,
 370,Bebington,S Andrew,Merseyside,GB,53.34782,-3.00352,8,937,False,
@@ -538,7 +538,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 422,Bentworth,S Mary,Hampshire,GB,51.15797,-1.05004,6,809,False,Mon (alt with Chawton)
 423,Benwell,S James,Tyne and Wear,GB,54.97094,-1.66142,6,1820,False,
 424,Beoley,S Leonard,Worcestershire,GB,52.32487,-1.90594,8,1196,False,Thu
-425,Bere Ferrers,S Andrew,Devon,GB,50.45021,-4.17164,6,892,False,Mon 19:45
+425,Bere Ferrers,S Andrew,Devon,GB,50.45021,-4.17164,6,892,False,Mon
 426,Bere Regis,S John Bapt,Dorset,GB,50.75219,-2.21786,6,1960,False,Wed 18:30
 427,Bergh Apton,S Peter & S Paul,Norfolk,GB,52.54787,1.40619,6,995,False,Tue (Check to confirm)
 428,Berkeley,S Mary V,Gloucestershire,GB,51.68965,-2.45771,10,2383,False,Wed
@@ -881,7 +881,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 703,Brent Tor,S Michael,Devon,GB,50.60327,-4.16241,5,638,False,
 704,Brentwood,S Thomas,Essex,GB,51.61978,0.30438,8,2059,False,Thu (exc 1st)
 6949,Brenzett,S Eanswith,Kent,GB,51.01393,0.85693,3,1288,True,
-705,Brereton,S Oswald,Cheshire,GB,53.17975,-2.3286,6,1176,False,Thu (last Thurs of month)
+705,Brereton,S Oswald,Cheshire,GB,53.17975,-2.3286,6,1176,False,Thu (last)
 5970,Bressingham,S John Bapt,Norfolk,GB,52.3855,1.04898,6,972,False,Fri (Check to confirm)
 706,Bretforton,S Leonard,Worcestershire,GB,52.09259,-1.86583,8,991,False,
 707,Brettenham,S Andrew,Norfolk,GB,52.41424,0.83909,5,1068,True,
@@ -986,7 +986,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 6682,Broomfield,S Margaret,Kent,GB,51.24194,0.63447,6,422,False,
 792,Broomfield,S Mary & All Saints,Somerset,GB,51.08217,-3.10895,6,1487,False,Mon
 793,Broseley,All Saints,Shropshire,GB,52.61059,-2.4759,8,1419,False,Thu 18:30
-794,Brough,S Michael,Cumbria,GB,54.52013,-2.32134,4,1956,True,
+794,Brough,S Michael,Cumbria,GB,54.52013,-2.32134,4,1956,False,
 795,Broughton,S Lawrence,Buckinghamshire,GB,52.05218,-0.69812,4,1176,True,
 796,Broughton,All Saints,Cambridgeshire,GB,52.38423,-0.12001,4,1151,False,
 797,Broughton,S Mary,Hampshire,GB,51.09466,-1.56045,6,1232,False,"Mon (2nd, 4th)"
@@ -1097,7 +1097,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 6760,Bury,Holy Cross,Cambridgeshire,GB,52.43676,-0.10814,3,896,False,
 887,Bury,S Mary V,Greater Manchester,GB,53.59385,-2.29737,8,1430,False,Mon
 888,Bury,S John Ev,West Sussex,GB,50.90842,-0.55563,4,1120,True,
-889,Bury St Edmunds,Cath Ch of S James & S Edmund,Suffolk,GB,52.24367,0.71669,12,3085,False,Thu 19:15
+889,Bury St Edmunds,Cath Ch of S James & S Edmund,Suffolk,GB,52.24367,0.71669,12,3085,False,Thu
 6116,Buscot,S Mary,Oxfordshire,GB,51.68159,-1.67381,4,843,False,
 6705,Bush End,S John Ev,Essex,GB,51.85724,0.24567,3,271,False,
 890,Bushbury,S Mary,West Midlands,GB,52.61996,-2.11322,6,1118,False,
@@ -2118,7 +2118,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 6317,Edlington,S Helen,Lincolnshire,GB,53.22603,-0.15387,3,812,False,
 6857,Edmondsham,S Nicholas,Dorset,GB,50.90333,-1.91442,3,728,True,
 6998,Edmondthorpe,S Michael & All Angels,Leicestershire,GB,52.74879,-0.73034,3,1120,True,
-1729,Edmonton,All Saints,Greater London,GB,51.62586,-0.06608,8,1773,False,Sun (4th: 11:30 - 13:00)
+1729,Edmonton,All Saints,Greater London,GB,51.62586,-0.06608,8,1773,False,Sun (4th) 11:30
 6550,Edvin Loach,S Mary,Herefordshire,GB,52.22297,-2.49587,3,573,False,
 5973,Edwalton,Holy Rood,Nottinghamshire,GB,52.90914,-1.11168,6,589,False,Wed 20:00
 1730,Edwardstone,S Mary V,Suffolk,GB,52.04308,0.82749,6,1118,False,Wed
@@ -2217,7 +2217,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 1803,Evercreech,S Peter,Somerset,GB,51.14627,-2.50279,10,2362,False,
 1804,Everdon,S Mary BV,Northamptonshire,GB,52.2119,-1.13135,5,2159,False,Mon 20:00
 7681,Everingham,S Everilda,East Riding of Yorkshire,GB,53.87075,-0.7788,3,448,True,
-1805,Everleigh,S Peter,Wiltshire,GB,51.28624,-1.71731,6,1652,False,PN: by arrangement only
+1805,Everleigh,S Peter,Wiltshire,GB,51.28624,-1.71731,6,1652,False,PN: by arrangement
 1806,Eversholt,S John Bapt,Bedfordshire,GB,51.98227,-0.5703,6,1862,False,
 1807,Evershot,S Osmond,Dorset,GB,50.83846,-2.60862,6,816,False,Tue
 1808,Eversley,S Mary,Hampshire,GB,51.34206,-0.883,6,572,False,Wed 20:00
@@ -2957,7 +2957,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 2407,Henfield,S Peter,West Sussex,GB,50.93239,-0.27671,8,1855,False,Wed
 2408,Henham,S Mary V,Essex,GB,51.93439,0.24491,6,954,False,Thu
 2409,Henley,S Peter,Suffolk,GB,52.1181,1.15145,8,899,False,Thu
-2410,Henley in Arden,S John Bapt,Warwickshire,GB,52.29209,-1.77999,6,1320,False,Tue (6.00 - 7.45 pm)
+2410,Henley in Arden,S John Bapt,Warwickshire,GB,52.29209,-1.77999,6,1320,False,Tue 18:00
 2411,Henley on Thames,S Mary V,Oxfordshire,GB,51.53784,-0.9019,8,2408,False,Mon
 6566,Henllys,S Peter,Torfaen,GB,51.61336,-3.05922,3,644,True,
 2412,Henlow,S Mary,Bedfordshire,GB,52.03469,-0.28422,8,1624,False,Tue
@@ -3409,7 +3409,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 2767,King's Walden,S Mary,Hertfordshire,GB,51.89808,-0.31532,6,1232,False,
 2768,Kingham,S Andrew,Oxfordshire,GB,51.91141,-1.62606,8,1348,False,
 2759,Kings Langley,All Saints,Hertfordshire,GB,51.71085,-0.44803,8,1296,False,Wed
-2770,Kings Worthy,S Mary,Hampshire,GB,51.08825,-1.2978,5,1001,False,Mon 19:45
+2770,Kings Worthy,S Mary,Hampshire,GB,51.08825,-1.2978,5,1001,False,Mon
 2771,Kingsbridge,S Edmund K&M,Devon,GB,50.28596,-3.77828,8,1313,False,
 2772,Kingsbury,S Andrew,Greater London,GB,51.56807,-0.26195,8,2184,False,
 2773,Kingsbury,S Peter & S Paul,Warwickshire,GB,52.56374,-1.6848,8,1932,False,Fri
@@ -5044,7 +5044,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 4060,Rayleigh,Holy Trinity,Essex,GB,51.5882,0.60847,8,1834,False,
 4061,Rayne,All Saints,Essex,GB,51.87782,0.51618,6,733,False,Tue
 4062,Reading,S Giles,Berkshire,GB,51.4509,-0.97074,8,1631,False,Wed
-4063,Reading,S Laurence,Berkshire,GB,51.45635,-0.96971,12,2596,False,"PN: No practice, ringing by arrangement"
+4063,Reading,S Laurence,Berkshire,GB,51.45635,-0.96971,12,2596,False,PN: by arrangement
 4064,Reading,Minster Ch of S Mary V,Berkshire,GB,51.45443,-0.97389,8,2882,False,Tue
 7259,Rearsby,S Michael & All Angels,Leicestershire,GB,52.72546,-1.03746,3,879,False,
 4065,Redbourn,S Mary,Hertfordshire,GB,51.79197,-0.40676,6,1782,False,Tue 20:00
@@ -5145,7 +5145,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 6071,Rosliston,S Mary,Derbyshire,GB,52.74839,-1.64109,3,560,True,
 4141,Ross on Wye,S Mary V,Herefordshire,GB,51.91358,-2.58607,8,2272,False,Tue
 5889,Rosscarbery,Cath & Parish Ch of S Fachtna,Cork,IE,51.57794,-9.02983,6,1403,False,Thu 19:00
-4142,Rostherne,S Mary,Cheshire,GB,53.3495,-2.38828,6,2184,False,Wed (exc 4th)
+4142,Rostherne,S Mary,Cheshire,GB,53.3495,-2.38828,6,2184,False,
 5897,Rostrevor,S Bronach,Down,GB,54.10169,-6.19791,6,1458,False,
 4143,Rothbury,All Saints,Northumberland,GB,55.30894,-1.91068,8,1555,False,Fri 19:00
 4144,Rotherfield,S Denys,East Sussex,GB,51.04605,0.21819,8,2599,False,Mon 20:00
@@ -5231,7 +5231,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 1898,Salisbury,S Paul,Wiltshire,GB,51.07206,-1.80429,8,1350,False,
 4205,Salisbury,S Thomas of Canterbury,Wiltshire,GB,51.06889,-1.797,8,2818,False,Thu
 4206,Salle,S Peter & S Paul,Norfolk,GB,52.78031,1.1273,8,2016,False,
-6450,Saltaire,United Reformed Ch,West Yorkshire,GB,53.83905,-1.79067,6,448,False,PN: practice by arrangement
+6450,Saltaire,United Reformed Ch,West Yorkshire,GB,53.83905,-1.79067,6,448,False,PN: by arrangement
 4207,Saltash,S Nicholas & S Faith,Cornwall,GB,50.4083,-4.20931,6,1501,False,
 4208,Saltburn by the Sea,Emmanuel,North Yorkshire,GB,54.58143,-0.97736,8,2597,False,Tue
 5797,Saltby,S Peter,Leicestershire,GB,52.82979,-0.73807,10,1383,False,Mon (check with contact)
@@ -6519,7 +6519,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 5241,Wangford,S Peter & S Paul,Suffolk,GB,52.35475,1.61989,5,1008,True,
 5242,Wanlip,Our Lady & S Nicholas,Leicestershire,GB,52.69318,-1.11073,6,871,False,
 5243,Wansford,S Mary V,Cambridgeshire,GB,52.58052,-0.41739,6,421,False,
-5244,Wanstead,Christ Church,Greater London,GB,51.57769,0.02428,8,908,False,Tue
+5244,Wanstead,Christ Church,Greater London,GB,51.57769,0.02428,8,908,False,
 5245,Wanstrow,Blessed Virgin Mary,Somerset,GB,51.17344,-2.41649,6,923,False,Thu (3rd)
 5246,Wantage,S Peter & S Paul,Oxfordshire,GB,51.58869,-1.42849,8,2423,False,Tue
 5247,Wapley,S Peter,Gloucestershire,GB,51.51569,-2.41381,6,912,False,Mon
@@ -6561,7 +6561,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 6698,Water Newton,S Remigius,Cambridgeshire,GB,52.56245,-0.36579,3,1120,False,
 5274,Waterbeach,S John Ev,Cambridgeshire,GB,52.26361,0.19261,5,784,True,
 6427,Waterfall,S James & S Bartholomew,Staffordshire,GB,53.06202,-1.87936,3,760,False,
-5908,Waterford,Christ Church Cathedral,Waterford,IE,52.25992,-7.10789,8,2241,False,Tue (18.00 - 19.00)
+5908,Waterford,Christ Church Cathedral,Waterford,IE,52.25992,-7.10789,8,2241,False,Tue 18:00
 5276,Wateringbury,S John Bapt,Kent,GB,51.25732,0.41368,6,831,False,Tue
 2849,Waterloo,S John Ev,Greater London,GB,51.50452,-0.11226,8,1973,False,Sun (not always: check) 12:00
 5878,Watertown,Perkins School for the Blind,Massachusetts,US,42.36096,-71.17527,8,2507,False,
@@ -6745,7 +6745,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 5420,Wethersfield,S Mary Magd,Essex,GB,51.95332,0.49001,8,1282,False,Mon
 7361,Wetton,S Margaret,Staffordshire,GB,53.09564,-1.83924,6,746,False,Thu
 6203,Wetwang,S Nicholas,East Riding of Yorkshire,GB,54.01903,-0.57788,3,796,False,
-5909,Wexford,Immaculate Conception,Wexford,IE,52.33837,-6.46405,10,3500,False,Mon (19.00 - 20.00)
+5909,Wexford,Immaculate Conception,Wexford,IE,52.33837,-6.46405,10,3500,False,Mon 19:00
 5421,Weybread,S Andrew,Suffolk,GB,52.37319,1.29053,6,1018,False,
 5422,Weybridge,S James,Surrey,GB,51.37167,-0.46125,8,1267,False,Thu
 5423,Whaddon,S Mary,Buckinghamshire,GB,51.99931,-0.82851,6,1645,False,Thu
@@ -7137,7 +7137,7 @@ towerId,place,dedication,county,iso3166,latitude,longitude,bells,weight,unringab
 5747,York,S Martin le Grand,North Yorkshire,GB,53.95929,-1.08464,8,1171,False,
 5749,York,S Olave,North Yorkshire,GB,53.96222,-1.08925,6,1022,False,Wed (on the Wednesday before the first Sunday of the month) 19:00
 5978,York,Oratory Ch of S Wilfrid,North Yorkshire,GB,53.96179,-1.08462,10,2065,False,Thu 19:00
-5748,York,Spurriergate Centre,North Yorkshire,GB,53.95779,-1.08272,6,966,False,PN: No regular practice
+5748,York,Spurriergate Centre,North Yorkshire,GB,53.95779,-1.08272,6,966,False,
 7340,York,York St Mary's (visual art venue),North Yorkshire,GB,53.95716,-1.08061,3,840,True,
 5915,York,Holy Trinity,Western Australia,AU,-31.88656,116.77238,8,520,False,
 5752,Youlgreave,All Saints,Derbyshire,GB,53.176,-1.68442,12,2656,False,Tue
