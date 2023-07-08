@@ -181,10 +181,11 @@ class MapFragment : SearchableFragment(), LocationListener {
     }
 
     private fun updateMarkers() {
-        if (mapView.zoomLevelDouble > 9.5) {
+        val visibleTowers = towers.filter {mapView.boundingBox.contains(GeoPoint(it.latitude, it.longitude))}
+
+        if (visibleTowers.size < 250) {
             infoMarker.setVisible(false)
 
-            val visibleTowers = towers.filter {mapView.boundingBox.contains(GeoPoint(it.latitude, it.longitude))}
             val ids = visibleTowers.map { it.towerId }
 
             // Old markers to remove
