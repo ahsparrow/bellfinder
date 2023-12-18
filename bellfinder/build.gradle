@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'uk.org.freeflight.bellfinder'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "uk.org.freeflight.bellfinder"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 19
         versionName "1.9"
         buildConfigField("String", "DOVE_DATE", "\"02-Jul-2023\"")
