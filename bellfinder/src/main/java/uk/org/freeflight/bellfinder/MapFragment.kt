@@ -248,7 +248,7 @@ class MapFragment : SearchableFragment(), LocationListener {
             infoMarker.setVisible(true)
             infoMarker.alpha = 0.6F
 
-            mapView.overlays.removeAll(markers)
+            mapView.overlays.removeAll(markers.toSet())
             markers = ArrayList()
         }
 
