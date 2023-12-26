@@ -48,6 +48,9 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     // Delete all towers
     suspend fun deleteTowers() = dao.deleteTowers()
 
+    // Total towers in database
+    fun getTotalTowers(): Flow<Long> = dao.getTotalTowers()
+
     // Visited tower IDs
     val getVisitedTowerIds: Flow<List<Long>> = dao.getVisitedTowerIds()
 
@@ -82,6 +85,8 @@ class ViewModel (application: Application) : AndroidViewModel(application) {
     fun deleteVisit(visitId: Long) = viewModelScope.launch(Dispatchers.IO) {
         dao.deleteVisit(visitId)
     }
+
+    fun getNumTowersVisited(): Flow<Long> = dao.getNumTowersVisited()
 
     // Tower position to pass to map
     var towerPosition: Position? = null

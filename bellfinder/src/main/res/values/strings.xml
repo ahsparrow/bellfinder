@@ -19,8 +19,9 @@
     <string name="delete">Delete</string>
     <string name="delete_visit">Delete this visit?</string>
     <string name="distance_formatter">"%.1f mi"</string>
-    <string name="dove_info_label">Dove data release date</string>
+    <string name="dove_info_label">Dove data</string>
     <string name="dove_link"><u>Open Dove\'s Guide</u></string>
+    <string name="dove_release_date">Release Date: %1$s</string>
     <string name="export_menuitem">Export visits</string>
     <string name="import_menuitem">Import visits</string>
     <string name="info">Info</string>
@@ -40,6 +41,8 @@
     <string name="settings_menuitem">Settings</string>
     <string name="show_map_item">Get directions</string>
     <string name="tenor_label">Tenor:</string>
+    <string name="total_towers">Total towers: %1$d</string>
+    <string name="towers_visited">Visited: %1$d</string>
     <string name="unused">Unused</string>
     <string name="yes">Yes</string>
 

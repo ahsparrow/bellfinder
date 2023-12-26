@@ -55,7 +55,14 @@ interface BellFinderDao {
     @Query("DELETE FROM towers")
     suspend fun deleteTowers()
 
+    @Query("SELECT COUNT (*) FROM towers")
+    fun getTotalTowers(): Flow<Long>
+
     // Visits...
+
+    // Total number of towers visited
+    @Query("SELECT COUNT (DISTINCT towerId) FROM visits")
+    fun getNumTowersVisited(): Flow<Long>
 
     // Single visit from visit id
     @Query("SELECT * FROM visits WHERE visitId = :visitId LIMIT 1")

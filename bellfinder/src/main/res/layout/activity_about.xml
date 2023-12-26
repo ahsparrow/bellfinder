@@ -66,6 +66,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_dove_info_label" />
 
+    <TextView
+        android:id="@+id/textview_total_dove_towers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_dove_info" />
+
+    <TextView
+        android:id="@+id/textview_num_towers_visited"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_total_dove_towers" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
@@ -74,7 +92,7 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_dove_info" />
+        app:layout_constraintTop_toBottomOf="@+id/textview_num_towers_visited" />
 
     <TextView
         android:layout_width="0dp"
