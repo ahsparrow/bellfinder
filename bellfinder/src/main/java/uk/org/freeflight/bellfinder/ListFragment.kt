@@ -37,7 +37,7 @@ abstract class ListFragment: SearchableFragment() {
         val view = inflater.inflate(R.layout.fragment_recycler_list, container, false)
 
         //  Setup RecyclerView
-        val recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerview)
         recyclerView.adapter = getAdapter()
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
