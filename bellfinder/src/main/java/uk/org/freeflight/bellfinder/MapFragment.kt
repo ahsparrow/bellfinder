@@ -68,7 +68,7 @@ class MapFragment : SearchableFragment(), LocationListener {
 
         const val MAX_INITIAL_AGE = 30000L
         const val LOCATION_UPDATE_INTERVAL = 5000L
-        const val LOCATiON_UPDATE_DIST = 50.0F
+        const val LOCATION_UPDATE_DIST = 50.0F
     }
 
     private val viewModel: ViewModel by activityViewModels()
@@ -471,7 +471,7 @@ class MapFragment : SearchableFragment(), LocationListener {
                 permission
             ) == PackageManager.PERMISSION_GRANTED)
         ) {
-            locationManager?.requestLocationUpdates(provider, LOCATION_UPDATE_INTERVAL, LOCATiON_UPDATE_DIST, this)
+            locationManager?.requestLocationUpdates(provider, LOCATION_UPDATE_INTERVAL, LOCATION_UPDATE_DIST, this)
 
             var lastLocation: Location? = null
             try {
