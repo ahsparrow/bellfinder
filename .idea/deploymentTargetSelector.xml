@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="bellfinder">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-07-21T17:23:56.808782744Z">
+        <DropdownSelection timestamp="2025-01-01T15:04:55.994117854Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/home/ahs/.android/avd/Pixel_4a_API_32.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/ahs/.android/avd/Pixel_6a_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>
